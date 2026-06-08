@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script src="./protected-ebook.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ebook IAX — Syntra Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6B2A;
+    --dark: #0A0A0F;
+    --dark-2: #111118;
+    --dark-3: #18181F;
+    --dark-4: #222230;
+    --text: #F0EDE6;
+    --text-muted: #8A8799;
+    --text-dim: #5A5870;
+    --accent: #6C63FF;
+    --accent-2: #00D4AA;
+    --border: rgba(201,168,76,0.15);
+    --border-subtle: rgba(255,255,255,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Syne', sans-serif;
+    line-height: 1.2;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 80px 40px;
+    background: var(--dark);
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 40% at 80% 80%, rgba(108,99,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .brand-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 8px 20px;
+    border-radius: 100px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .cover h1 {
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  .cover h1 .iax {
+    display: block;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover h1 .ebook {
+    display: block;
+    font-size: 0.35em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    -webkit-text-fill-color: var(--text-muted);
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .cover-tagline {
+    font-size: 18px;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 540px;
+    margin: 32px auto 56px;
+    font-style: italic;
+  }
+
+  .cover-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 64px;
+    position: relative;
+  }
+
+  .badge {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--gold-light);
+  }
+
+  .cover-by {
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .cover-by strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .divider-gold {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 40px auto;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    gap: 32px;
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+  }
+
+  .nav-links::-webkit-scrollbar { display: none; }
+
+  .nav-links a {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    white-space: nowrap;
+    font-family: 'Syne', sans-serif;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 0 0 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .section h2 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    margin-bottom: 32px;
+    letter-spacing: -0.02em;
+  }
+
+  .section p {
+    color: var(--text-muted);
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    max-width: 720px;
+  }
+
+  /* ── MODULE CARDS ── */
+  .module-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .module-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(201,168,76,0.12);
+    letter-spacing: -0.05em;
+    flex-shrink: 0;
+    min-width: 90px;
+  }
+
+  .module-block {
+    background: var(--dark-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 48px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .module-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+
+  .module-block h3 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  .module-block p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── TOPIC GRID ── */
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .topic-card {
+    background: var(--dark-3);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .topic-card .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .topic-card .title {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(201,168,76,0.06), rgba(201,168,76,0.02));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px;
+    padding: 32px;
+    margin: 32px 0;
+  }
+
+  .highlight-box p {
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .highlight-box strong {
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist {
+    list-style: none;
+    margin: 24px 0;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .checklist li::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 8px;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  /* ── JOURNEY ── */
+  .journey-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border-subtle);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 40px;
+  }
+
+  .journey-step {
+    background: var(--dark-2);
+    padding: 32px;
+  }
+
+  .step-phase {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── WEEK PLAN ── */
+  .week-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .week-card {
+    background: var(--dark-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .week-label {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+
+  .week-label .period {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-weight: 400;
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+
+  .week-content h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .week-content ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .week-content ul li {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .week-content ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  /* ── CHECK ITEMS ── */
+  .check-section {
+    background: var(--dark-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 40px;
+    margin-bottom: 32px;
+  }
+
+  .check-section h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .check-section .subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-style: italic;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-subtle);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .check-item:last-child { border-bottom: none; }
+
+  .check-item.done { opacity: 0.4; }
+
+  .check-box {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .check-item.done .check-box {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .check-item.done .check-box::after {
+    content: '✓';
+    font-size: 11px;
+    color: var(--dark);
+    font-weight: 700;
+  }
+
+  .check-text {
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .check-item.done .check-text {
+    text-decoration: line-through;
+    color: var(--text-dim);
+  }
+
+  /* ── FULL BLEED SEPARATOR ── */
+  .separator {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 0;
+  }
+
+  /* ── QUOTE ── */
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    padding: 8px 0 8px 28px;
+    margin: 40px 0;
+  }
+
+  .pull-quote p {
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text) !important;
+    line-height: 1.6;
+    margin: 0 !important;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--dark-2);
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+    padding: 60px 40px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .footer p {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .nav { display: none; }
+    .cover { page-break-after: always; }
+    .module-block { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CAPA -->
+<section class="cover" id="capa">
+  <div class="cover-grid"></div>
+  <div class="brand-tag">Syntra Digital — Ecossistema de Transformação Digital</div>
+  <h1>
+    <span class="ebook">Ebook</span>
+    <span class="iax">IAX</span>
+  </h1>
+  <p class="cover-tagline">O Ecossistema Completo para Construir sua Evolução Digital, Acelerar sua Carreira e Dominar as Competências do Futuro.</p>
+  <div class="cover-badges">
+    <span class="badge">Inteligência Artificial</span>
+    <span class="badge">Automação</span>
+    <span class="badge">Transformação Digital</span>
+    <span class="badge">Branding</span>
+    <span class="badge">Design</span>
+    <span class="badge">Frontend</span>
+    <span class="badge">LinkedIn</span>
+    <span class="badge">TikTok Shop</span>
+    <span class="badge">Criação de Conteúdo</span>
+    <span class="badge">Modelos Digitais</span>
+  </div>
+  <div class="cover-by">Criado por <strong>Syntra Digital</strong> &nbsp;·&nbsp; 10 Módulos &nbsp;·&nbsp; Plano de 90 Dias</div>
+</section>
+
+<!-- NAVEGAÇÃO -->
+<nav class="nav">
+  <a href="#capa" class="nav-logo">IAX</a>
+  <div class="nav-links">
+    <a href="#apresentacao">Apresentação</a>
+    <a href="#missao">Missão</a>
+    <a href="#jornada">Jornada</a>
+    <a href="#m1">Módulo 1</a>
+    <a href="#m2">Módulo 2</a>
+    <a href="#m3">Módulo 3</a>
+    <a href="#m4">Módulo 4</a>
+    <a href="#m5">Módulo 5</a>
+    <a href="#m6">Módulo 6</a>
+    <a href="#m7cert">Módulo 7</a>
+    <a href="#m7">Módulo 8</a>
+    <a href="#m8">Módulo 9</a>
+    <a href="#m9">Plano 90 Dias</a>
+    <a href="#m10">Transformação Final</a>
+  </div>
+</nav>
+
+<!-- APRESENTAÇÃO -->
+<section class="section" id="apresentacao">
+  <div class="section-label">Apresentação</div>
+  <h2>Bem-vindo ao Ebook IAX</h2>
+  <p>Você está diante de algo diferente. O Ebook IAX não é um livro comum. Não é apenas uma coleção de informações. É um <strong style="color:var(--gold-light);font-weight:500;">ecossistema de transformação digital</strong> — um sistema vivo, estruturado e estratégico, criado para organizar, acelerar e direcionar o crescimento de profissionais no cenário digital.</p>
+  <p>Vivemos em uma era de abundância de informação e escassez de direção. Existem cursos, tutoriais, vídeos e conteúdos por toda parte. Mas a maioria das pessoas está perdida — sem saber por onde começar, o que priorizar, como conectar os pontos.</p>
+  <p>O Ebook IAX resolve esse problema. Ele entrega o que mais importa: um caminho claro.</p>
+
+  <div class="highlight-box">
+    <p>O <strong>IAX</strong> significa <strong>Inteligência Artificial + Aceleração + Execução</strong>. Cada letra representa um pilar da sua evolução digital. Cada módulo foi arquitetado para se conectar ao próximo, criando uma progressão lógica e poderosa do fundamento ao domínio profissional.</p>
+  </div>
+
+  <p>Este não é um produto passivo. É uma ferramenta ativa. Para extrair o máximo do Ebook IAX, você precisa mais do que leitura — precisa de ação deliberada, execução consistente e comprometimento com sua própria transformação.</p>
+  <p>A Syntra Digital criou o IAX com uma filosofia central: <em>aprendizado sem execução é entretenimento. Conhecimento aplicado é poder real.</em></p>
+</section>
+
+<hr class="separator">
+
+<!-- MISSÃO -->
+<section class="section" id="missao">
+  <div class="section-label">Missão</div>
+  <h2>A Missão do Ebook IAX</h2>
+
+  <div class="pull-quote">
+    <p>"Ajudar pessoas a construir habilidades digitais, sistemas, ativos e oportunidades por meio de trilhas de aprendizado organizadas."</p>
+  </div>
+
+  <p>A missão da Syntra Digital é clara e sem ambiguidade. Em um mundo onde a tecnologia redefine carreiras a cada ano, dominar as competências certas no momento certo não é diferencial — é sobrevivência profissional.</p>
+  <p>O Ebook IAX foi construído sobre quatro pilares fundamentais:</p>
+
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="num">01</div>
+      <div class="title">Direção clara sobre o que aprender e em que ordem</div>
+    </div>
+    <div class="topic-card">
+      <div class="num">02</div>
+      <div class="title">Organização de trilhas de conhecimento conectadas</div>
+    </div>
+    <div class="topic-card">
+      <div class="num">03</div>
+      <div class="title">Curadoria de ferramentas, modelos e práticas reais</div>
+    </div>
+    <div class="topic-card">
+      <div class="num">04</div>
+      <div class="title">Aceleração do crescimento com foco em resultado</div>
+    </div>
+  </div>
+
+  <p style="margin-top:40px;">O IAX não é para quem quer saber mais. É para quem quer <strong style="color:var(--gold-light);font-weight:500;">ser mais</strong> — profissionalmente, estrategicamente, digitalmente.</p>
+</section>
+
+<hr class="separator">
+
+<!-- COMO USAR -->
+<section class="section" id="como-usar">
+  <div class="section-label">Como Usar o Ecossistema</div>
+  <h2>Como Extrair o Máximo do IAX</h2>
+  <p>O Ebook IAX foi projetado para ser percorrido de forma progressiva, mas também para ser consultado de forma estratégica. Entenda como navegar por ele:</p>
+
+  <ul class="checklist">
+    <li>Leia os módulos na ordem apresentada na primeira vez. A sequência foi arquitetada com intencionalidade — cada módulo prepara o terreno para o próximo.</li>
+    <li>Use os modelos práticos do Módulo 5 imediatamente. Não espere terminar o ebook para aplicar o que encontrar.</li>
+    <li>Execute o Plano de 90 Dias (Módulo 9) em paralelo com sua leitura. Teoria e prática devem caminhar juntas.</li>
+    <li>Retorne aos módulos de referência conforme suas necessidades evoluem. O IAX é um recurso vivo, não uma leitura única.</li>
+    <li>Use os checklists do Módulo 10 como revisão periódica do seu progresso e próximos passos.</li>
+    <li>Explore as certificações externas indicadas no Módulo 8 conforme você avança nas trilhas temáticas.</li>
+  </ul>
+
+  <div class="highlight-box">
+    <p>💡 <strong>Regra de Ouro do IAX:</strong> Para cada conceito que você aprender, defina uma ação concreta. Conhecimento sem movimento não transforma. O Ebook IAX é um mapa — você é o explorador.</p>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- JORNADA DE APRENDIZADO -->
+<section class="section" id="jornada">
+  <div class="section-label">Jornada de Aprendizado</div>
+  <h2>Sua Trilha de Evolução Digital</h2>
+  <p>O Ebook IAX organiza sua jornada em quatro fases progressivas. Cada fase constrói sobre a anterior, garantindo uma evolução sólida e sustentada.</p>
+
+  <div class="journey-steps">
+    <div class="journey-step">
+      <div class="step-phase">Fase 1 — Fundação</div>
+      <div class="step-title">Contexto & Mindset</div>
+      <div class="step-desc">Módulos 1–2. Compreenda o cenário digital, a economia da transformação e os fundamentos da inteligência artificial. Posicione-se mentalmente para o que vem a seguir.</div>
+    </div>
+    <div class="journey-step">
+      <div class="step-phase">Fase 2 — Ferramentas</div>
+      <div class="step-title">Domínio Prático</div>
+      <div class="step-desc">Módulos 3–5. Domine o Claude AI como ferramenta de aceleração, construa sua presença no LinkedIn e crie um arsenal completo de modelos digitais reutilizáveis.</div>
+    </div>
+    <div class="journey-step">
+      <div class="step-phase">Fase 3 — Produção</div>
+      <div class="step-title">Sistemas & Conteúdo</div>
+      <div class="step-desc">Módulos 6–7. Monte seu motor de criação de conteúdo com IA, estruture um ecossistema de afiliados no TikTok Shop e construa canais de geração de renda digital.</div>
+    </div>
+    <div class="journey-step">
+      <div class="step-phase">Fase 4 — Escala</div>
+      <div class="step-title">Execução & Expansão</div>
+      <div class="step-desc">Módulos 8–10. Direcione-se às certificações externas relevantes, execute o plano de 90 dias e valide sua transformação com os checklists finais de crescimento.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 1 -->
+<section class="section" id="m1">
+  <div class="section-label">Módulo 1</div>
+  <div class="module-header">
+    <div class="module-num">01</div>
+    <div>
+      <h2>Transformação Digital</h2>
+      <p style="margin:0;font-size:16px;">O novo contexto do trabalho, da economia e das oportunidades profissionais.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>O Futuro do Trabalho</h3>
+    <p>O mercado de trabalho não está apenas mudando — ele está sendo reinventado. A automação, a inteligência artificial e a digitalização de processos estão eliminando funções repetitivas enquanto criam demanda explosiva por profissionais que sabem trabalhar com tecnologia de forma estratégica.</p>
+    <p>A pergunta não é mais "meu emprego vai existir amanhã?" A pergunta correta é: "Quais competências me tornam insubstituível na era da automação?" Profissionais que aprendem a usar ferramentas digitais como extensão da sua inteligência natural possuem uma vantagem competitiva extraordinária.</p>
+    <p>Segundo estimativas de institutos de pesquisa globais, até 2030 mais de 85 milhões de postos de trabalho serão transformados pela automação — e ao mesmo tempo, surgirão 97 milhões de novas funções que hoje não existem. O profissional preparado está do lado certo dessa equação.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Economia Digital</h3>
+    <p>A economia digital não é um nicho. É a economia. Praticamente todos os setores — saúde, educação, finanças, varejo, entretenimento, logística — estão sendo reorganizados em torno de dados, plataformas digitais e modelos de negócio baseados em software.</p>
+    <p>Compreender a economia digital significa entender onde o valor está sendo criado, capturado e redistribuído. Significa reconhecer que ativos digitais — conteúdo, audiência, sistemas automatizados, reputação online — possuem valor real e crescente.</p>
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">Plataformas como infraestrutura de negócios</div></div>
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">Dados como vantagem competitiva estratégica</div></div>
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">Efeitos de rede e escala digital</div></div>
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">Receitas recorrentes e modelos de assinatura</div></div>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Novas Oportunidades</h3>
+    <p>A transformação digital não é só uma ameaça a modelos antigos — é a maior geração de oportunidades profissionais das últimas décadas. Nunca foi tão acessível construir um negócio, criar uma audiência, oferecer serviços e gerar renda de qualquer lugar do mundo com investimento inicial mínimo.</p>
+    <p>Entre as oportunidades mais acessíveis e de alto potencial para profissionais em transição digital:</p>
+    <ul class="checklist">
+      <li>Freelance especializado em ferramentas de IA para empresas que ainda não sabem usá-las</li>
+      <li>Criação de conteúdo educacional em nichos de alta demanda</li>
+      <li>Consultoria em automação de processos para pequenas e médias empresas</li>
+      <li>Marketing de afiliados com plataformas como TikTok Shop, Amazon e Hotmart</li>
+      <li>Desenvolvimento de produtos digitais: templates, prompts, cursos, ferramentas</li>
+      <li>Gestão de presença digital para profissionais e empresas locais</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Posicionamento Profissional</h3>
+    <p>Em um mercado saturado de generalistas, especialistas com posicionamento claro têm poder de atração. Posicionamento profissional não é sobre o que você faz — é sobre para quem você faz, qual problema você resolve e por que você é a escolha certa.</p>
+    <p>O framework de posicionamento IAX é simples e poderoso: <strong style="color:var(--gold-light);font-weight:500;">Nicho + Especialidade + Resultado Comprovado + Canal de Visibilidade.</strong> Qualquer profissional que dominar esses quatro elementos constrói um posicionamento magnético no digital.</p>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 2 -->
+<section class="section" id="m2">
+  <div class="section-label">Módulo 2</div>
+  <div class="module-header">
+    <div class="module-num">02</div>
+    <div>
+      <h2>Inteligência Artificial</h2>
+      <p style="margin:0;font-size:16px;">Do fundamento à aplicação prática — IA como ferramenta de produtividade e crescimento.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Fundamentos de IA</h3>
+    <p>Inteligência Artificial é o campo da computação dedicado a criar sistemas capazes de realizar tarefas que normalmente exigiriam inteligência humana. Isso inclui compreender linguagem natural, reconhecer padrões, tomar decisões e aprender com experiências.</p>
+    <p>Para o profissional moderno, não é necessário ser engenheiro de machine learning para extrair valor extraordinário da IA. O que importa é compreender o que cada tipo de ferramenta de IA pode fazer e como integrá-la ao seu fluxo de trabalho.</p>
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">Modelos de linguagem (LLMs) e como funcionam</div></div>
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">IA generativa: texto, imagem, vídeo e áudio</div></div>
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">Agentes de IA e automação inteligente</div></div>
+      <div class="topic-card"><div class="num">Conceito</div><div class="title">Limitações atuais e quando não usar IA</div></div>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>IA Prática</h3>
+    <p>O gap entre saber que IA existe e saber usá-la com eficiência é o que separa os profissionais do futuro dos que ficarão para trás. IA prática significa ter um repertório de ferramentas que você domina e um conjunto de casos de uso onde elas geram impacto real.</p>
+    <p>Ferramentas essenciais no arsenal do profissional de IA prática:</p>
+    <ul class="checklist">
+      <li><strong style="color:var(--text)">Claude (Anthropic)</strong> — raciocínio complexo, escrita, análise, código e pesquisa</li>
+      <li><strong style="color:var(--text)">ChatGPT (OpenAI)</strong> — brainstorming, geração de conteúdo e suporte a tarefas</li>
+      <li><strong style="color:var(--text)">Midjourney / DALL-E</strong> — criação de imagens e assets visuais</li>
+      <li><strong style="color:var(--text)">Eleven Labs / Suno</strong> — geração de áudio, voz e música</li>
+      <li><strong style="color:var(--text)">Make / n8n</strong> — automação de fluxos de trabalho com IA</li>
+      <li><strong style="color:var(--text)">Perplexity</strong> — pesquisa com IA em tempo real</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Produtividade Diária com IA</h3>
+    <p>Profissionais que integram IA ao dia a dia trabalham de forma assimetricamente mais eficiente. A IA não substitui o julgamento humano — ela amplifica a capacidade de execução, libera tempo para o que é estratégico e elimina o atrito nas tarefas operacionais.</p>
+    <p>Exemplos concretos de uso diário de IA para produtividade:</p>
+    <ul class="checklist">
+      <li>Usar IA para rascunhar emails, propostas e mensagens profissionais</li>
+      <li>Sintetizar artigos longos, relatórios e documentos em minutos</li>
+      <li>Gerar ideias, estruturas e roteiros para qualquer tipo de conteúdo</li>
+      <li>Pesquisar e analisar informações com velocidade 10x superior</li>
+      <li>Criar apresentações, planilhas e documentos com suporte de IA</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>IA para Negócios</h3>
+    <p>Empresas que integram IA em seus processos ganham vantagem competitiva significativa: redução de custos operacionais, personalização em escala, decisões baseadas em dados e velocidade de execução superior. Para o profissional, isso significa oportunidade — seja como especialista interno ou consultor externo.</p>
+    <div class="highlight-box">
+      <p><strong>Caso de Uso Estratégico:</strong> Um profissional de marketing que domina IA pode produzir em um dia o que uma equipe de 5 pessoas produziria em uma semana — sem perder qualidade. Essa é a alavancagem que a IA oferece. O IAX te ensina como capturar essa alavancagem de forma sistemática.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 3 -->
+<section class="section" id="m3">
+  <div class="section-label">Módulo 3</div>
+  <div class="module-header">
+    <div class="module-num">03</div>
+    <div>
+      <h2>Trilha de Aceleração com Claude AI</h2>
+      <p style="margin:0;font-size:16px;">Aprendizado comprimido, pensamento estratégico e produtividade máxima com IA.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>O Que é Aprendizado Acelerado com IA</h3>
+    <p>O conceito de aprendizado comprimido é simples: usar ferramentas de IA para absorver, processar e aplicar conhecimento em uma fração do tempo que os métodos tradicionais exigem. Isso não substitui o estudo profundo — mas elimina o atrito inicial e acelera exponencialmente a curva de aprendizado.</p>
+    <p>Claude AI, desenvolvido pela Anthropic, é um dos modelos de linguagem mais avançados disponíveis para profissionais. Sua capacidade de raciocínio, síntese, criação e análise o torna um parceiro extraordinário para quem busca aceleração real.</p>
+    <div class="highlight-box">
+      <p>⚠️ <strong>Aviso Importante:</strong> Esta trilha é focada em uso prático de Claude como ferramenta de produtividade, pesquisa, criação e aceleração de aprendizado. Não representa afiliação oficial, endosso ou certificação pela Anthropic. As certificações oficiais de plataformas de IA são indicadas no Módulo 8.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Produtividade com Claude</h3>
+    <p>Claude se destaca em tarefas que exigem raciocínio contextual profundo, análise de documentos extensos, escrita de alta qualidade e execução de tarefas complexas de múltiplos passos. Para o profissional que quer maximizar output sem sacrificar qualidade, Claude é uma alavanca poderosa.</p>
+    <ul class="checklist">
+      <li>Análise de contratos, relatórios e documentos técnicos em minutos</li>
+      <li>Redação de propostas comerciais, briefings e apresentações executivas</li>
+      <li>Revisão, melhoria e adaptação de textos para diferentes tons e públicos</li>
+      <li>Criação de planilhas de planejamento, cronogramas e frameworks estratégicos</li>
+      <li>Suporte a código: revisão, geração, debugging e documentação</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Pesquisa e Síntese Inteligente</h3>
+    <p>Uma das habilidades mais valiosas no mercado atual é sintetizar grandes volumes de informação em insights acionáveis. Claude é excepcionalmente eficaz nessa função — transformando horas de leitura e pesquisa em sínteses claras, estruturadas e prontas para decisão.</p>
+    <p>Técnicas avançadas para pesquisa com Claude:</p>
+    <ul class="checklist">
+      <li>Solicitar análises comparativas de múltiplas perspectivas sobre um tema</li>
+      <li>Pedir sínteses estruturadas com pontos-chave, implicações e lacunas</li>
+      <li>Usar Claude para identificar vieses, contradições e inconsistências em argumentos</li>
+      <li>Solicitar mapas mentais e frameworks conceituais para organizar conhecimento</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Criação e Aceleração de Conteúdo</h3>
+    <p>Claude como parceiro criativo significa ir além de "gerar texto". Significa colaborar ativamente no processo criativo — desenvolvendo ideias, refinando ângulos, construindo narrativas e adaptando conteúdo para diferentes formatos e audiências.</p>
+    <p>O profissional que domina a colaboração com Claude multiplica sua capacidade criativa sem perder autenticidade. A chave está em fornecer contexto rico, direcionamento claro e feedback iterativo.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Pensamento Estratégico com IA</h3>
+    <p>Usar IA para pensar estrategicamente significa ir além das tarefas operacionais. Significa usar Claude para explorar cenários, questionar premissas, identificar pontos cegos e estruturar decisões complexas com mais clareza.</p>
+    <p>Exemplos de uso estratégico: análise de concorrentes, desenvolvimento de proposta de valor, planejamento de produto, mapeamento de riscos, construção de argumentos e tomada de decisão baseada em evidências.</p>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 4 -->
+<section class="section" id="m4">
+  <div class="section-label">Módulo 4</div>
+  <div class="module-header">
+    <div class="module-num">04</div>
+    <div>
+      <h2>Desenvolvimento Profissional no LinkedIn</h2>
+      <p style="margin:0;font-size:16px;">Construa autoridade, expanda sua rede e seja encontrado pelas oportunidades certas.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Otimização de Perfil</h3>
+    <p>Seu perfil no LinkedIn é sua página de vendas profissional. É o primeiro ponto de contato com recrutadores, parceiros, clientes e oportunidades. Um perfil otimizado não é apenas "completo" — é estrategicamente construído para comunicar valor, gerar credibilidade e atrair o perfil de oportunidade que você busca.</p>
+    <p>Os elementos de um perfil LinkedIn de alto impacto:</p>
+    <ul class="checklist">
+      <li><strong style="color:var(--text)">Foto profissional</strong> — bem iluminada, rosto visível, fundo neutro ou contextualizado</li>
+      <li><strong style="color:var(--text)">Banner personalizado</strong> — comunica especialidade, proposta de valor ou nicho</li>
+      <li><strong style="color:var(--text)">Headline estratégica</strong> — quem você ajuda, como você ajuda e qual resultado você entrega</li>
+      <li><strong style="color:var(--text)">Sobre narrativo</strong> — sua história, seu posicionamento e sua chamada para ação</li>
+      <li><strong style="color:var(--text)">Experiências com resultados</strong> — não apenas cargos, mas conquistas quantificadas</li>
+      <li><strong style="color:var(--text)">Habilidades e recomendações</strong> — validação social que aumenta sua credibilidade</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Posicionamento e Autoridade</h3>
+    <p>Autoridade no LinkedIn não se compra e não se constrói em um dia. É o resultado de consistência, relevância e generosidade intelectual ao longo do tempo. Profissionais que compartilham conhecimento valioso de forma regular constroem audiências leais que se traduzem em oportunidades reais.</p>
+    <p>A fórmula de posicionamento IAX para LinkedIn:</p>
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">Pilar 1</div><div class="title">Consistência de publicação — mínimo 3x por semana</div></div>
+      <div class="topic-card"><div class="num">Pilar 2</div><div class="title">Nicho claro — fale para um público específico</div></div>
+      <div class="topic-card"><div class="num">Pilar 3</div><div class="title">Conteúdo de valor — ensine, inspire ou provoque reflexão</div></div>
+      <div class="topic-card"><div class="num">Pilar 4</div><div class="title">Engajamento ativo — comente com substância nos posts do nicho</div></div>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Construção de Autoridade</h3>
+    <p>Autoridade é o resultado de ser consistentemente útil para uma audiência específica. No LinkedIn, autoridade se manifesta como: convites para palestras, menções espontâneas, DMs de oportunidade, seguidores qualificados e inbound de clientes ou recrutadores.</p>
+    <p>Para construir autoridade de forma acelerada, use o Framework de Conteúdo de Autoridade: alternar entre conteúdo educacional (explica conceitos), conteúdo de perspectiva (compartilha opinião única) e conteúdo de prova (demonstra resultados concretos).</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Networking Profissional Estratégico</h3>
+    <p>Networking não é coletar conexões. É construir relacionamentos de valor mútuo com pessoas que você pode ajudar e que podem ajudá-lo. No LinkedIn, networking estratégico significa ser seletivo, genuíno e consistente nas interações.</p>
+    <p>Protocolo de networking IAX: identifique os 50 perfis mais relevantes do seu nicho, interaja com conteúdo deles de forma genuína por 2 semanas, depois envie uma mensagem de conexão personalizada com uma observação específica sobre o trabalho deles. Essa abordagem tem taxa de aceitação muito superior à solicitação fria padrão.</p>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 5 -->
+<section class="section" id="m5">
+  <div class="section-label">Módulo 5</div>
+  <div class="module-header">
+    <div class="module-num">05</div>
+    <div>
+      <h2>Criação de Modelos Digitais</h2>
+      <p style="margin:0;font-size:16px;">Construa seu arsenal de modelos profissionais reutilizáveis para escalar com velocidade.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Modelos de Landing Page</h3>
+    <p>Uma landing page eficiente não é bela por acidente — é construída sobre princípios de conversão testados. O modelo IAX de landing page segue a estrutura AIDA+P: Atenção, Interesse, Desejo, Ação e Prova Social.</p>
+    <p><strong style="color:var(--gold-light);font-weight:500;">Estrutura do Modelo IAX de Landing Page:</strong></p>
+    <ul class="checklist">
+      <li>Header com headline de impacto + subheadline que explica o benefício central</li>
+      <li>Seção de Problema — valide a dor do cliente de forma precisa</li>
+      <li>Seção de Solução — apresente sua oferta com clareza e especificidade</li>
+      <li>Benefícios em bullets — transforme características em resultados concretos</li>
+      <li>Prova Social — depoimentos, números, logos de clientes ou parceiros</li>
+      <li>CTA principal — uma única ação clara, repetida estrategicamente na página</li>
+      <li>Seção de FAQ — remova as objeções mais comuns antes que surjam</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Modelos de Serviço</h3>
+    <p>Um modelo de serviço bem estruturado elimina a dúvida do cliente e aumenta significativamente a taxa de fechamento. O formato IAX para apresentação de serviços inclui: nome do serviço, público-alvo ideal, problema que resolve, entregáveis concretos, resultado esperado, prazo e investimento.</p>
+    <p>Evite listas de tarefas e ferramentas que você usa. Clientes compram resultados, não processos. Estruture seus serviços sempre a partir do resultado final que o cliente recebe.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Modelos de Prompt</h3>
+    <p>Prompts bem estruturados são ativos digitais de alto valor. Um prompt de qualidade pode ser reutilizado centenas de vezes, delegado para outros profissionais e constantemente refinado. A biblioteca de prompts IAX cobre as principais necessidades profissionais:</p>
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">Tipo</div><div class="title">Prompts de escrita: artigos, posts, emails, scripts</div></div>
+      <div class="topic-card"><div class="num">Tipo</div><div class="title">Prompts de análise: dados, concorrência, textos</div></div>
+      <div class="topic-card"><div class="num">Tipo</div><div class="title">Prompts de estratégia: planejamento, posicionamento</div></div>
+      <div class="topic-card"><div class="num">Tipo</div><div class="title">Prompts de vendas: propostas, objeções, follow-up</div></div>
+    </div>
+    <p style="margin-top:24px;"><strong style="color:var(--gold-light);font-weight:500;">Anatomia do Prompt IAX:</strong> Contexto + Persona + Tarefa + Formato de Saída + Restrições. Quanto mais específico e contextualizado o prompt, mais preciso e utilizável o resultado.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Modelos de Proposta, Briefing e WhatsApp</h3>
+    <p>Uma proposta profissional é o reflexo da sua competência antes mesmo de você entregar qualquer trabalho. O modelo IAX de proposta segue a estrutura: contexto do cliente, diagnóstico do problema, solução proposta, entregáveis, cronograma, investimento e próximos passos.</p>
+    <p>Para briefings, o objetivo é extrair o máximo de informação relevante com o mínimo de atrito para o cliente. Use perguntas abertas e específicas, agrupadas por tema: contexto do projeto, público-alvo, objetivos, referências, restrições e cronograma.</p>
+    <p>Modelos de WhatsApp Business são fundamentais para profissionais que usam a plataforma para vendas e atendimento. Inclua mensagens de boas-vindas, apresentação de serviços, respostas a objeções comuns, confirmação de reunião e follow-up pós-reunião.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Modelos de Typebot</h3>
+    <p>Typebots são fluxos de conversa automatizados que qualificam leads, respondem dúvidas e direcionam o usuário para a ação desejada — funcionando 24 horas por dia sem intervenção humana. Um Typebot bem construído pode substituir horas de atendimento manual semanalmente.</p>
+    <p>Estrutura do Typebot IAX para qualificação de leads: Boas-vindas personalizadas → Identificação do problema → Qualificação do perfil (budget, prazo, urgência) → Apresentação da solução → Captura de contato → Agendamento automático.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Modelos de Negócios Digitais</h3>
+    <p>Existem dezenas de modelos de negócios digitais viáveis para um profissional individual. O Ebook IAX apresenta os modelos com melhor relação entre barreira de entrada e potencial de retorno:</p>
+    <ul class="checklist">
+      <li>Serviços baseados em expertise com pacotes de alto valor</li>
+      <li>Produtos digitais de baixo custo e alta escala (templates, ebooks, prompts)</li>
+      <li>Comunidades pagas em torno de um nicho de conhecimento</li>
+      <li>Agências enxutas com 2 a 5 pessoas focadas em um serviço específico</li>
+      <li>Marketing de afiliados em plataformas de alta comissão</li>
+      <li>Cursos e mentorias para transformação de especialidade em renda recorrente</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 6 -->
+<section class="section" id="m6">
+  <div class="section-label">Módulo 6</div>
+  <div class="module-header">
+    <div class="module-num">06</div>
+    <div>
+      <h2>Motor de Conteúdo com IA</h2>
+      <p style="margin:0;font-size:16px;">Construa sistemas de criação de conteúdo que funcionam sem você estar presente.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Sistemas de Conteúdo</h3>
+    <p>A diferença entre um criador de conteúdo e um sistema de conteúdo é a diferença entre trabalhar por projeto e trabalhar por processo. Um sistema de conteúdo é replicável, escalável e não depende de inspiração para funcionar — ele funciona pela força do processo.</p>
+    <p>O Sistema IAX de Conteúdo opera em três camadas:</p>
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">Camada 1</div><div class="title">Ideação sistemática — banco de pautas que nunca esgota</div></div>
+      <div class="topic-card"><div class="num">Camada 2</div><div class="title">Produção em lote — criar 30 dias de conteúdo em um dia</div></div>
+      <div class="topic-card"><div class="num">Camada 3</div><div class="title">Distribuição automatizada — publicar no piloto automático</div></div>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Modelos de Conteúdo Reutilizáveis</h3>
+    <p>Modelos de conteúdo são estruturas que funcionam repetidamente para gerar engajamento. Você não precisa reinventar o formato a cada publicação — você precisa ter bons formatos e preenchê-los com perspectivas novas e relevantes.</p>
+    <p>Os 5 modelos de conteúdo IAX com maior consistência de resultados:</p>
+    <ul class="checklist">
+      <li><strong style="color:var(--text)">O Contraintuitivo</strong> — comece com uma afirmação que contraria a expectativa comum do seu nicho</li>
+      <li><strong style="color:var(--text)">A Transformação</strong> — antes/depois de uma situação, habilidade ou resultado</li>
+      <li><strong style="color:var(--text)">O Número Específico</strong> — use dados precisos para dar credibilidade e criar curiosidade</li>
+      <li><strong style="color:var(--text)">O Erro que Cometí</strong> — vulnerabilidade estratégica que ensina uma lição valiosa</li>
+      <li><strong style="color:var(--text)">O Passo a Passo</strong> — processo claro com resultado específico prometido</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Teste de Conteúdo Viral</h3>
+    <p>Viralidade não é sorte — é o resultado de testar sistematicamente elementos que historicamente aumentam o alcance orgânico. Os principais fatores de viralidade que você pode testar e otimizar:</p>
+    <ul class="checklist">
+      <li>Abertura: a primeira linha (hook) é o fator mais crítico de toda a peça de conteúdo</li>
+      <li>Relevância temporal: conteúdo que toca em um tema em alta tem vantagem algorítmica</li>
+      <li>Carga emocional: conteúdo que gera forte reação emocional (surpresa, raiva, inspiração) é mais compartilhado</li>
+      <li>Utilidade imediata: conteúdo que o leitor pode aplicar hoje tem taxa de salvamento muito superior</li>
+      <li>Formato visual: listas, carousel e vídeos curtos têm vantagem consistente na maioria das plataformas</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Organização e Estratégia de Publicação</h3>
+    <p>Um calendário editorial é o esqueleto do seu sistema de conteúdo. Sem estrutura, conteúdo é reativo e inconsistente. Com estrutura, conteúdo é estratégico e cumulativo. A consistência ao longo do tempo é o que constrói audiências que se tornam ativos duradouros.</p>
+    <p>Estruture seu calendário com: objetivo de cada publicação (awareness, engajamento, conversão), plataforma alvo, formato, tema/ângulo e CTA. Planeje em blocos mensais com revisão semanal de performance.</p>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 7 — CERTIFICAÇÕES -->
+<section class="section" id="m7cert">
+  <div class="section-label">Módulo 7</div>
+  <div class="module-header">
+    <div class="module-num">07</div>
+    <div>
+      <h2>Jornada Oficial de Certificações e Desenvolvimento Digital</h2>
+      <p style="margin:0;font-size:16px;">Um roteiro profissional de certificações reais — não é um curso, é um mapa de evolução com credenciais reconhecidas.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Como usar este módulo</h3>
+    <p>Este módulo é um roteiro profissional de certificações externas. Cada etapa foi curada para construir uma trilha de competências digitais progressiva e complementar. As certificações são gratuitas, emitidas por instituições reconhecidas e acessíveis por link direto.</p>
+    <p>Acesse cada URL diretamente no seu navegador. Todos os links levam à página oficial do curso. Copie e cole o endereço completo conforme necessário.</p>
+  </div>
+
+  <!-- ETAPA 1 -->
+  <div class="module-block">
+    <h3>Etapa 1 — Fundamentos da Transformação Digital</h3>
+    <p>O ponto de partida da jornada. Antes de dominar ferramentas, o profissional IAX compreende o contexto macro da transformação digital — o que muda, por que muda e como se posicionar estrategicamente nesse cenário.</p>
+
+    <div class="topic-grid">
+
+      <div class="topic-card">
+        <div class="num">Curso 1</div>
+        <div class="title">Fundamentos da Transformação Digital</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Conceitos centrais de digitalização, modelos de negócio digitais, impacto organizacional.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Certificado federal gratuito. Base conceitual sólida para todos os módulos seguintes.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Fundamenta toda a jornada IAX com linguagem e visão alinhadas ao mercado digital atual.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/518</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 2</div>
+        <div class="title">Transformação Digital no Serviço Público</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Aplicação prática da transformação em contextos institucionais, gestão de mudança, cultura digital.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Diferencial para profissionais que atuam em ambientes corporativos e públicos.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Amplia o repertório estratégico para além das ferramentas — trabalha a mentalidade de transformação.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/419</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 3</div>
+        <div class="title">Novas Tecnologias para a Transformação Digital</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Panorama das tecnologias emergentes: cloud, IoT, blockchain, automação e seus casos de uso reais.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Visão tecnológica ampla que complementa a prática com IA abordada nos módulos centrais do IAX.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Profissional que entende o ecossistema tecnológico toma decisões melhores sobre quais ferramentas adotar.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/367</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ETAPA 2 -->
+  <div class="module-block">
+    <h3>Etapa 2 — Inteligência Artificial</h3>
+    <p>A etapa central da jornada IAX. Aqui o profissional desenvolve fluência real em IA — não apenas no uso de ferramentas, mas na compreensão ética, estratégica e aplicada da inteligência artificial no contexto profissional moderno.</p>
+
+    <div class="topic-grid">
+
+      <div class="topic-card">
+        <div class="num">Curso 4</div>
+        <div class="title">Inteligência Artificial Generativa</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Fundamentos de IA generativa, modelos de linguagem, geração de texto, imagem e automação criativa.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Certificação diretamente alinhada ao uso do Claude AI trabalhado ao longo do IAX.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> IA generativa é a habilidade profissional mais requisitada e escassa do mercado atual.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/1091</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 5</div>
+        <div class="title">Ética em Inteligência Artificial</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Vieses algorítmicos, privacidade de dados, responsabilidade no uso de IA, regulação e impacto social.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Uso responsável de IA é diferencial competitivo — e requisito crescente em empresas e contratos.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Quem usa IA com consciência ética constrói reputação mais sólida e sustentável no longo prazo.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/1090</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 6</div>
+        <div class="title">Inteligência Artificial para Simplificar o Dia a Dia</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Aplicações práticas de IA no cotidiano profissional — produtividade, automação de tarefas, decisões inteligentes.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Foco em aplicação imediata. Complementa diretamente a metodologia de aceleração do IAX.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> A IA só gera valor quando integrada à rotina real — este curso ensina exatamente isso.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/861</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 7</div>
+        <div class="title">Inteligência Artificial no Contexto do Serviço Público</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> IA aplicada a gestão pública, políticas de dados, transparência algorítmica e inovação institucional.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Abre portas em licitações, consultorias e projetos governamentais com IA.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> O setor público é um dos maiores adotantes de IA no Brasil — estar certificado nessa área é vantagem estratégica.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/377</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 8</div>
+        <div class="title">IA — Aplicações no Governo Federal</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Casos reais de implementação de IA em órgãos federais, impacto em processos, eficiência e inovação.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Certificação especializada com alto valor para quem atua ou pretende atuar com tecnologia no setor público.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Casos reais ensinam o que a teoria não alcança — e credenciam o profissional com exemplos concretos de aplicação.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/1395</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ETAPA 3 -->
+  <div class="module-block">
+    <h3>Etapa 3 — Comunicação e Marketing</h3>
+    <p>Comunicar com clareza e estratégia é a habilidade que transforma conhecimento em resultado. Esta etapa certifica competências que amplificam o alcance de qualquer profissional digital — especialmente nas frentes de conteúdo e presença online trabalhadas nos módulos anteriores.</p>
+
+    <div class="topic-grid">
+
+      <div class="topic-card">
+        <div class="num">Curso 9</div>
+        <div class="title">Comunicação Empresarial e Atendimento Digital</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Comunicação profissional em canais digitais, atendimento ao cliente online, linguagem corporativa e gestão de reputação.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Base essencial para qualquer profissional que se comunica digitalmente — freelancer, empreendedor ou colaborador.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> A forma como você se comunica define como o mercado percebe o valor do seu trabalho.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/54</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 10</div>
+        <div class="title">Marketing Digital para Negócios</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Estratégia de marketing digital, funil de vendas online, SEO, redes sociais e métricas de performance.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Complementa diretamente as estratégias de LinkedIn (Módulo 4), conteúdo (Módulo 6) e TikTok Shop do IAX.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Sem estratégia de marketing, o melhor conteúdo não alcança quem deveria alcançar.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/343</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ETAPA 4 -->
+  <div class="module-block">
+    <h3>Etapa 4 — Design e Experiência Digital</h3>
+    <p>A camada visual e experiencial da jornada. Profissionais que dominam design thinking e UX entregam produtos digitais que não apenas funcionam — que encantam. Esta etapa completa o perfil do profissional IAX com as habilidades que elevam a percepção de valor do seu trabalho.</p>
+
+    <div class="topic-grid">
+
+      <div class="topic-card">
+        <div class="num">Curso 11</div>
+        <div class="title">Introdução ao Design Gráfico</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Fundamentos de composição visual, tipografia, paleta de cores e hierarquia visual aplicada a materiais digitais.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Melhora imediata na qualidade visual de todo conteúdo produzido — posts, documentos, apresentações e materiais de venda.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Design comunica antes das palavras — profissionais com esse olhar se destacam em qualquer nicho.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/702</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 12</div>
+        <div class="title">Design Thinking Aplicado à Transformação Digital</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Metodologia de inovação centrada no usuário, prototipagem, empatia e resolução criativa de problemas digitais.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Mentalidade essencial para criar produtos, serviços e conteúdos que realmente resolvem problemas reais.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Design Thinking é o método por trás dos produtos digitais mais bem-sucedidos do mundo.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/692</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 13</div>
+        <div class="title">Comunicação Visual para Serviços Digitais</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Comunicação visual estratégica em plataformas digitais — iconografia, infográficos, identidade visual e consistência de marca.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Profissionais com comunicação visual coerente geram mais confiança e autoridade percebida no ambiente digital.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Identidade visual consistente é o que separa um criador amador de um profissional reconhecível.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/871</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 14</div>
+        <div class="title">Design de Aplicativos na Transformação Digital</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Princípios de design para aplicativos móveis e web — fluxo de navegação, wireframe, usabilidade e boas práticas de interface.<br>
+          <strong style="color:var(--text)">Benefício:</strong> Capacita o profissional a colaborar em projetos de produto digital com visão de design estruturada.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Apps são o principal ponto de contato digital — saber como pensá-los é vantagem em qualquer projeto tech.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/803</span>
+        </p>
+      </div>
+
+      <div class="topic-card">
+        <div class="num">Curso 15</div>
+        <div class="title">Experiência do Usuário (UX) na Transformação Digital</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:8px;line-height:1.5;">
+          <strong style="color:var(--text)">Instituição:</strong> Escola Virtual Gov (ENAP)<br>
+          <strong style="color:var(--text)">Competências:</strong> Pesquisa de usuário, jornada do cliente, testes de usabilidade, personas e design orientado a experiência.<br>
+          <strong style="color:var(--text)">Benefício:</strong> A certificação de UX mais acessível do mercado brasileiro. Abre portas para projetos de produto, consultoria e freelance digital.<br>
+          <strong style="color:var(--text)">Por que é importante:</strong> Quem projeta com foco no usuário cria soluções que as pessoas realmente querem usar — e pagar.<br>
+          <strong style="color:var(--text)">URL:</strong><br>
+          <span style="word-break:break-all;color:var(--gold);">https://www.escolavirtual.gov.br/curso/804</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 8 (antigo Módulo 7) — TIKTOK SHOP -->
+<section class="section" id="m7">
+  <div class="section-label">Módulo 7</div>
+  <div class="module-header">
+    <div class="module-num">07</div>
+    <div>
+      <h2>TikTok Shop & Ecossistema de Afiliados</h2>
+      <p style="margin:0;font-size:16px;">Construa fontes de renda digital com marketing de afiliados e vendas em plataformas sociais.</div>
+  </div>
+
+  <div class="module-block">
+    <h3>Marketing de Afiliados</h3>
+    <p>Marketing de afiliados é um dos modelos de renda digital mais acessíveis e escaláveis disponíveis. Você promove produtos de terceiros e recebe uma comissão por cada venda ou ação gerada através do seu link de afiliado — sem precisar criar produto, gerenciar estoque ou lidar com logística.</p>
+    <p>Para ter sucesso consistente em afiliados, o profissional IAX opera com três princípios: promover apenas o que testou e aprovaria genuinamente, construir audiência antes de monetizar e diversificar entre múltiplas plataformas e programas de afiliados.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Seleção Estratégica de Produtos</h3>
+    <p>A escolha do produto certo para promover é determinante para o resultado. Produto errado + audiência certa = conversão baixa. Produto certo + audiência certa = escalada natural.</p>
+    <p>Critérios IAX para seleção de produtos no TikTok Shop:</p>
+    <ul class="checklist">
+      <li>Alta demanda comprovada — tendências no TikTok com volume de busca crescente</li>
+      <li>Comissão atrativa — mínimo 10%, ideal acima de 20% para produtos físicos</li>
+      <li>Facilidade de demonstração — produtos que podem ser mostrados em vídeo curto com impacto visual</li>
+      <li>Ticket adequado ao público — nem muito barato (baixa comissão) nem muito caro (baixa conversão)</li>
+      <li>Avaliações positivas — produtos com alta avaliação convertem melhor e protegem sua reputação</li>
+    </ul>
+  </div>
+
+  <div class="module-block">
+    <h3>Criação de Conteúdo para TikTok Shop</h3>
+    <p>Conteúdo para TikTok Shop tem características distintas do conteúdo orgânico tradicional. O objetivo é entreter enquanto converte — o que exige um equilíbrio entre valor/entretenimento e intenção comercial.</p>
+    <p>Os formatos que consistentemente performam no TikTok Shop:</p>
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">Formato</div><div class="title">Unboxing e primeira impressão com reação genuína</div></div>
+      <div class="topic-card"><div class="num">Formato</div><div class="title">Tutorial de uso com resultado antes/depois</div></div>
+      <div class="topic-card"><div class="num">Formato</div><div class="title">"Achei no TikTok Shop" — descoberta autêntica</div></div>
+      <div class="topic-card"><div class="num">Formato</div><div class="title">Review honesta comparando com alternativas</div></div>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Vendas Digitais e Estratégia de Crescimento</h3>
+    <p>Crescimento sustentável no TikTok Shop requer uma abordagem de sistema, não de conteúdo viral isolado. A estratégia IAX de crescimento em afiliados é construída em três horizontes:</p>
+    <ul class="checklist">
+      <li><strong style="color:var(--text)">Curto prazo (30 dias):</strong> testar 5 a 10 produtos em diferentes nichos, identificar os 2 com melhor engajamento e taxa de clique</li>
+      <li><strong style="color:var(--text)">Médio prazo (90 dias):</strong> aprofundar nos produtos vencedores, criar série de conteúdo e construir autoridade no nicho</li>
+      <li><strong style="color:var(--text)">Longo prazo (6+ meses):</strong> usar audiência construída para negociar melhores comissões, parcerias diretas com marcas e diversificação para outros canais (YouTube Shorts, Instagram Reels)</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 8 -->
+<section class="section" id="m8">
+  <div class="section-label">Módulo 8</div>
+  <div class="module-header">
+    <div class="module-num">08</div>
+    <div>
+      <h2>Certificações Profissionais</h2>
+      <p style="margin:0;font-size:16px;">Direcionamento para oportunidades de aprendizado externas que validam sua evolução.</p>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Nossa Posição sobre Certificações</h3>
+    <div class="highlight-box">
+      <p>⚠️ <strong>Aviso de Transparência:</strong> O Ebook IAX não é uma plataforma de certificação e não emite diplomas ou certificados oficiais. As certificações mencionadas neste módulo são oferecidas exclusivamente por suas respectivas plataformas externas. O IAX atua como guia e curador — indicando os caminhos mais valiosos, sem ser o destino final de certificação.</p>
+    </div>
+    <p>Com isso dito, certificações externas são um componente importante da estratégia de desenvolvimento profissional. Elas validam competências perante empregadores, clientes e parceiros, e representam compromisso genuíno com o aprendizado estruturado.</p>
+  </div>
+
+  <div class="module-block">
+    <h3>Trilhas de Certificação Recomendadas</h3>
+    <p>Com base nas competências desenvolvidas ao longo dos módulos do IAX, estas são as áreas de certificação com maior retorno profissional no cenário atual:</p>
+
+    <div class="topic-grid">
+      <div class="topic-card"><div class="num">IA & Machine Learning</div><div class="title">Google Cloud, AWS, Microsoft Azure — certificações em IA e ML</div></div>
+      <div class="topic-card"><div class="num">Marketing Digital</div><div class="title">Google Skillshop, HubSpot Academy, Meta Blueprint</div></div>
+      <div class="topic-card"><div class="num">Análise de Dados</div><div class="title">Google Data Analytics (Coursera), IBM Data Science</div></div>
+      <div class="topic-card"><div class="num">Design & UX</div><div class="title">Google UX Design Certificate, Interaction Design Foundation</div></div>
+      <div class="topic-card"><div class="num">Automação</div><div class="title">Make (Integromat) Academy, n8n Certification</div></div>
+      <div class="topic-card"><div class="num">LinkedIn</div><div class="title">LinkedIn Learning — trilhas de Marketing e Negócios</div></div>
+    </div>
+
+    <p style="margin-top:32px;">Antes de investir em qualquer certificação, avalie: a certificação é reconhecida no seu mercado-alvo? Ela complementa sua trilha atual? O tempo e investimento são proporcionais ao retorno esperado?</p>
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 9 -->
+<section class="section" id="m9">
+  <div class="section-label">Módulo 9</div>
+  <div class="module-header">
+    <div class="module-num">09</div>
+    <div>
+      <h2>Plano de Execução — 90 Dias</h2>
+      <p style="margin:0;font-size:16px;">Do conhecimento à transformação real em três meses de execução estruturada.</p>
+    </div>
+  </div>
+
+  <p>Este plano foi projetado para ser executado em paralelo com a leitura dos módulos do IAX. Ele é progressivo — cada semana constrói sobre a anterior. Comprometa-se com o processo, mesmo que imperfeito. Execução consistente supera planejamento perfeito.</p>
+
+  <div class="week-grid">
+
+    <div class="week-card">
+      <div class="week-label">Semana 1<span class="period">Dias 1–7</span></div>
+      <div class="week-content">
+        <h4>Fundação & Diagnóstico</h4>
+        <ul>
+          <li>Leia os Módulos 1 e 2 completos com anotações</li>
+          <li>Defina seu nicho de atuação e público-alvo com precisão</li>
+          <li>Faça um diagnóstico honesto das suas competências atuais vs. desejadas</li>
+          <li>Configure suas ferramentas de IA: Claude, ChatGPT e pelo menos uma ferramenta de automação</li>
+          <li>Defina o seu objetivo principal dos 90 dias (uma meta específica e mensurável)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-label">Semana 2<span class="period">Dias 8–14</span></div>
+      <div class="week-content">
+        <h4>Presença Digital & Posicionamento</h4>
+        <ul>
+          <li>Leia o Módulo 4 (LinkedIn) e otimize seu perfil completo</li>
+          <li>Escreva e publique seus primeiros 3 posts no LinkedIn usando os modelos IAX</li>
+          <li>Defina sua Headline estratégica e reescreva a seção "Sobre"</li>
+          <li>Conecte-se com 20 profissionais do seu nicho com mensagem personalizada</li>
+          <li>Crie o banco inicial de 30 ideias de conteúdo para as próximas semanas</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-label">Semana 3<span class="period">Dias 15–21</span></div>
+      <div class="week-content">
+        <h4>Arsenal de Modelos Digitais</h4>
+        <ul>
+          <li>Leia o Módulo 5 e construa sua biblioteca de modelos pessoais</li>
+          <li>Crie seu modelo de proposta adaptado à sua área de atuação</li>
+          <li>Escreva seus 10 prompts mais usados e salve em documento organizado</li>
+          <li>Monte seu modelo de briefing para captação de clientes ou projetos</li>
+          <li>Configure um Typebot básico para qualificação de contatos (se aplicável)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-label">Semana 4<span class="period">Dias 22–30</span></div>
+      <div class="week-content">
+        <h4>Motor de Conteúdo Ativado</h4>
+        <ul>
+          <li>Leia o Módulo 6 e implemente o Sistema IAX de Conteúdo</li>
+          <li>Produza em lote os conteúdos do próximo mês completo (mínimo 12 peças)</li>
+          <li>Defina seus 3 formatos de conteúdo principais e teste cada um</li>
+          <li>Analise os resultados das primeiras publicações e ajuste a estratégia</li>
+          <li>Escolha sua plataforma principal de distribuição e setup de agendamento</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-label">Mês 2<span class="period">Dias 31–60</span></div>
+      <div class="week-content">
+        <h4>Execução, Teste e Ajuste</h4>
+        <ul>
+          <li>Leia os Módulos 3 e 7 e integre ao seu fluxo de trabalho</li>
+          <li>Execute seu plano de conteúdo com consistência — sem quebrar a cadência</li>
+          <li>Inicie no TikTok Shop com os primeiros 5 produtos testados</li>
+          <li>Faça sua primeira venda, parceria ou resultado concreto do mês</li>
+          <li>Identifique os 20% de ações que estão gerando 80% dos resultados</li>
+          <li>Explore as certificações do Módulo 8 e escolha uma para iniciar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-label">Mês 3<span class="period">Dias 61–90</span></div>
+      <div class="week-content">
+        <h4>Escala & Consolidação</h4>
+        <ul>
+          <li>Leia o Módulo 10 e valide sua transformação com os checklists</li>
+          <li>Duplique os esforços nas ações que mais geraram resultado no Mês 2</li>
+          <li>Construa ou aprimore sua oferta principal com base no feedback coletado</li>
+          <li>Mapeie seu próximo ciclo de 90 dias com objetivos ainda mais ambiciosos</li>
+          <li>Documente seus aprendizados, resultados e próximas etapas de evolução</li>
+          <li>Celebre a distância percorrida — você é uma versão melhor de 90 dias atrás</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="separator">
+
+<!-- MÓDULO 10 -->
+<section class="section" id="m10">
+  <div class="section-label">Módulo 10 — Final</div>
+  <div class="module-header">
+    <div class="module-num">10</div>
+    <div>
+      <h2>Plano de Transformação Final</h2>
+      <p style="margin:0;font-size:16px;">Valide sua evolução, consolide seus ganhos e projete o próximo nível.</p>
+    </div>
+  </div>
+
+  <p>Os três checklists a seguir são ferramentas de avaliação e direcionamento. Use-os periodicamente — não apenas ao final do IAX, mas a cada 30 dias — para medir progresso, identificar lacunas e reorientar esforços.</p>
+
+  <div class="check-section">
+    <h3>Checklist de Ação</h3>
+    <p class="subtitle">Valide se você está executando o que sabe. Conhecimento sem ação não transforma.</p>
+
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Defini meu nicho com precisão e posso articulá-lo em uma frase clara</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Meu perfil no LinkedIn está completamente otimizado com headline, sobre e banner estratégicos</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Estou publicando conteúdo com consistência de pelo menos 3x por semana</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho minha biblioteca de prompts organizada e uso IA no trabalho diário</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Criei ou aprimorei minha oferta de serviços/produtos com base nos modelos IAX</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho um sistema de criação de conteúdo que funciona independente da inspiração</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Testei pelo menos uma fonte de renda digital (afiliados, serviços, produto digital)</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Iniciei pelo menos uma certificação externa relevante para minha trilha</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Executo o plano de 90 dias com comprometimento e sem criar desculpas</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Documentei meu aprendizado e tenho registro claro dos meus resultados</div>
+    </div>
+  </div>
+
+  <div class="check-section">
+    <h3>Checklist de Crescimento</h3>
+    <p class="subtitle">Avalie se você está crescendo na direção certa — profissional, estratégica e digitalmente.</p>
+
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Minha rede profissional cresceu com pelo menos 50 conexões relevantes e qualificadas</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Já recebi ao menos uma oportunidade inbound (contato espontâneo via LinkedIn ou conteúdo)</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho domínio prático de pelo menos 3 ferramentas de IA diferentes</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Minha presença digital reflete com clareza quem sou, o que faço e para quem faço</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho um processo claro de aquisição de clientes ou oportunidades (não dependendo de sorte)</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Gerei renda digital de pelo menos uma fonte nova que não existia 90 dias atrás</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Minha produtividade aumentou visivelmente graças à integração de IA no meu trabalho</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho clareza sobre os próximos 3 objetivos de crescimento profissional para os próximos 90 dias</div>
+    </div>
+  </div>
+
+  <div class="check-section">
+    <h3>Checklist de Evolução Digital</h3>
+    <p class="subtitle">Meça a profundidade da sua transformação no ecossistema digital.</p>
+
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho um ecossistema digital básico: presença, conteúdo, oferta e canal de conversão</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Uso automações para pelo menos 3 processos repetitivos do meu trabalho</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho ativos digitais criados: templates, modelos, prompts, ou produtos que continuam gerando valor</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Meu posicionamento digital é reconhecível e consistente em todas as plataformas que uso</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tenho audiência engajada em pelo menos uma plataforma digital com crescimento consistente</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Minha renda digital (mesmo que pequena) já existe e está estruturada para escalar</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Fui além do Ebook IAX: continuei aprendendo, testando e evoluindo de forma autônoma</div>
+    </div>
+    <div class="check-item" onclick="this.classList.toggle('done')">
+      <div class="check-box"></div>
+      <div class="check-text">Tornei-me um profissional que se adapta a mudanças tecnológicas em vez de temê-las</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <p>"Transformação digital não é um destino. É uma postura permanente de aprendizado, adaptação e execução. O Ebook IAX foi apenas o começo."</p>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Próximo Passo:</strong> Você completou o Ebook IAX. Agora a verdadeira jornada começa. Compartilhe sua evolução, ensine o que aprendeu, conecte-se com outros profissionais em transformação e nunca pare de construir. O ecossistema digital recompensa quem age com consistência.</p>
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">IAX</div>
+  <p>Criado com excelência pela <strong style="color:var(--gold);font-weight:500;">Syntra Digital</strong></p>
+  <p style="margin-top:8px;">Ecossistema de Transformação Digital — Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>

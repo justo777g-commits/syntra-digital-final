@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acesso — Biblioteca Estratégica IAX · Syntra Digital</title>
+  <link rel="canonical" href="https://syntra.tec.br/portal-biblioteca.html" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232979FF'/><text y='24' x='5' font-size='22' font-family='Arial' font-weight='900' fill='white'>S</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:         #060810;
+      --bg-2:       #0B0F1A;
+      --surface:    rgba(255,255,255,0.04);
+      --surface-2:  rgba(255,255,255,0.07);
+      --border:     rgba(255,255,255,0.08);
+      --border-2:   rgba(255,255,255,0.14);
+      --blue:       #2979FF;
+      --blue-light: #5B9EFF;
+      --purple:     #7C3AED;
+      --gold:       #C9A84C;
+      --gold-light: #F5C842;
+      --text:       #F0F4FF;
+      --text-dim:   rgba(240,244,255,0.55);
+      --text-muted: rgba(240,244,255,0.32);
+      --radius:     14px;
+      --font-d:     'Syne', sans-serif;
+      --font-b:     'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text); font-family: var(--font-b);
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 24px; position: relative; overflow: hidden;
+    }
+
+    .bg-orb { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+    .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(124,58,237,0.2) 0%, transparent 70%); top: -80px; right: -80px; }
+    .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(41,121,255,0.12) 0%, transparent 70%); bottom: -80px; left: -80px; }
+    .bg-orb-3 { width: 250px; height: 250px; background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+    .bg-grid {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    }
+
+    .portal-card {
+      position: relative; z-index: 2;
+      width: 100%; max-width: 440px;
+      background: rgba(11,15,26,0.92);
+      border: 1px solid var(--border-2);
+      border-radius: 24px; padding: 48px 40px;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 32px 80px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(124,58,237,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      animation: card-in 0.6s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .portal-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+    .logo-mark {
+      width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #7C3AED, #2979FF);
+      border-radius: 8px; font-family: var(--font-d); font-weight: 800; font-size: 1rem; color: #fff;
+      box-shadow: 0 2px 12px rgba(124,58,237,0.4); flex-shrink: 0;
+    }
+    .logo-text { font-family: var(--font-d); font-weight: 700; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; }
+    .logo-text em { font-style: normal; color: var(--gold-light); }
+
+    .product-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(124,58,237,0.06));
+      border: 1px solid rgba(124,58,237,0.35);
+      color: #C4B5FD;
+      font-family: var(--font-d); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
+    }
+
+    .portal-title { font-family: var(--font-d); font-size: 1.7rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .portal-title .gt {
+      background: linear-gradient(135deg, #C4B5FD, var(--gold-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .portal-sub { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 32px; }
+
+    .divider { height: 1px; background: var(--border); margin-bottom: 28px; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block; font-family: var(--font-d); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px;
+    }
+    .input-wrap { position: relative; }
+    .form-input {
+      width: 100%; padding: 13px 16px;
+      background: var(--surface); border: 1px solid var(--border-2);
+      border-radius: var(--radius); color: var(--text);
+      font-family: var(--font-b); font-size: 0.95rem;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s; outline: none;
+    }
+    .form-input:focus {
+      border-color: rgba(124,58,237,0.5);
+      background: rgba(124,58,237,0.05);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.12);
+    }
+    .form-input.input-pass { padding-right: 44px; letter-spacing: 0.1em; }
+    .toggle-pass {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 4px;
+      transition: color 0.2s;
+    }
+    .toggle-pass:hover { color: var(--text-dim); }
+
+    .btn-login {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #7C3AED, #2979FF);
+      color: #fff; border: none; border-radius: var(--radius);
+      font-family: var(--font-d); font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.06em; cursor: pointer;
+      box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+      transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+      margin-top: 8px; position: relative; overflow: hidden;
+    }
+    .btn-login:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(124,58,237,0.55); }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .msg-error, .msg-success {
+      display: none; padding: 11px 14px; border-radius: 10px;
+      font-size: 0.85rem; margin-bottom: 14px; line-height: 1.5;
+    }
+    .msg-error { background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.3); color: #FF9B9B; }
+    .msg-success { background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); color: #6EE7A0; }
+
+    #login-loading { display: none; align-items: center; justify-content: center; gap: 8px; padding: 14px; color: var(--text-dim); font-size: 0.88rem; }
+    .spin { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.2); border-top-color: #C4B5FD; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .portal-note { margin-top: 24px; text-align: center; font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
+    .portal-note a { color: #C4B5FD; text-decoration: none; }
+    .portal-note a:hover { text-decoration: underline; }
+
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+    .shake { animation: shake 0.4s ease; }
+
+    @media (max-width: 480px) { .portal-card { padding: 36px 24px; } }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+
+  <div class="portal-card">
+
+    <div class="portal-brand">
+      <span class="logo-mark">S</span>
+      <span class="logo-text">SYNTRA <em>DIGITAL</em></span>
+    </div>
+
+    <div class="product-badge">
+      <span>📚</span>
+      Biblioteca Estratégica IAX
+    </div>
+
+    <h1 class="portal-title">
+      Acesse sua<br /><span class="gt">Biblioteca IAX</span>
+    </h1>
+    <p class="portal-sub">
+      Digite sua matrícula e senha exclusivas da Biblioteca Estratégica para acessar o acervo completo.
+    </p>
+
+    <div class="divider"></div>
+
+    <div id="msg-error" class="msg-error"></div>
+    <div id="msg-success" class="msg-success"></div>
+
+    <form
+      id="syntra-login-form"
+      data-product="biblioteca_iax"
+      data-redirect="./biblioteca-estrategica-iax.html"
+      novalidate
+    >
+      <div class="form-group">
+        <label class="form-label" for="matricula">Matrícula</label>
+        <input
+          id="matricula"
+          class="form-input"
+          type="text"
+          placeholder="Ex: BIB-M3Q7"
+          autocomplete="username"
+          autocapitalize="characters"
+          spellcheck="false"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="senha">Senha</label>
+        <div class="input-wrap">
+          <input
+            id="senha"
+            class="form-input input-pass"
+            type="password"
+            placeholder="Sua senha de acesso"
+            autocomplete="current-password"
+          />
+          <button type="button" class="toggle-pass" id="toggle-pass" aria-label="Mostrar senha">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="login-loading">
+        <div class="spin"></div>
+        <span>Verificando credenciais...</span>
+      </div>
+
+      <button type="submit" class="btn-login" id="btn-login">
+        Acessar Biblioteca IAX
+      </button>
+    </form>
+
+    <p class="portal-note">
+      Acesso exclusivo para compradores da Biblioteca Estratégica IAX.<br />
+      Dúvidas? <a href="https://wa.me/5579991090306?text=Ol%C3%A1%2C+preciso+de+suporte+com+a+Biblioteca+Estrat%C3%A9gica+IAX." target="_blank" rel="noopener noreferrer">Fale com o suporte</a>
+    </p>
+
+  </div>
+
+
+  <!-- TYPEBOT BUBBLE — suporte/afiliados -->
+  <script type="module">
+    (function () {
+      if (window.__syntraPortalBubbleLoaded) return;
+      window.__syntraPortalBubbleLoaded = true;
+      import('https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js')
+        .then(({ default: Typebot }) => {
+          Typebot.initBubble({
+            typebot: 'central-syntra-digital-q06bfw2',
+            previewMessage: {
+              message: 'Olá! 👋\n\nPrecisa de suporte ou deseja ser afiliado?'
+            },
+            theme: {
+              button: {
+                backgroundColor: '#303235',
+                customIconSrc: 'https://s3.typebotstorage.com/public/workspaces/cmq2xzffe00000bkkryqd1zto/typebots/jwg66eoxv4awef1gtq06bfw2/bubble-icon?v=1780802928772'
+              },
+              previewMessage: { textColor: '#666460' },
+              chatWindow:     { backgroundColor: '#FAF3EA' }
+            }
+          });
+        })
+        .catch((err) => {
+          console.warn('[Syntra] Typebot Bubble indisponível:', err);
+        });
+    })();
+  </script>
+  <script src="./supabase-config.js"></script>
+  <script src="./auth.js"></script>
+</body>
+</html>

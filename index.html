@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syntra Digital — IA, Automação, Ebook IAX e Tabelinha da Copa 2026</title>
+  <meta name="description" content="Syntra Digital: ecossistema de automação, IA, Ebook IAX, Biblioteca Estratégica IAX e Tabelinha da Copa 2026. Soluções digitais premium para negócios." />
+  <meta property="og:title" content="Syntra Digital — IA, Automação e Ecossistema Digital" />
+  <meta property="og:description" content="Automação com IA, frontend premium, Ebook IAX, Biblioteca Estratégica IAX e Tabelinha da Copa 2026. Transformação digital para negócios." />
+  <meta property="og:url" content="https://syntra.tec.br/" />
+  <meta property="og:type" content="website" />
+  <meta name="keywords" content="Syntra Digital, Ebook IAX, Biblioteca Estratégica IAX, Tabelinha da Copa 2026, IA, automação, transformação digital, ecossistema digital" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="canonical" href="https://syntra.tec.br/" />
+  <meta property="og:image" content="https://syntra.tec.br/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Syntra Digital" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Syntra Digital — IA, Automação e Ecossistema Digital" />
+  <meta name="twitter:description" content="Automação com IA, Ebook IAX, Biblioteca Estratégica IAX e Tabelinha da Copa 2026." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232979FF'/><text y='24' x='5' font-size='22' font-family='Arial' font-weight='900' fill='white'>S</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%232979FF'/><text y='24' x='5' font-size='22' font-family='Arial' font-weight='900' fill='white'>S</text></svg>" />
+</head>
+<body>
+
+  <!-- CANVAS BACKGROUND -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- CURSOR GLOW -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-mark">S</span>
+        <span class="logo-text">SYNTRA <em>DIGITAL</em></span>
+      </a>
+      <div class="nav-links">
+        <a href="#servicos">Serviços</a>
+        <a href="#iax">Ebook IAX</a>
+        <a href="#biblioteca">Biblioteca IAX</a>
+        <a href="#afiliados">Afiliados</a>
+        <button type="button" id="nav-btn-orcamento" class="nav-cta" data-open-orcamento="true">Orçamento</button>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#servicos">Serviços</a>
+      <a href="#iax">Ebook IAX</a>
+      <a href="#biblioteca">Biblioteca IAX</a>
+      <a href="#afiliados">Afiliados</a>
+      <button type="button" class="nav-mobile-orcamento" data-open-orcamento="true">Orçamento</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-grid-lines"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Ecossistema Digital Premium
+      </div>
+
+      <h1 class="hero-title reveal">
+        <span class="line line-1">O futuro do</span>
+        <span class="line line-2 gradient-text">seu negócio</span>
+        <span class="line line-3">começa aqui.</span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        Automação com IA · Frontend premium · Transformação digital<br />
+        Soluções que elevam empresas a outro nível.
+      </p>
+
+      <!-- 4 MAIN BUTTONS -->
+      <div class="hero-actions reveal">
+
+        <a href="https://typebot.co/syntra-digital-briefing-azxz7xe" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btn-gerar-orcamento" role="button" aria-label="Gerar Orçamento — Syntra Digital">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12h6m-3-3v6M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/></svg>
+          Gerar Orçamento
+        </a>
+
+        <a href="https://pay.cakto.com.br/i3oz6mc_916472" target="_blank" rel="noopener noreferrer" class="btn btn-gold">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Ebook IAX
+        </a>
+
+        <a href="https://wa.me/5579991090306?text=Ol%C3%A1%2C+gostaria+de+me+afiliar+%C3%A0+Syntra+Digital." target="_blank" rel="noopener noreferrer" class="btn btn-outline" aria-label="Afiliados — WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Afiliados
+        </a>
+
+        <a href="https://www.linkedin.com/in/alysson-savio-syntra" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-linkedin" aria-label="LinkedIn de Alysson Sávio">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+
+        <a href="https://world-cup-pool--justo777g.replit.app" target="_blank" rel="noopener noreferrer" class="btn btn-selecao" aria-label="Tabelinha da Copa 2026">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Tabelinha da Copa 2026
+        </a>
+
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="holo-ring ring-1"></div>
+      <div class="holo-ring ring-2"></div>
+      <div class="holo-ring ring-3"></div>
+      <div class="hero-badge-float">
+        <div class="float-icon">⚡</div>
+        <div class="float-text">
+          <strong>IA Ativa</strong>
+          <span>Soluções inteligentes</span>
+        </div>
+      </div>
+      <div class="hero-stat-float stat-2">
+        <strong>100%</strong>
+        <span>Digital</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SERVIÇOS ═══════════════════════════ -->
+  <section class="services" id="servicos">
+    <div class="section-header">
+      <span class="section-label">O que entregamos</span>
+      <h2 class="section-title">Soluções para <span class="gradient-text">cada etapa</span><br />da sua operação</h2>
+      <p class="section-sub">Da identidade visual à automação inteligente — tudo em um ecossistema.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card card-featured" data-delay="0">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+        <h3>Frontend & Sites</h3>
+        <p>Sites profissionais, páginas de vendas e ecossistemas digitais completos com design premium.</p>
+        <div class="card-tags"><span>HTML/CSS</span><span>Premium</span><span>Responsivo</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="50">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Automação WhatsApp</h3>
+        <p>Atendimento automatizado, fluxos inteligentes e integração com Typebot e IA.</p>
+        <div class="card-tags"><span>Typebot</span><span>IA</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="100">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Automação Web</h3>
+        <p>Processos automatizados, integrações entre sistemas e workflows que trabalham por você.</p>
+        <div class="card-tags"><span>Webhooks</span><span>APIs</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="150">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Páginas de Vendas</h3>
+        <p>Landing pages de alta conversão com copywriting estratégico e design persuasivo.</p>
+        <div class="card-tags"><span>Conversão</span><span>Copy</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="200">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <h3>Branding & Logos</h3>
+        <p>Identidade visual completa — logo, paleta, tipografia e manual de marca.</p>
+        <div class="card-tags"><span>Identidade</span><span>Design</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="250">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Cardápios Digitais</h3>
+        <p>Cardápios online elegantes com QR Code para mesas e integração com pedidos.</p>
+        <div class="card-tags"><span>QR Code</span><span>Pedidos</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="300">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <h3>Sistemas Empresariais</h3>
+        <p>Sistemas de pedidos presenciais e online, operações digitalizadas end-to-end.</p>
+        <div class="card-tags"><span>ERP</span><span>Pedidos</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card card-featured-gold" data-delay="350">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3>Ecossistema Completo</h3>
+        <p>Solução total: frontend + automações + IA + branding — tudo integrado e escalável.</p>
+        <div class="card-tags"><span>Full Stack</span><span>IA</span><span>Premium</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="400">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>Design para Negócios</h3>
+        <p>Currículos, materiais institucionais e peças visuais com identidade profissional.</p>
+        <div class="card-tags"><span>Currículo</span><span>Visual</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card service-cta-card" data-delay="450">
+        <p>Não encontrou o que precisa?</p>
+        <h3>Soluções sob medida</h3>
+        <a href="https://typebot.co/syntra-digital-briefing-azxz7xe" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" data-open-orcamento="true" role="button">
+          Falar com a equipe →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ EBOOK IAX ═══════════════════════════ -->
+  <section class="iax" id="iax">
+    <div class="iax-bg-glow"></div>
+    <div class="iax-inner">
+
+      <div class="iax-content">
+        <span class="section-label">Produto Educacional</span>
+        <h2 class="section-title">
+          <span class="gradient-text">Ebook IAX</span><br />
+          Sua jornada de<br />transformação digital
+        </h2>
+        <p class="iax-desc">
+          Uma jornada completa com IA, LinkedIn, TikTok Shop, criativos gerados por inteligência artificial e muito mais. Do zero à renda digital — com estratégia.
+        </p>
+
+        <div class="iax-topics">
+          <div class="topic"><span class="topic-icon">🤖</span><span>IA & Claude</span></div>
+          <div class="topic"><span class="topic-icon">💼</span><span>LinkedIn</span></div>
+          <div class="topic"><span class="topic-icon">🛍️</span><span>TikTok Shop</span></div>
+          <div class="topic"><span class="topic-icon">🎨</span><span>Criativos com IA</span></div>
+          <div class="topic"><span class="topic-icon">📜</span><span>Cursos & Certificados</span></div>
+          <div class="topic"><span class="topic-icon">💰</span><span>Afiliação Digital</span></div>
+        </div>
+
+        <a href="https://pay.cakto.com.br/i3oz6mc_916472" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Quero o Ebook IAX
+        </a>
+      </div>
+
+      <div class="iax-visual">
+        <div class="iax-card-stack">
+          <div class="iax-card iax-card-back"></div>
+          <div class="iax-card iax-card-mid"></div>
+          <div class="iax-card iax-card-front">
+            <div class="iax-card-logo">IAX</div>
+            <div class="iax-card-title">Inteligência Artificial<br />Acelerada</div>
+            <div class="iax-card-bar"></div>
+            <div class="iax-card-modules">
+              <span>IA</span><span>LinkedIn</span><span>TikTok</span><span>Afiliados</span>
+            </div>
+          </div>
+        </div>
+        <div class="iax-orb"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════ BIBLIOTECA IAX ═══════════════════════════ -->
+  <section class="biblioteca" id="biblioteca">
+    <div class="biblioteca-inner">
+      <div class="biblioteca-content">
+        <span class="section-label">Ecossistema Premium</span>
+        <h2 class="section-title">
+          <span class="gradient-text">Biblioteca Estratégica</span><br />
+          IAX
+        </h2>
+        <p class="biblioteca-desc">
+          Mais do que uma biblioteca. Um ecossistema em evolução para quem quer crescer com inteligência artificial, automação, marketing digital e expansão profissional.
+        </p>
+        <div class="biblioteca-itens">
+          <div class="bib-item"><span>✓</span><span>Biblioteca Estratégica IAX</span></div>
+          <div class="bib-item"><span>✓</span><span>Network IAX</span></div>
+          <div class="bib-item"><span>✓</span><span>Avisos IAX</span></div>
+          <div class="bib-item"><span>✓</span><span>Materiais complementares</span></div>
+          <div class="bib-item"><span>✓</span><span>Ferramentas e recursos digitais</span></div>
+          <div class="bib-item"><span>✓</span><span>Atualizações futuras</span></div>
+        </div>
+        <div class="biblioteca-eco">
+          <span class="eco-label">Ecossistema IAX</span>
+          <div class="eco-tags">
+            <span>VIP IAX</span>
+            <span>Mentoria IAX</span>
+            <span>Afiliados IAX</span>
+          </div>
+        </div>
+        <a href="https://pay.cakto.com.br/z2aq2q6_916838" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Quero entrar para a Biblioteca Estratégica IAX
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ AFILIADOS ═══════════════════════════ -->
+  <section class="afiliados" id="afiliados">
+    <div class="afiliados-inner">
+      <div class="afil-badge">💸 Programa de Afiliados</div>
+      <h2 class="section-title">
+        Indique · Venda · <span class="gradient-text">Ganhe</span>
+      </h2>
+      <p class="section-sub">
+        Torne-se afiliado da Syntra Digital ou do Ebook IAX e gere comissões indicando soluções digitais para empresas e pessoas.
+      </p>
+      <div class="afil-steps">
+        <div class="afil-step">
+          <div class="step-num">01</div>
+          <h4>Entre em contato</h4>
+          <p>Fale via WhatsApp e informe que quer se afiliar.</p>
+        </div>
+        <div class="afil-step-arrow">→</div>
+        <div class="afil-step">
+          <div class="step-num">02</div>
+          <h4>Receba seus materiais</h4>
+          <p>Link rastreável, criativos e suporte completo.</p>
+        </div>
+        <div class="afil-step-arrow">→</div>
+        <div class="afil-step">
+          <div class="step-num">03</div>
+          <h4>Ganhe comissões</h4>
+          <p>Por cada serviço ou ebook vendido via sua indicação.</p>
+        </div>
+      </div>
+      <a href="https://wa.me/5579991090306?text=Ol%C3%A1%2C+gostaria+de+me+afiliar+%C3%A0+Syntra+Digital." target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+        Quero me Afiliar
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-glow"></div>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">S</span>
+          <span class="logo-text">SYNTRA <em>DIGITAL</em></span>
+        </div>
+        <p>Ecossistema de soluções digitais com IA, automação e design premium para negócios que querem crescer.</p>
+        <a href="mailto:syntratech999@gmail.com" class="footer-email" aria-label="E-mail Syntra Digital">syntratech999@gmail.com</a>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/in/alysson-savio-syntra" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de Alysson Sávio">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://www.instagram.com/syntra.eng?igsh=dGZ0ajRycTNnaDUw" target="_blank" rel="noopener noreferrer" aria-label="Instagram Syntra Digital">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://wa.me/5579991090306" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Syntra Digital">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Serviços</h4>
+          <a href="#servicos">Frontend & Sites</a>
+          <a href="#servicos">Automação WhatsApp</a>
+          <a href="#servicos">Automação Web</a>
+          <a href="#servicos">Páginas de Vendas</a>
+          <a href="#servicos">Branding & Logos</a>
+        </div>
+        <div class="footer-col">
+          <h4>Mais Serviços</h4>
+          <a href="#servicos">Cardápios Digitais</a>
+          <a href="#servicos">Sistemas Empresariais</a>
+          <a href="#servicos">QR Code para Mesas</a>
+          <a href="#servicos">Ecossistema Completo</a>
+          <a href="#servicos">Design para Negócios</a>
+        </div>
+        <div class="footer-col">
+          <h4>Ecossistema</h4>
+          <a href="#iax">Ebook IAX</a>
+          <a href="#biblioteca">Biblioteca Estratégica IAX</a>
+          <a href="#afiliados">Programa de Afiliados</a>
+          <a href="https://www.linkedin.com/in/alysson-savio-syntra" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://www.instagram.com/syntra.eng?igsh=dGZ0ajRycTNnaDUw" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://world-cup-pool--justo777g.replit.app" target="_blank" rel="noopener noreferrer">Tabelinha da Copa 2026</a>
+          <a href="https://typebot.co/syntra-digital-briefing-azxz7xe" target="_blank" rel="noopener noreferrer" data-open-orcamento="true" aria-label="Gerar Orçamento">Gerar Orçamento</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Syntra Digital · syntra.tec.br · Todos os direitos reservados</p>
+      <p>Desenvolvido com IA · Powered by Syntra</p>
+    </div>
+  </footer>
+
+
+  <!-- ── TYPEBOT LOADER CORRIGIDO (Bubble suporte + Modal orçamento) — v3 ── -->
+  <!--
+    BUBBLE : central-syntra-digital-q06bfw2   → suporte / afiliados (bolha fixa)
+    ORÇAMENTO : syntra-digital-briefing-azxz7xe → abre somente por clique em modal interno
+    Correção: removido initPopup para evitar abertura automática e conflito com o Bubble.
+  -->
+  <script type="module" id="typebot-syntra-loader">
+    (function () {
+      if (window.__syntraTypebotLoaderLoaded) return;
+      window.__syntraTypebotLoaderLoaded = true;
+
+      const ORCAMENTO_URL = 'https://typebot.co/syntra-digital-briefing-azxz7xe';
+
+      function ensureOrcamentoModal() {
+        let modal = document.getElementById('syntra-orcamento-modal');
+        if (modal) return modal;
+
+        modal = document.createElement('div');
+        modal.id = 'syntra-orcamento-modal';
+        modal.setAttribute('aria-hidden', 'true');
+        modal.innerHTML = `
+          <div class="syntra-orcamento-backdrop" data-close-orcamento="true"></div>
+          <div class="syntra-orcamento-dialog" role="dialog" aria-modal="true" aria-label="Gerar orçamento Syntra Digital">
+            <button type="button" class="syntra-orcamento-close" data-close-orcamento="true" aria-label="Fechar orçamento">×</button>
+            <iframe
+              title="Gerar orçamento Syntra Digital"
+              data-src="${ORCAMENTO_URL}"
+              src="about:blank"
+              loading="lazy"
+              allow="clipboard-write; microphone; camera"
+            ></iframe>
+          </div>
+        `;
+
+        const style = document.createElement('style');
+        style.id = 'syntra-orcamento-modal-style';
+        style.textContent = `
+          #syntra-orcamento-modal{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;padding:18px}
+          #syntra-orcamento-modal.is-open{display:flex}
+          .syntra-orcamento-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}
+          .syntra-orcamento-dialog{position:relative;width:min(760px,96vw);height:min(780px,92vh);background:#FAF3EA;border-radius:18px;overflow:hidden;box-shadow:0 28px 90px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12)}
+          .syntra-orcamento-dialog iframe{width:100%;height:100%;border:0;background:#FAF3EA;display:block}
+          .syntra-orcamento-close{position:absolute;top:10px;right:10px;z-index:2;width:38px;height:38px;border:0;border-radius:999px;background:rgba(0,0,0,.55);color:#fff;font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+          .syntra-orcamento-close:hover{background:rgba(0,0,0,.72)}
+          body.syntra-modal-open{overflow:hidden}
+          @media(max-width:640px){#syntra-orcamento-modal{padding:8px}.syntra-orcamento-dialog{width:100vw;height:96vh;border-radius:14px}.syntra-orcamento-close{top:8px;right:8px}}
+        `;
+        document.head.appendChild(style);
+        document.body.appendChild(modal);
+
+        modal.addEventListener('click', (ev) => {
+          if (ev.target && ev.target.dataset.closeOrcamento === 'true') closeOrcamentoModal();
+        });
+        document.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Escape') closeOrcamentoModal();
+        });
+
+        return modal;
+      }
+
+      function openOrcamentoModal() {
+        const modal = ensureOrcamentoModal();
+        const iframe = modal.querySelector('iframe');
+        if (iframe && iframe.getAttribute('src') === 'about:blank') {
+          iframe.setAttribute('src', iframe.dataset.src);
+        }
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('syntra-modal-open');
+      }
+
+      function closeOrcamentoModal() {
+        const modal = document.getElementById('syntra-orcamento-modal');
+        if (!modal) return;
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('syntra-modal-open');
+      }
+
+      function bindOrcamentoTriggers() {
+        document
+          .querySelectorAll('#btn-gerar-orcamento, [data-open-orcamento="true"]')
+          .forEach((el) => {
+            if (el.dataset.syntraBudgetBound === 'true') return;
+            el.dataset.syntraBudgetBound = 'true';
+            el.addEventListener('click', (ev) => {
+              ev.preventDefault();
+              ev.stopPropagation();
+              if (typeof ev.stopImmediatePropagation === 'function') ev.stopImmediatePropagation();
+              openOrcamentoModal();
+            }, true);
+          });
+      }
+
+      bindOrcamentoTriggers();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindOrcamentoTriggers, { once: true });
+      }
+
+      import('https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js')
+        .then(({ default: Typebot }) => {
+          Typebot.initBubble({
+            typebot: 'central-syntra-digital-q06bfw2',
+            previewMessage: {
+              message: 'Olá! 👋\n\nPrecisa de suporte ou deseja ser afiliado?'
+            },
+            theme: {
+              button: {
+                backgroundColor: '#303235',
+                customIconSrc: 'https://s3.typebotstorage.com/public/workspaces/cmq2xzffe00000bkkryqd1zto/typebots/jwg66eoxv4awef1gtq06bfw2/bubble-icon?v=1780802928772'
+              },
+              previewMessage: { textColor: '#666460' },
+              chatWindow: { backgroundColor: '#FAF3EA' }
+            }
+          });
+        })
+        .catch((err) => {
+          console.warn('[Syntra] Typebot Bubble indisponível — site continua funcional.', err);
+        });
+    })();
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>

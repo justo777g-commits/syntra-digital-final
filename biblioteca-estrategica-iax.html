@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script src="./protected-biblioteca.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca Estratégica IAX — Syntra Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0d0d0d;
+    --ink-mid: #3a3a3a;
+    --ink-light: #6b6b6b;
+    --ink-ghost: #a8a8a8;
+    --cream: #faf8f4;
+    --cream-2: #f2efe8;
+    --cream-3: #e8e4da;
+    --gold: #b8933a;
+    --gold-light: #e8d08a;
+    --gold-pale: #fdf5e0;
+    --accent: #1a3a5c;
+    --accent-mid: #2d5f8a;
+    --accent-pale: #e8f0f8;
+    --rule: #d4cfc4;
+    --page: #fff;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PAGE LAYOUT ── */
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--page);
+    box-shadow: 0 0 80px rgba(0,0,0,0.12);
+    min-height: 100vh;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--ink);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.025) 39px,
+      rgba(255,255,255,0.025) 40px
+    );
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,147,58,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-inner { position: relative; z-index: 1; max-width: 560px; }
+
+  .brand-label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 48px;
+  }
+  .cover-ornament {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    margin: 0 auto 48px;
+  }
+  .cover h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  .cover h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .cover-subtitle {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 56px;
+  }
+  .cover-divider {
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
+  }
+  .cover-edition {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── FRONT MATTER ── */
+  .front-matter {
+    padding: 72px 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .front-matter p {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.9;
+    margin-bottom: 12px;
+  }
+  .front-matter strong { color: var(--ink-mid); font-weight: 600; }
+
+  /* ── TABLE OF CONTENTS ── */
+  .toc { padding: 72px 80px; border-bottom: 1px solid var(--rule); }
+  .toc-header {
+    font-family: var(--serif);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+  }
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--cream-3);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .toc-item:hover .toc-title { color: var(--accent); }
+  .toc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold);
+    min-width: 36px;
+    flex-shrink: 0;
+  }
+  .toc-title {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-mid);
+    flex: 1;
+    transition: color 0.2s;
+  }
+  .toc-sub {
+    font-size: 12px;
+    color: var(--ink-ghost);
+    margin-left: 36px;
+    margin-top: 2px;
+    margin-bottom: 6px;
+  }
+  .toc-dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--cream-3);
+    margin: 0 12px 3px;
+  }
+  .toc-page {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-ghost);
+  }
+
+  /* ── SECTION / CHAPTER ── */
+  .section { padding: 80px 80px 64px; border-bottom: 1px solid var(--rule); }
+
+  .section-flag {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-flag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .section h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .section h2 em { font-style: italic; color: var(--accent); }
+
+  .section-lead {
+    font-size: 17px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    margin: 24px 0 40px;
+    padding-left: 20px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .section h3 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 40px 0 12px;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: var(--ink-mid);
+    line-height: 1.85;
+    margin-bottom: 16px;
+  }
+
+  /* ── FRAMEWORK CARD ── */
+  .framework-card {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    margin: 32px 0;
+    overflow: hidden;
+  }
+  .fc-head {
+    background: var(--ink);
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .fc-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold-light);
+    background: rgba(255,255,255,0.08);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+  .fc-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .fc-body { padding: 24px; }
+  .fc-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--cream-3);
+    font-size: 14px;
+  }
+  .fc-row:last-child { border-bottom: none; }
+  .fc-label {
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding-top: 2px;
+  }
+  .fc-value { color: var(--ink-mid); line-height: 1.7; }
+
+  /* ── PROMPT BOX ── */
+  .prompt-box {
+    background: #f8f7f3;
+    border: 1px solid var(--cream-3);
+    border-left: 3px solid var(--accent-mid);
+    border-radius: 2px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    white-space: pre-wrap;
+  }
+  .prompt-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-mid);
+    margin-bottom: 8px;
+  }
+
+  /* ── TEMPLATE ── */
+  .template {
+    background: var(--gold-pale);
+    border: 1px solid var(--gold-light);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin: 32px 0;
+  }
+  .template-header {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .template-header::before {
+    content: '';
+    display: inline-block;
+    width: 16px; height: 2px;
+    background: var(--gold);
+  }
+  .template-field {
+    margin-bottom: 16px;
+  }
+  .template-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-mid);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .template-field .field-value {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--gold-light);
+    border-radius: 2px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--ink-light);
+    font-style: italic;
+    min-height: 36px;
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist {
+    margin: 28px 0;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .checklist-title {
+    background: var(--ink);
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--cream-3);
+    font-size: 14px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .checklist-box {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--cream-3);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background: #fff;
+  }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--accent-pale);
+    border-left: 3px solid var(--accent-mid);
+    border-radius: 0 4px 4px 0;
+    padding: 18px 22px;
+    margin: 24px 0;
+  }
+  .callout-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .callout p { font-size: 14px; color: var(--accent); margin: 0; line-height: 1.7; }
+
+  .callout.gold {
+    background: var(--gold-pale);
+    border-left-color: var(--gold);
+  }
+  .callout.gold .callout-label { color: var(--gold); }
+  .callout.gold p { color: #5a4018; }
+
+  /* ── TWO COLS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 28px 0; }
+
+  /* ── ROADMAP ── */
+  .roadmap { margin: 40px 0; }
+  .roadmap-phase {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0;
+    margin-bottom: 4px;
+  }
+  .roadmap-num {
+    background: var(--ink);
+    color: var(--gold-light);
+    font-family: var(--mono);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .roadmap-content {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-left: none;
+    padding: 20px 24px;
+  }
+  .roadmap-content h4 {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .roadmap-content ul {
+    list-style: none;
+    padding: 0;
+  }
+  .roadmap-content ul li {
+    font-size: 13px;
+    color: var(--ink-mid);
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .roadmap-content ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  /* ── CHAPTER BREAK ── */
+  .chapter-break {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 40px 80px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .chapter-break-num {
+    font-family: var(--mono);
+    font-size: 56px;
+    color: var(--cream-3);
+    font-weight: 400;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .chapter-break-text { }
+  .chapter-break-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .chapter-break-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  /* ── PRESENTATION ── */
+  .presentation-quote {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    text-align: center;
+    padding: 48px 40px;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--gold-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+
+  /* ── COMMUNITY ── */
+  .community-link {
+    display: block;
+    background: #25D366;
+    color: #fff;
+    text-decoration: none;
+    padding: 16px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    margin: 20px 0;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── FINAL ── */
+  .back-cover {
+    background: var(--ink);
+    color: #fff;
+    padding: 80px;
+    text-align: center;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+  }
+  .back-cover p { color: rgba(255,255,255,0.45); font-size: 13px; max-width: 400px; }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; }
+  }
+
+  @media (max-width: 640px) {
+    .section, .toc, .front-matter { padding: 48px 28px; }
+    .chapter-break { padding: 32px 28px; }
+    .two-col { grid-template-columns: 1fr; }
+    .roadmap-phase { grid-template-columns: 1fr; }
+    .roadmap-num { padding: 12px 20px; }
+    .fc-row { grid-template-columns: 1fr; }
+    .cover { padding: 60px 32px; }
+    .back-cover { padding: 60px 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════════════════════════════ CAPA ══════════════════════════════════════ -->
+<div class="cover" id="capa">
+  <div class="cover-inner">
+    <div class="brand-label">Syntra Digital</div>
+    <div class="cover-ornament"></div>
+    <h1>Biblioteca<br>Estratégica <em>IAX</em></h1>
+    <p class="cover-subtitle">Implementação · Organização · Produção Digital</p>
+    <div class="cover-divider"></div>
+    <p class="cover-edition">Companion Prático do e-Book IAX &nbsp;·&nbsp; Edição 2025</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ COPYRIGHT ══════════════════════════════════ -->
+<div class="front-matter" id="copyright">
+  <p><strong>Biblioteca Estratégica IAX</strong><br>
+  Implementação, Organização e Produção Digital</p>
+  <p><strong>Marca:</strong> Syntra Digital</p>
+  <p>© 2025 Syntra Digital. Todos os direitos reservados.</p>
+  <p>Nenhuma parte desta publicação pode ser reproduzida, distribuída ou transmitida por qualquer meio ou forma, incluindo fotocópia, gravação ou outros métodos eletrônicos ou mecânicos, sem a permissão prévia e por escrito da Syntra Digital, exceto nos casos de breve citação em resenhas críticas e determinados outros usos não comerciais permitidos pela lei de direitos autorais.</p>
+  <p><strong>Comunidade Oficial IAX:</strong> https://chat.whatsapp.com/EyBeBSFYp5NBcCFPXJpdwV</p>
+  <p>Para solicitações de permissão, escreva para a Syntra Digital através dos canais oficiais da comunidade.</p>
+  <p>Publicado no Brasil.</p>
+</div>
+
+<!-- ══════════════════════════════════════ DISCLAIMER ══════════════════════════════════ -->
+<div class="front-matter" id="disclaimer">
+  <p><strong>AVISO LEGAL — ISENÇÃO DE RESPONSABILIDADE</strong></p>
+  <p>As informações contidas nesta biblioteca são fornecidas para fins educativos e de implementação prática. O conteúdo representa ferramentas e frameworks organizacionais desenvolvidos com base em princípios de produtividade e produção de conteúdo digital.</p>
+  <p>Os resultados obtidos com a aplicação do conteúdo desta biblioteca dependem exclusivamente do comprometimento, esforço, contexto e capacidade de execução de cada leitor. A Syntra Digital não garante resultados financeiros específicos, crescimento profissional garantido ou qualquer outro resultado determinístico.</p>
+  <p>O Certificado de Conclusão da Jornada IAX é um documento de reconhecimento interno da Syntra Digital. Não substitui certificações governamentais, institucionais ou acadêmicas reconhecidas por órgãos reguladores.</p>
+  <p>As ferramentas de inteligência artificial mencionadas nesta biblioteca são desenvolvidas por terceiros. A Syntra Digital não é afiliada a nenhum provedor de IA e não se responsabiliza por alterações nas plataformas citadas.</p>
+</div>
+
+<!-- ══════════════════════════════════════ SUMÁRIO ══════════════════════════════════════ -->
+<div class="toc" id="sumario">
+  <p class="toc-header">Sumário</p>
+
+  <a class="toc-item" href="#apresentacao">
+    <span class="toc-num">00</span>
+    <span class="toc-title">Apresentação</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§1</span>
+  </a>
+
+  <a class="toc-item" href="#como-usar">
+    <span class="toc-num">00</span>
+    <span class="toc-title">Como Usar Esta Biblioteca</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§2</span>
+  </a>
+
+  <a class="toc-item" href="#modulo1">
+    <span class="toc-num">01</span>
+    <span class="toc-title">Banco de Prompts Estratégicos</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§3</span>
+  </a>
+  <div class="toc-sub">Pesquisa · Aprendizado · Criação · Produtividade · Análise</div>
+
+  <a class="toc-item" href="#modulo2">
+    <span class="toc-num">02</span>
+    <span class="toc-title">Sistema de Produção com IA</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§4</span>
+  </a>
+  <div class="toc-sub">Organização · Projetos · Fluxo de Trabalho Semanal</div>
+
+  <a class="toc-item" href="#modulo3">
+    <span class="toc-num">03</span>
+    <span class="toc-title">Método de Personagens Digitais</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§5</span>
+  </a>
+  <div class="toc-sub">Nicho · Audiência · Posicionamento · Identidade Visual</div>
+
+  <a class="toc-item" href="#modulo4">
+    <span class="toc-num">04</span>
+    <span class="toc-title">Estrutura de Criativos e Vídeos</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§6</span>
+  </a>
+  <div class="toc-sub">Hooks · Curiosidade · Demonstrações · CTAs</div>
+
+  <a class="toc-item" href="#modulo5">
+    <span class="toc-num">05</span>
+    <span class="toc-title">Comunidade e Certificação IAX</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§7</span>
+  </a>
+  <div class="toc-sub">Comunidade Oficial · Certificado da Jornada</div>
+
+  <a class="toc-item" href="#plano">
+    <span class="toc-num">06</span>
+    <span class="toc-title">Plano Final de Implementação</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§8</span>
+  </a>
+  <div class="toc-sub">Dias 1–30 · Dias 31–60 · Dias 61–90</div>
+
+  <a class="toc-item" href="#conclusao">
+    <span class="toc-num">07</span>
+    <span class="toc-title">Conclusão</span>
+    <span class="toc-dots"></span>
+    <span class="toc-page">§9</span>
+  </a>
+</div>
+
+<!-- ══════════════════════════════════════ APRESENTAÇÃO ══════════════════════════════ -->
+<div class="section" id="apresentacao">
+  <p class="section-flag">Apresentação</p>
+  <h2>Você chegou até aqui.<br><em>Agora é hora de agir.</em></h2>
+
+  <div class="section-lead">
+    O e-Book IAX te mostrou o caminho. Esta biblioteca existe para ajudá-lo a percorrê-lo — com organização, clareza e ferramentas práticas para cada etapa.
+  </div>
+
+  <p>Você não está começando do zero. Você já tem o conhecimento de base. O que falta é o sistema: um lugar onde cada conceito aprendido se transforma em ação concreta, em produção real e em crescimento mensurável.</p>
+
+  <p>A <strong>Biblioteca Estratégica IAX</strong> é exatamente isso: um conjunto compacto e direto de frameworks, templates e sistemas que transformam o aprendizado do e-Book IAX em execução do mundo real.</p>
+
+  <div class="presentation-quote">
+    "Conhecimento sem implementação é apenas potencial. Esta biblioteca é a ponte entre o que você aprendeu e o que você vai construir."
+  </div>
+
+  <p>Cada módulo foi criado com um único propósito: que você termine a leitura com algo em mãos — um template preenchido, um sistema configurado, um plano pronto para execução.</p>
+
+  <p>Não há teoria desnecessária aqui. Cada página serve a uma ação.</p>
+
+  <div class="callout gold">
+    <p class="callout-label">Como foi construída</p>
+    <p>Esta biblioteca foi desenvolvida especificamente para estudantes que completaram o e-Book IAX. Se você ainda não leu o e-Book, recomendamos que comece por ele antes de utilizar os recursos aqui presentes.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ COMO USAR ══════════════════════════════════ -->
+<div class="section" id="como-usar">
+  <p class="section-flag">Guia de Uso</p>
+  <h2>Como Usar <em>Esta Biblioteca</em></h2>
+
+  <p class="section-lead">
+    Esta não é uma leitura sequencial obrigatória. É uma biblioteca: você consulta o que precisa, quando precisa.
+  </p>
+
+  <h3>Três formas de navegar</h3>
+
+  <p><strong>Leitura Completa:</strong> Leia do início ao fim para ter uma visão integrada de todos os sistemas. Recomendado na primeira vez.</p>
+
+  <p><strong>Por Necessidade Imediata:</strong> Vá diretamente ao módulo que resolve o seu problema do momento. Precisa de um prompt? Módulo 1. Precisa organizar sua produção? Módulo 2.</p>
+
+  <p><strong>Por Referência Recorrente:</strong> Use os templates e checklists como ferramentas de trabalho contínuo. Imprima ou salve os que fizer mais sentido para a sua rotina.</p>
+
+  <h3>O que você vai encontrar</h3>
+
+  <div class="two-col">
+    <div class="callout">
+      <p class="callout-label">Frameworks</p>
+      <p>Estruturas prontas para aplicar em situações específicas, com exemplos reais e instruções de uso.</p>
+    </div>
+    <div class="callout">
+      <p class="callout-label">Templates</p>
+      <p>Documentos para preencher e adaptar à sua realidade — personagem, conteúdo, projetos e planejamento.</p>
+    </div>
+    <div class="callout">
+      <p class="callout-label">Checklists</p>
+      <p>Listas de verificação para garantir que nada importante seja esquecido em cada etapa da sua jornada.</p>
+    </div>
+    <div class="callout">
+      <p class="callout-label">Plano de Ação</p>
+      <p>Um roteiro de 90 dias estruturado para transformar organização em resultados consistentes.</p>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <p class="callout-label">Sobre as ferramentas de IA</p>
+    <p>Os prompts e frameworks desta biblioteca foram desenvolvidos para funcionar com as principais ferramentas de IA disponíveis: ChatGPT, Claude, Gemini e similares. Não há dependência de uma plataforma específica.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ MÓDULO 1 ══════════════════════════════════ -->
+<div class="chapter-break" id="modulo1">
+  <div class="chapter-break-num">01</div>
+  <div class="chapter-break-text">
+    <div class="chapter-break-label">Módulo Um</div>
+    <div class="chapter-break-title">Banco de Prompts Estratégicos</div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-flag">Módulo 01 — Banco de Prompts</p>
+  <h2>Prompts que <em>Geram Resultados</em></h2>
+
+  <p class="section-lead">
+    Um bom prompt é como uma boa pergunta: determina completamente a qualidade da resposta que você vai obter. Esta seção entrega frameworks testados para as cinco áreas mais importantes do seu trabalho com IA.
+  </p>
+
+  <p>A maioria das pessoas usa IA de forma superficial — perguntas genéricas que geram respostas genéricas. Os frameworks a seguir ensinam uma abordagem diferente: prompts com contexto, objetivo claro e estrutura que maximizam a utilidade de cada interação.</p>
+
+  <!-- FRAMEWORK 1 -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">F-01</span>
+      <span class="fc-title">Framework de Pesquisa Profunda</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Propósito</div>
+        <div class="fc-value">Aprofundar rapidamente em qualquer tema, com perspectivas múltiplas e referências verificáveis.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Quando usar</div>
+        <div class="fc-value">Antes de criar conteúdo, tomar decisões estratégicas ou aprender sobre um novo assunto.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Estrutura</div>
+        <div class="fc-value">Contexto → Objetivo → Nível de profundidade → Formato de saída</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-label">Prompt Estruturado — F-01</div>
+  <div class="prompt-box">Atue como um especialista em [ÁREA DE CONHECIMENTO].
+
+Preciso entender profundamente o tema: [TEMA ESPECÍFICO].
+
+Meu objetivo com essa pesquisa é: [OBJETIVO — ex: criar conteúdo / tomar uma decisão / aprender para ensinar].
+
+Por favor, aborde:
+1. Definição clara e objetiva
+2. Por que isso é relevante em [CONTEXTO/MERCADO]
+3. Os 3 principais pontos que toda pessoa precisa saber
+4. Erros comuns sobre esse tema
+5. Uma aplicação prática imediata que eu possa testar hoje
+
+Use linguagem acessível e direta. Evite jargões sem explicação.</div>
+
+  <div class="callout">
+    <p class="callout-label">Exemplo Prático</p>
+    <p>Tema: Inteligência Artificial Generativa / Objetivo: criar conteúdo educativo para iniciantes / Contexto: mercado brasileiro de educação digital.</p>
+  </div>
+
+  <div class="fc-row" style="grid-template-columns: 140px 1fr; display: grid; gap: 8px 16px; padding: 12px 0; font-size: 14px; border-bottom: 1px solid var(--rule);">
+    <div class="fc-label">Erros comuns</div>
+    <div class="fc-value">Não fornecer contexto suficiente; pedir tudo de uma vez sem priorizar; aceitar a primeira resposta sem refinar.</div>
+  </div>
+
+  <!-- FRAMEWORK 2 -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">F-02</span>
+      <span class="fc-title">Framework de Aprendizado Acelerado</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Propósito</div>
+        <div class="fc-value">Aprender qualquer habilidade nova de forma estruturada, com plano de estudos personalizado.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Quando usar</div>
+        <div class="fc-value">Ao iniciar o aprendizado de uma nova ferramenta, técnica ou área de conhecimento.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Estrutura</div>
+        <div class="fc-value">Nível atual → Meta de aprendizado → Tempo disponível → Estilo preferido</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-label">Prompt Estruturado — F-02</div>
+  <div class="prompt-box">Quero aprender [HABILIDADE/FERRAMENTA] do zero ao nível funcional.
+
+Meu nível atual: [iniciante / tenho conhecimentos básicos em...]
+Minha meta: [o que quero ser capaz de fazer]
+Tempo disponível: [X horas por semana]
+Formato preferido: [leitura / prática / vídeo / projetos]
+
+Crie para mim:
+1. Um roteiro de aprendizado em 4 semanas
+2. Os 3 recursos mais diretos ao ponto (pode ser prompt de prática)
+3. Um projeto simples para validar meu aprendizado ao final
+4. Como eu saberei que aprendi — critérios de conclusão claros</div>
+
+  <!-- FRAMEWORK 3 -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">F-03</span>
+      <span class="fc-title">Framework de Criação de Conteúdo</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Propósito</div>
+        <div class="fc-value">Criar conteúdo alinhado ao seu público, tom de voz e objetivo de comunicação.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Quando usar</div>
+        <div class="fc-value">Para posts, roteiros, legendas, threads, newsletters ou qualquer peça de comunicação.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Estrutura</div>
+        <div class="fc-value">Público → Tom → Formato → Objetivo → Restrições</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-label">Prompt Estruturado — F-03</div>
+  <div class="prompt-box">Crie [TIPO DE CONTEÚDO: post / roteiro / thread / legenda] sobre [TEMA].
+
+Público-alvo: [quem vai consumir esse conteúdo]
+Tom de voz: [direto / inspiracional / educativo / conversacional]
+Plataforma: [Instagram / LinkedIn / YouTube / TikTok / E-mail]
+Objetivo: [engajamento / educação / conversão / relacionamento]
+Restrições: [tamanho máximo / palavras a evitar / elementos obrigatórios]
+
+Estruture o conteúdo com:
+- Uma abertura que prende atenção nos primeiros 3 segundos
+- Desenvolvimento claro e escaneável
+- Encerramento com direcionamento</div>
+
+  <!-- FRAMEWORK 4 -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">F-04</span>
+      <span class="fc-title">Framework de Produtividade e Organização</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Propósito</div>
+        <div class="fc-value">Organizar tarefas, prioridades e projetos com ajuda da IA como parceira de planejamento.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Quando usar</div>
+        <div class="fc-value">Ao início da semana, ao receber um novo projeto ou quando sentir sobrecarga.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-label">Prompt Estruturado — F-04</div>
+  <div class="prompt-box">Atue como meu assistente de organização pessoal.
+
+Estas são minhas tarefas e projetos desta semana:
+[LISTA DE TAREFAS]
+
+Meu objetivo principal desta semana: [OBJETIVO]
+Horas disponíveis por dia: [X horas]
+Minha maior dificuldade com organização: [DIFICULDADE]
+
+Me ajude a:
+1. Priorizar as tarefas por urgência e impacto (matriz 2x2)
+2. Distribuir as tarefas pelos dias da semana
+3. Identificar o que posso delegar, automatizar ou eliminar
+4. Criar um ritual simples de início de dia</div>
+
+  <!-- FRAMEWORK 5 -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">F-05</span>
+      <span class="fc-title">Framework de Análise de Negócio</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Propósito</div>
+        <div class="fc-value">Analisar ideias, oportunidades ou decisões de negócio com pensamento estratégico.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Quando usar</div>
+        <div class="fc-value">Ao avaliar uma nova oferta, posicionamento, parceria ou decisão de crescimento.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt-label">Prompt Estruturado — F-05</div>
+  <div class="prompt-box">Quero analisar [IDEIA / OPORTUNIDADE / DECISÃO] do ponto de vista estratégico.
+
+Contexto do meu negócio/projeto: [BREVE DESCRIÇÃO]
+Público que atendo: [DESCRIÇÃO]
+Recursos disponíveis: [TEMPO / DINHEIRO / EQUIPE]
+Prazo para decidir: [DATA]
+
+Analise com os seguintes ângulos:
+1. Oportunidade real: qual o potencial de resultado?
+2. Riscos principais: o que pode dar errado?
+3. Custo de oportunidade: o que eu deixo de fazer ao escolher isso?
+4. Passo mínimo viável: como testar antes de comprometer recursos?
+5. Recomendação objetiva: o que você faria e por quê?</div>
+
+  <h3>Regras de Ouro para Prompts Eficazes</h3>
+
+  <div class="checklist">
+    <div class="checklist-title">Checklist — Anatomia de um Bom Prompt</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Defina o papel que a IA deve assumir ("Atue como...")</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Forneça contexto suficiente — quem você é, qual é o cenário</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Declare o objetivo com clareza — o que você quer obter</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Especifique o formato da saída — lista, parágrafo, tabela, etc.</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Inclua restrições relevantes — tamanho, tom, o que evitar</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Refine iterativamente — a segunda versão sempre é melhor que a primeira</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ MÓDULO 2 ══════════════════════════════════ -->
+<div class="chapter-break" id="modulo2">
+  <div class="chapter-break-num">02</div>
+  <div class="chapter-break-text">
+    <div class="chapter-break-label">Módulo Dois</div>
+    <div class="chapter-break-title">Sistema de Produção com IA</div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-flag">Módulo 02 — Produção</p>
+  <h2>De Ideia à <em>Entrega</em></h2>
+
+  <p class="section-lead">
+    Produtividade real não é sobre trabalhar mais. É sobre ter um sistema que elimine decisões desnecessárias e coloque seu tempo onde ele gera mais resultado.
+  </p>
+
+  <p>Este módulo entrega os pilares de um sistema de produção digital sustentável: como organizar projetos, gerenciar ativos criativos, planejar conteúdo e estruturar sua semana de trabalho com o suporte da IA.</p>
+
+  <h3>O Sistema de Três Camadas</h3>
+
+  <p>Todo criador digital eficiente opera em três camadas simultâneas: <strong>estratégia</strong> (para onde vai), <strong>produção</strong> (o que cria) e <strong>distribuição</strong> (como entrega). A IA serve como parceira em todas as três.</p>
+
+  <!-- Template: Organização de Projetos -->
+  <div class="template">
+    <div class="template-header">Template 01 — Organização de Projetos</div>
+    <div class="template-field">
+      <label>Nome do Projeto</label>
+      <div class="field-value">Ex: Lançamento do curso "Fundamentos de IA"</div>
+    </div>
+    <div class="template-field">
+      <label>Objetivo Principal</label>
+      <div class="field-value">O que esse projeto entrega ao final?</div>
+    </div>
+    <div class="template-field">
+      <label>Público-Alvo</label>
+      <div class="field-value">Para quem esse projeto existe?</div>
+    </div>
+    <div class="template-field">
+      <label>Data de Início / Data Limite</label>
+      <div class="field-value">DD/MM/AAAA → DD/MM/AAAA</div>
+    </div>
+    <div class="template-field">
+      <label>Entregáveis Principais</label>
+      <div class="field-value">Liste os 3 a 5 itens que precisam existir ao fim do projeto</div>
+    </div>
+    <div class="template-field">
+      <label>Recursos Necessários</label>
+      <div class="field-value">Ferramentas, tempo estimado, colaborações necessárias</div>
+    </div>
+    <div class="template-field">
+      <label>Métrica de Sucesso</label>
+      <div class="field-value">Como você saberá que o projeto foi bem-sucedido?</div>
+    </div>
+    <div class="template-field">
+      <label>Riscos e Pontos de Atenção</label>
+      <div class="field-value">O que pode atrasar ou complicar? Como mitigar?</div>
+    </div>
+  </div>
+
+  <h3>Organização de Ativos Criativos</h3>
+
+  <p>Ativos criativos são todos os elementos reutilizáveis que compõem sua produção: textos, roteiros, imagens, ideias, referências visuais, templates e fragmentos de conteúdo. Sem organização, eles se perdem — e você refaz o trabalho constantemente.</p>
+
+  <div class="template">
+    <div class="template-header">Template 02 — Biblioteca de Ativos Criativos</div>
+    <div class="template-field">
+      <label>Categoria do Ativo</label>
+      <div class="field-value">Ex: Roteiro / Prompt salvo / Referência visual / Template de post</div>
+    </div>
+    <div class="template-field">
+      <label>Título / Identificador</label>
+      <div class="field-value">Nome curto e descritivo para localizar rapidamente</div>
+    </div>
+    <div class="template-field">
+      <label>Descrição / Contexto de Uso</label>
+      <div class="field-value">Quando e como usar este ativo</div>
+    </div>
+    <div class="template-field">
+      <label>Plataformas Aplicáveis</label>
+      <div class="field-value">Instagram / YouTube / LinkedIn / E-mail / Outros</div>
+    </div>
+    <div class="template-field">
+      <label>Última Atualização</label>
+      <div class="field-value">Data de criação e última revisão</div>
+    </div>
+    <div class="template-field">
+      <label>Versões e Variações</label>
+      <div class="field-value">Lista de variações disponíveis deste ativo</div>
+    </div>
+  </div>
+
+  <!-- Template: Planejamento de Conteúdo -->
+  <div class="template">
+    <div class="template-header">Template 03 — Planejamento de Conteúdo Mensal</div>
+    <div class="template-field">
+      <label>Mês de Referência</label>
+      <div class="field-value">Mês e Ano</div>
+    </div>
+    <div class="template-field">
+      <label>Tema Central do Mês</label>
+      <div class="field-value">Um eixo temático que une a maioria do conteúdo</div>
+    </div>
+    <div class="template-field">
+      <label>Meta de Publicações</label>
+      <div class="field-value">Quantidade por plataforma (ex: 12 posts Instagram, 4 vídeos YouTube)</div>
+    </div>
+    <div class="template-field">
+      <label>Formatos Previstos</label>
+      <div class="field-value">Reels / Carrossel / Post estático / Short / Newsletter / Outro</div>
+    </div>
+    <div class="template-field">
+      <label>Datas Estratégicas do Mês</label>
+      <div class="field-value">Feriados, eventos do nicho, datas comemorativas relevantes</div>
+    </div>
+    <div class="template-field">
+      <label>KPI Principal</label>
+      <div class="field-value">O que será medido ao final do mês para avaliar o resultado?</div>
+    </div>
+  </div>
+
+  <h3>Fluxo de Trabalho Semanal</h3>
+
+  <p>Um fluxo semanal bem definido elimina a procrastinação causada pela falta de clareza sobre o que fazer em cada momento.</p>
+
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">SEM</span>
+      <span class="fc-title">Modelo de Semana Produtiva — Criador Digital</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Segunda-feira</div>
+        <div class="fc-value"><strong>Planejamento e Estratégia.</strong> Revisão da semana anterior. Definição das 3 prioridades da semana. Aprovação do calendário de conteúdo.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Terça e Quarta</div>
+        <div class="fc-value"><strong>Produção Pesada.</strong> Gravações, escrita de roteiros, criação de peças visuais. Blocos de 90 minutos sem interrupção.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Quinta-feira</div>
+        <div class="fc-value"><strong>Edição e Refinamento.</strong> Revisão de conteúdo produzido. Ajustes finais. Programação de publicações.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Sexta-feira</div>
+        <div class="fc-value"><strong>Engajamento e Aprendizado.</strong> Resposta a comentários e mensagens. Análise de métricas. Estudo e referências para a semana seguinte.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Fim de semana</div>
+        <div class="fc-value"><strong>Desconexão planejada.</strong> Consumo de conteúdo por lazer. Ideias anotadas sem pressão de produção imediata.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <p class="callout-label">Princípio de Produção</p>
+    <p>Consistência supera perfeição. Uma publicação boa toda semana vale mais do que uma publicação perfeita por mês. Use a IA para acelerar o "bom suficiente" e reserve sua energia criativa para os momentos de alto impacto.</p>
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">Checklist — Setup do Sistema de Produção</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Defini as plataformas onde vou publicar regularmente (máximo 2 no início)</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Criei uma pasta organizada para cada categoria de ativo criativo</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Preenchi o template de planejamento mensal para o próximo mês</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Defini os dias e horários de produção na minha semana</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Escolhi uma ferramenta de gestão de tarefas (Notion, Trello, papel — o que funcionar)</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Tenho um banco de ideias ativo onde capturo referências e conceitos</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ MÓDULO 3 ══════════════════════════════════ -->
+<div class="chapter-break" id="modulo3">
+  <div class="chapter-break-num">03</div>
+  <div class="chapter-break-text">
+    <div class="chapter-break-label">Módulo Três</div>
+    <div class="chapter-break-title">Método de Personagens Digitais</div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-flag">Módulo 03 — Identidade</p>
+  <h2>Quem é Você <em>No Digital</em>?</h2>
+
+  <p class="section-lead">
+    Antes de produzir conteúdo, você precisa saber quem está produzindo esse conteúdo. Identidade digital clara é o que transforma seguidores em comunidade e audiência em confiança.
+  </p>
+
+  <p>Um personagem digital bem construído não é uma máscara. É uma versão estratégica e consistente de quem você genuinamente é — amplificada para comunicar com clareza, gerar identificação e construir autoridade no seu nicho.</p>
+
+  <h3>Seleção de Nicho</h3>
+
+  <p>Nicho não é limitação — é foco. Quanto mais específico for o problema que você resolve, mais fácil é ser encontrado, lembrado e escolhido.</p>
+
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">N-01</span>
+      <span class="fc-title">Método das Três Interseções — Encontrando Seu Nicho</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Interseção 1</div>
+        <div class="fc-value"><strong>O que você sabe fazer bem?</strong> Habilidades e conhecimentos que você já possui ou está desenvolvendo ativamente.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Interseção 2</div>
+        <div class="fc-value"><strong>O que o mercado quer e paga?</strong> Problemas reais que pessoas buscam resolver e estão dispostas a investir em soluções.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Interseção 3</div>
+        <div class="fc-value"><strong>O que você consegue produzir consistentemente?</strong> Temas que sustentam sua energia criativa ao longo do tempo sem esgotamento.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Seu Nicho</div>
+        <div class="fc-value">O ponto onde as três interseções se encontram. É aqui que está sua oportunidade mais sustentável.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template: Perfil do Personagem -->
+  <div class="template">
+    <div class="template-header">Template 04 — Perfil do Personagem Digital</div>
+    <div class="template-field">
+      <label>Nome / Identificador Digital</label>
+      <div class="field-value">Como você será conhecido nas plataformas</div>
+    </div>
+    <div class="template-field">
+      <label>Proposta de Valor em Uma Frase</label>
+      <div class="field-value">Eu ajudo [QUEM] a [FAZER O QUÊ] através de [COMO].</div>
+    </div>
+    <div class="template-field">
+      <label>Tom de Voz Principal</label>
+      <div class="field-value">Ex: Educativo e direto / Inspiracional e humano / Técnico e preciso / Descontraído e acessível</div>
+    </div>
+    <div class="template-field">
+      <label>3 Temas Principais do Conteúdo</label>
+      <div class="field-value">Os pilares temáticos que sustentam sua presença digital</div>
+    </div>
+    <div class="template-field">
+      <label>O Que Você NÃO Fala</label>
+      <div class="field-value">Temas fora do seu posicionamento — delimita seu espaço de atuação</div>
+    </div>
+    <div class="template-field">
+      <label>Referências de Estilo</label>
+      <div class="field-value">3 criadores ou marcas cuja comunicação ressoa com o que você quer construir</div>
+    </div>
+    <div class="template-field">
+      <label>Diferencial Único</label>
+      <div class="field-value">O que existe em você que é genuinamente difícil de replicar?</div>
+    </div>
+  </div>
+
+  <!-- Template: Audiência -->
+  <div class="template">
+    <div class="template-header">Template 05 — Perfil da Audiência Ideal</div>
+    <div class="template-field">
+      <label>Persona Principal</label>
+      <div class="field-value">Nome fictício, faixa etária, ocupação, contexto de vida</div>
+    </div>
+    <div class="template-field">
+      <label>Maior Dor / Frustração</label>
+      <div class="field-value">O problema mais doloroso que essa pessoa tem e que você pode ajudar a resolver</div>
+    </div>
+    <div class="template-field">
+      <label>Maior Desejo / Objetivo</label>
+      <div class="field-value">O que essa pessoa quer alcançar — em termos emocionais e práticos</div>
+    </div>
+    <div class="template-field">
+      <label>Objeções Frequentes</label>
+      <div class="field-value">Por que essa pessoa hesita em agir? O que a impede?</div>
+    </div>
+    <div class="template-field">
+      <label>Onde Ela Está</label>
+      <div class="field-value">Plataformas que usa, comunidades onde participa, tipo de conteúdo que consome</div>
+    </div>
+    <div class="template-field">
+      <label>Como Ela Decide</label>
+      <div class="field-value">O que gera confiança suficiente para ela agir?</div>
+    </div>
+  </div>
+
+  <!-- Template: Ângulos de Conteúdo -->
+  <div class="template">
+    <div class="template-header">Template 06 — Ângulos de Conteúdo por Intenção</div>
+    <div class="template-field">
+      <label>Ângulo Educativo</label>
+      <div class="field-value">Conteúdo que ensina algo prático. "Como fazer X em Y passos"</div>
+    </div>
+    <div class="template-field">
+      <label>Ângulo de Autoridade</label>
+      <div class="field-value">Conteúdo que demonstra conhecimento e experiência. "O que aprendi depois de..."</div>
+    </div>
+    <div class="template-field">
+      <label>Ângulo de Relacionamento</label>
+      <div class="field-value">Conteúdo que constrói conexão humana. Bastidores, processos, vulnerabilidades estratégicas</div>
+    </div>
+    <div class="template-field">
+      <label>Ângulo de Conversão</label>
+      <div class="field-value">Conteúdo com direcionamento direto para uma ação. Ofertas, CTAs, provas sociais</div>
+    </div>
+    <div class="template-field">
+      <label>Ângulo de Entretenimento</label>
+      <div class="field-value">Conteúdo que gera alcance e descoberta. Humor, surpresa, formatos virais do nicho</div>
+    </div>
+  </div>
+
+  <h3>Consistência Visual</h3>
+
+  <p>Identidade visual consistente não exige um designer. Exige decisões claras aplicadas repetidamente. Defina e documente:</p>
+
+  <div class="checklist">
+    <div class="checklist-title">Checklist — Consistência Visual Mínima Viável</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Paleta de cores definida: máximo 3 cores principais</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Fonte(s) definidas: máximo 2 — uma para títulos, uma para corpo</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Estilo de imagem definido: filtros, estética, mood board de referência</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Template de post criado para cada formato recorrente</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Foto de perfil e banner padronizados em todas as plataformas</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Tom de voz documentado — como você escreve, o que você evita</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ MÓDULO 4 ══════════════════════════════════ -->
+<div class="chapter-break" id="modulo4">
+  <div class="chapter-break-num">04</div>
+  <div class="chapter-break-text">
+    <div class="chapter-break-label">Módulo Quatro</div>
+    <div class="chapter-break-title">Estrutura de Criativos e Vídeos</div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-flag">Módulo 04 — Criativos</p>
+  <h2>Conteúdo que <em>Para, Engaja e Converte</em></h2>
+
+  <p class="section-lead">
+    Todo vídeo ou criativo que funciona segue uma lógica. Não é sorte — é estrutura. Este módulo entrega os frameworks reutilizáveis para cada tipo de conteúdo que você vai produzir.
+  </p>
+
+  <h3>Os Cinco Elementos Universais</h3>
+
+  <p>Qualquer peça de conteúdo eficaz — independente do formato ou plataforma — contém cinco elementos em proporções diferentes conforme o objetivo:</p>
+
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">5E</span>
+      <span class="fc-title">Os Cinco Elementos do Conteúdo Eficaz</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">1. Hook</div>
+        <div class="fc-value">Os primeiros 3 segundos que decidem se a pessoa fica ou vai embora. Deve criar tensão, curiosidade ou identificação imediata.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">2. Curiosidade</div>
+        <div class="fc-value">O elemento que faz a pessoa querer saber mais. Uma promessa implícita ou explícita de que vale a pena continuar.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">3. Demonstração</div>
+        <div class="fc-value">A prova do que foi prometido. Pode ser prática (mostre fazendo), lógica (argumento sólido) ou emocional (história real).</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">4. Benefício</div>
+        <div class="fc-value">O que a pessoa ganha com isso — em termos concretos. Não características, mas transformações.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">5. CTA</div>
+        <div class="fc-value">Uma ação clara e única. Salve, comente, acesse, compartilhe — nunca mais de uma por conteúdo.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Frameworks por Tipo de Vídeo</h3>
+
+  <!-- Vídeo de Produto -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">V-01</span>
+      <span class="fc-title">Vídeo de Produto / Oferta</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Segundos 0–3</div>
+        <div class="fc-value"><strong>Hook de Problema:</strong> "Se você ainda [PROBLEMA], este vídeo foi feito para você."</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Segundos 3–15</div>
+        <div class="fc-value"><strong>Agitação:</strong> Amplie o custo de não resolver o problema. Seja específico.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Segundos 15–45</div>
+        <div class="fc-value"><strong>Solução:</strong> Apresente o produto/serviço. Mostre, não apenas fale.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Segundos 45–60</div>
+        <div class="fc-value"><strong>Prova + Benefício Principal:</strong> Um resultado real ou caso concreto. O maior benefício em uma frase.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Últimos 10s</div>
+        <div class="fc-value"><strong>CTA Único:</strong> Uma ação clara. Link na bio, comentar uma palavra, acessar o link.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vídeo Tutorial -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">V-02</span>
+      <span class="fc-title">Vídeo Tutorial / Como Fazer</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Segundos 0–3</div>
+        <div class="fc-value"><strong>Hook de Resultado:</strong> "Você vai aprender a [FAZER X] em menos de [TEMPO]."</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Segundos 3–10</div>
+        <div class="fc-value"><strong>Credencial rápida:</strong> Por que você tem autoridade para ensinar isso.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Corpo do vídeo</div>
+        <div class="fc-value"><strong>Passo a passo:</strong> Máximo 5 passos. Cada passo com título claro. Mostra na tela sempre que possível.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Final</div>
+        <div class="fc-value"><strong>Resumo + CTA:</strong> Recapitule os passos em uma frase. Peça para salvar o vídeo.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vídeo de Descoberta -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">V-03</span>
+      <span class="fc-title">Vídeo de Descoberta / Alcance</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Segundos 0–3</div>
+        <div class="fc-value"><strong>Hook de Curiosidade:</strong> Afirmação contraintuitiva ou revelação surpreendente sobre o nicho.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Corpo</div>
+        <div class="fc-value"><strong>Desenvolvimento:</strong> Desenvolva a ideia com exemplos concretos. Quebre expectativas. Eduque com leveza.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Final</div>
+        <div class="fc-value"><strong>Giro + CTA leve:</strong> Virada que solidifica a ideia. CTA de baixo atrito: "Segue para mais conteúdos como esse".</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vídeo Problema/Solução -->
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">V-04</span>
+      <span class="fc-title">Vídeo Problema–Solução</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Segundos 0–3</div>
+        <div class="fc-value"><strong>Hook de Identificação:</strong> Descreva o problema com tanta precisão que a pessoa pense "isso é exatamente o que eu vivo".</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Segundos 3–20</div>
+        <div class="fc-value"><strong>Empatia e Contexto:</strong> Mostre que você entende de onde vem esse problema. Não subestime.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Segundos 20–50</div>
+        <div class="fc-value"><strong>A Virada:</strong> A solução. Específica, aplicável, com um exemplo real ou demonstração.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Final</div>
+        <div class="fc-value"><strong>Resultado + CTA:</strong> O que muda depois de aplicar. Ação clara e única.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Banco de Hooks Prontos</h3>
+
+  <p>O hook é a parte mais difícil e mais importante de qualquer conteúdo. Aqui estão modelos testados que você pode adaptar ao seu nicho:</p>
+
+  <div class="prompt-label">Hooks de Curiosidade</div>
+  <div class="prompt-box">"A maioria das pessoas não sabe que [VERDADE CONTRAINTUITIVA DO NICHO]..."
+"O que acontece quando você [AÇÃO INCOMUM]? Eu testei por [TEMPO] e..."
+"[NÚMERO] erros que 90% dos [PÚBLICO] cometem sem perceber."
+"Ninguém te conta sobre [TEMA] porque [RAZÃO REAL]."</div>
+
+  <div class="prompt-label">Hooks de Identificação</div>
+  <div class="prompt-box">"Se você está [SITUAÇÃO ESPECÍFICA], este vídeo vai mudar como você [FAZ X]."
+"Antes eu também achava que [CRENÇA LIMITANTE]. Até que descobri [REVELAÇÃO]."
+"[DIFICULDADE ESPECÍFICA]? Isso aconteceu comigo também. Foi assim que resolvi."</div>
+
+  <div class="prompt-label">Hooks de Resultado</div>
+  <div class="prompt-box">"Em [TEMPO CURTO], você vai saber como [RESULTADO DESEJADO]."
+"Isso me levou de [ESTADO ANTES] para [ESTADO DEPOIS] em [TEMPO]."
+"[NÚMERO] ferramentas que uso todo dia para [RESULTADO DO NICHO]."</div>
+
+  <div class="checklist">
+    <div class="checklist-title">Checklist — Antes de Publicar Qualquer Vídeo</div>
+    <div class="checklist-item"><div class="checklist-box"></div>O hook dos primeiros 3 segundos cria curiosidade ou identificação imediata?</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Tem no máximo um CTA claro no final?</div>
+    <div class="checklist-item"><div class="checklist-box"></div>A promessa feita no início foi cumprida?</div>
+    <div class="checklist-item"><div class="checklist-box"></div>O benefício para o espectador está explícito?</div>
+    <div class="checklist-item"><div class="checklist-box"></div>A linguagem está adequada ao público e à plataforma?</div>
+    <div class="checklist-item"><div class="checklist-box"></div>A legenda / thumbnail reforça o hook do vídeo?</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ MÓDULO 5 ══════════════════════════════════ -->
+<div class="chapter-break" id="modulo5">
+  <div class="chapter-break-num">05</div>
+  <div class="chapter-break-text">
+    <div class="chapter-break-label">Módulo Cinco</div>
+    <div class="chapter-break-title">Comunidade e Certificação IAX</div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-flag">Módulo 05 — Comunidade</p>
+  <h2>Você Não <em>Precisa Caminhar Sozinho</em></h2>
+
+  <p class="section-lead">
+    A Comunidade Oficial IAX é o espaço onde o aprendizado do e-Book e a implementação desta biblioteca se tornam coletivos — compartilhados, acelerados e sustentados por pessoas com os mesmos objetivos.
+  </p>
+
+  <h3>Propósito da Comunidade</h3>
+
+  <p>Nenhum sistema de implementação funciona no isolamento. A comunidade existe porque as melhores descobertas acontecem na troca: quando alguém compartilha uma estratégia que funcionou, uma ferramenta que encontrou, um erro que evitou — todos avançam mais rápido.</p>
+
+  <div class="framework-card">
+    <div class="fc-head">
+      <span class="fc-num">COM</span>
+      <span class="fc-title">O Que Você Encontra na Comunidade IAX</span>
+    </div>
+    <div class="fc-body">
+      <div class="fc-row">
+        <div class="fc-label">Networking</div>
+        <div class="fc-value">Conexão com outros profissionais e criadores que estão na mesma jornada de transformação digital e aplicação de IA.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Discussões Práticas</div>
+        <div class="fc-value">Troca de estratégias, prompts, ferramentas e casos reais aplicados ao contexto brasileiro.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Atualizações</div>
+        <div class="fc-value">Novidades sobre ferramentas de IA, mudanças de algoritmos, oportunidades e novos materiais da Syntra Digital.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Oportunidades</div>
+        <div class="fc-value">Colaborações, parcerias, projetos e possibilidades que surgem naturalmente em comunidades ativas e engajadas.</div>
+      </div>
+      <div class="fc-row">
+        <div class="fc-label">Accountability</div>
+        <div class="fc-value">Comprometimento coletivo. Compartilhe suas metas, progresso e aprendizados. A comunidade sustenta a consistência.</div>
+      </div>
+    </div>
+  </div>
+
+  <a class="community-link" href="https://chat.whatsapp.com/EyBeBSFYp5NBcCFPXJpdwV" target="_blank">
+    📲 Acessar a Comunidade Oficial IAX no WhatsApp
+  </a>
+
+  <div class="callout gold">
+    <p class="callout-label">Como participar com qualidade</p>
+    <p>Contribua antes de extrair. Compartilhe seus aprendizados, resultados e recursos. Comunidades crescem quando os membros trazem valor — não apenas quando buscam valor. Seja o membro que você gostaria de encontrar quando entrou.</p>
+  </div>
+
+  <h3>Certificação da Jornada IAX</h3>
+
+  <p>O Certificado de Conclusão da Jornada IAX, emitido pela Syntra Digital, é o reconhecimento formal de que você completou o ciclo de aprendizado e implementação do ecossistema IAX.</p>
+
+  <p>Este certificado documenta que você passou por:</p>
+  <p>→ Leitura e estudo do e-Book IAX com seus fundamentos de transformação digital e inteligência artificial</p>
+  <p>→ Implementação prática dos módulos da Biblioteca Estratégica IAX</p>
+  <p>→ Construção de sistema de produção e identidade digital com suporte de IA</p>
+
+  <div class="callout">
+    <p class="callout-label">Importante</p>
+    <p>O Certificado de Conclusão da Jornada IAX é um documento de reconhecimento interno da Syntra Digital. Ele não substitui certificações governamentais, acadêmicas ou institucionais reconhecidas por órgãos reguladores. Ele documenta sua jornada e comprometimento — isso tem valor real no mercado digital.</p>
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">Checklist de Conclusão — Requisitos Sugeridos</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Li e estudei o e-Book IAX na íntegra</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Completei a leitura da Biblioteca Estratégica IAX</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Preenchi o Template de Perfil do Personagem Digital (Módulo 3)</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Criei e utilizei pelo menos 3 prompts estratégicos do Módulo 1</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Defini meu sistema de produção semanal (Módulo 2)</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Produzi pelo menos uma peça de conteúdo usando os frameworks do Módulo 4</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Ingressei na Comunidade Oficial IAX</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Compartilhei meu progresso na comunidade ao menos uma vez</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Completei o Plano de 90 Dias ou estou em execução ativa</div>
+  </div>
+
+  <div class="checklist">
+    <div class="checklist-title">Checklist de Revisão Final</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Tenho clareza sobre meu nicho e posicionamento digital</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Tenho um sistema de produção funcionando — mesmo que simples</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Sei usar IA como ferramenta de produtividade e criação</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Tenho uma biblioteca de prompts personalizada para o meu contexto</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Estou produzindo conteúdo com estrutura e intenção</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Estou conectado a uma comunidade que apoia meu crescimento</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ PLANO 90 DIAS ══════════════════════════════ -->
+<div class="chapter-break" id="plano">
+  <div class="chapter-break-num">06</div>
+  <div class="chapter-break-text">
+    <div class="chapter-break-label">Módulo Seis</div>
+    <div class="chapter-break-title">Plano Final de Implementação</div>
+  </div>
+</div>
+
+<div class="section">
+  <p class="section-flag">Módulo 06 — Plano de Ação</p>
+  <h2>Seus Próximos <em>90 Dias</em></h2>
+
+  <p class="section-lead">
+    Conhecimento sem timeline é intenção sem compromisso. Este plano transforma tudo que você aprendeu em ações distribuídas no tempo — com clareza sobre o que fazer e quando fazer.
+  </p>
+
+  <p>Noventa dias é o período mínimo para construir hábitos sólidos, produzir com consistência e começar a ver resultados mensuráveis na sua presença digital. Não é muito tempo — mas é o suficiente para criar uma base que vai durar anos.</p>
+
+  <div class="roadmap">
+    <div class="roadmap-phase">
+      <div class="roadmap-num">FASE 1<br>DIAS<br>1–30</div>
+      <div class="roadmap-content">
+        <h4>Organização e Fundação</h4>
+        <ul>
+          <li>Configurar sistema de organização (pastas, ferramentas, banco de ativos)</li>
+          <li>Preencher todos os templates desta biblioteca</li>
+          <li>Definir nicho, personagem digital e tom de voz</li>
+          <li>Configurar perfis nas plataformas escolhidas com identidade consistente</li>
+          <li>Criar banco inicial de 20 prompts personalizados para seu contexto</li>
+          <li>Ingressar na comunidade IAX e fazer a primeira contribuição</li>
+          <li>Produzir os primeiros 4 conteúdos — foco em estrutura, não em perfeição</li>
+          <li>Estabelecer rotina semanal de produção e publicação</li>
+        </ul>
+      </div>
+    </div>
+    <div class="roadmap-phase" style="margin-top: 4px;">
+      <div class="roadmap-num">FASE 2<br>DIAS<br>31–60</div>
+      <div class="roadmap-content">
+        <h4>Produção e Prática Deliberada</h4>
+        <ul>
+          <li>Manter frequência de publicação definida na Fase 1</li>
+          <li>Testar os 4 tipos de vídeo/conteúdo do Módulo 4</li>
+          <li>Analisar os primeiros resultados: o que engajou mais?</li>
+          <li>Refinar prompts e templates com base no que descobriu na prática</li>
+          <li>Expandir banco de prompts para 50+ itens organizados por categoria</li>
+          <li>Implementar planejamento mensal de conteúdo</li>
+          <li>Documentar pelo menos um aprendizado relevante para compartilhar na comunidade</li>
+          <li>Revisar e ajustar o fluxo de trabalho semanal conforme o ritmo real</li>
+        </ul>
+      </div>
+    </div>
+    <div class="roadmap-phase" style="margin-top: 4px;">
+      <div class="roadmap-num">FASE 3<br>DIAS<br>61–90</div>
+      <div class="roadmap-content">
+        <h4>Consistência e Construção de Portfólio</h4>
+        <ul>
+          <li>Revisar e consolidar o sistema completo — o que funciona, o que ajustar</li>
+          <li>Iniciar construção de portfólio digital com os melhores conteúdos produzidos</li>
+          <li>Desenvolver ao menos um projeto ou produto digital simples</li>
+          <li>Estabelecer meta de crescimento para os próximos 90 dias</li>
+          <li>Solicitar Certificado de Conclusão da Jornada IAX</li>
+          <li>Avaliar próximos passos: produtos futuros da Syntra Digital, especializações</li>
+          <li>Documentar sua transformação dos últimos 90 dias — essa história tem valor</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3>Rituais de Alta Performance</h3>
+
+  <p>Além das tarefas por fase, estes rituais semanais mantêm o sistema funcionando:</p>
+
+  <div class="two-col">
+    <div class="template">
+      <div class="template-header">Ritual Semanal — Segunda</div>
+      <div class="template-field">
+        <label>Revisão da Semana Anterior</label>
+        <div class="field-value">O que foi produzido? O que funcionou? O que não funcionou?</div>
+      </div>
+      <div class="template-field">
+        <label>3 Prioridades da Semana</label>
+        <div class="field-value">As 3 tarefas que, se feitas, fazem a semana ser um sucesso.</div>
+      </div>
+      <div class="template-field">
+        <label>Conteúdo da Semana</label>
+        <div class="field-value">Quais peças serão produzidas e publicadas esta semana?</div>
+      </div>
+    </div>
+
+    <div class="template">
+      <div class="template-header">Ritual Mensal — Fim do Mês</div>
+      <div class="template-field">
+        <label>Análise de Métricas</label>
+        <div class="field-value">O que os números mostram sobre o que engajou e o que não engajou?</div>
+      </div>
+      <div class="template-field">
+        <label>Ajuste de Estratégia</label>
+        <div class="field-value">O que fazer mais? O que parar? O que testar?</div>
+      </div>
+      <div class="template-field">
+        <label>Planejamento do Próximo Mês</label>
+        <div class="field-value">Tema central, meta, calendário, datas estratégicas.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout gold">
+    <p class="callout-label">Lembre-se sempre</p>
+    <p>O plano serve a você — não o contrário. Se a vida mudar, ajuste o plano. O que não pode mudar é o compromisso com o progresso consistente. Um passo por vez, toda semana, é mais poderoso do que sprint e pausa.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════ CONCLUSÃO ══════════════════════════════════ -->
+<div class="section" id="conclusao">
+  <p class="section-flag">Conclusão</p>
+  <h2>A Jornada <em>Continua</em></h2>
+
+  <p class="section-lead">
+    Você chegou ao fim desta biblioteca. Mas esta não é uma conclusão — é um ponto de partida com muito mais clareza do que você tinha antes de abri-la.
+  </p>
+
+  <p>Se você leu até aqui com atenção, você agora tem:</p>
+
+  <div class="checklist">
+    <div class="checklist-title">O Que Você Carrega Desta Biblioteca</div>
+    <div class="checklist-item"><div class="checklist-box"></div>5 frameworks de prompts prontos para usar com qualquer ferramenta de IA</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Um sistema completo de organização de projetos e ativos criativos</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Templates para definir sua identidade digital com clareza e consistência</div>
+    <div class="checklist-item"><div class="checklist-box"></div>4 frameworks de vídeo/conteúdo para os principais formatos digitais</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Um roteiro de 90 dias para implementar tudo isso na prática</div>
+    <div class="checklist-item"><div class="checklist-box"></div>Acesso a uma comunidade de pessoas na mesma jornada</div>
+  </div>
+
+  <div class="presentation-quote">
+    "A diferença entre quem transforma o aprendizado em resultado e quem não transforma não está no conhecimento — está na execução consistente. Você tem as ferramentas. O próximo passo é seu."
+  </div>
+
+  <p>O ecossistema IAX foi construído para que você nunca se sinta sozinho nessa jornada. O e-Book te deu a direção. Esta biblioteca te deu os sistemas. A comunidade te dá o suporte. O que você faz com isso é a sua história para contar.</p>
+
+  <p>A Syntra Digital continuará desenvolvendo novos produtos e ferramentas para apoiar sua evolução — especializações, automações avançadas, sistemas mais sofisticados. Mas nenhum produto futuro vai funcionar sem a base que você construiu aqui.</p>
+
+  <div class="callout">
+    <p class="callout-label">Próximos Passos</p>
+    <p>Volte à Comunidade IAX. Compartilhe o que aprendeu. Comece o Plano de 90 Dias agora. A consistência começa hoje, não segunda-feira.</p>
+  </div>
+
+  <p style="margin-top: 40px; text-align: center; color: var(--ink-ghost); font-size: 13px;">
+    Syntra Digital · Biblioteca Estratégica IAX · 2025
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════ BACK COVER ══════════════════════════════ -->
+<div class="back-cover">
+  <div>
+    <div style="font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 16px;">Syntra Digital</div>
+    <div style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; color: rgba(255,255,255,0.7);">Biblioteca Estratégica IAX</div>
+  </div>
+  <div style="width: 60px; height: 1px; background: rgba(184,147,58,0.5);"></div>
+  <p>Companion prático do e-Book IAX.<br>Implementação, organização e produção digital com suporte de inteligência artificial.</p>
+  <a href="https://chat.whatsapp.com/EyBeBSFYp5NBcCFPXJpdwV" style="color: #b8933a; font-size: 12px; text-decoration: none; letter-spacing: 0.08em;">Comunidade Oficial IAX →</a>
+</div>
+
+</div><!-- .page -->
+</body>
+</html>
