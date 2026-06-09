@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYNTRA Barber — Barbearia Premium</title>
+  <meta name="description" content="SYNTRA Barber: barbearia premium com barbeiros especializados, cortes clássicos e modernos, barba na navalha e tratamentos exclusivos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23B8922A'/><text y='24' x='5' font-size='22' font-family='Arial' font-weight='900' fill='white'>B</text></svg>" />
+</head>
+<body>
+
+  <!-- DEMO BANNER -->
+  <div class="demo-banner">
+    ✏️ DEMONSTRAÇÃO DIGITAL — Personalize: nome, cores, logo e fotos antes de publicar
+  </div>
+
+  <!-- CANVAS BACKGROUND -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- CURSOR GLOW -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">
+        <span class="logo-mark">SB</span>
+        <span class="logo-text">SYNTRA <em>BARBER</em></span>
+      </a>
+      <div class="nav-links">
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#barbeiros">Barbeiros</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm nav-cta-wpp">
+          Agendar Horário
+        </a>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#barbeiros">Barbeiros</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" class="nav-mobile-cta">📅 Agendar Horário</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-grid-lines"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Barbearia Premium · Desde 2015
+      </div>
+
+      <h1 class="hero-title reveal">
+        <span class="line line-1">Seu estilo,</span>
+        <span class="line line-2 gradient-text">afiado e</span>
+        <span class="line line-3">sem igual.</span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        Cortes precisos · Barba na navalha · Tratamentos premium<br />
+        A barbearia que transforma aparência em identidade.
+      </p>
+
+      <div class="hero-actions reveal">
+        <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C+gostaria+de+agendar+um+hor%C3%A1rio!" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Agendar Horário
+        </a>
+        <a href="#barbeiros" class="btn btn-outline btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          Conheça os Barbeiros
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="holo-ring ring-1"></div>
+      <div class="holo-ring ring-2"></div>
+      <div class="holo-ring ring-3"></div>
+      <div class="hero-badge-float">
+        <div class="float-icon">✂️</div>
+        <div class="float-text">
+          <strong>Barbeiros Premium</strong>
+          <span>Especialistas certificados</span>
+        </div>
+      </div>
+      <div class="hero-stat-float stat-2">
+        <strong>+5.000</strong>
+        <span>Clientes Satisfeitos</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Explorar</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SOBRE ═══════════════════════════ -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-inner">
+      <div class="sobre-content reveal">
+        <span class="section-label">Nossa História</span>
+        <h2 class="section-title">Tradição e precisão <span class="gradient-text">em cada corte</span></h2>
+        <p class="section-sub">Fundada em 2015 por Marcos Oliveira, a SYNTRA Barber nasceu com uma missão simples: oferecer ao homem moderno uma experiência de barbearia que vai muito além do corte. Aqui, cada cliente é atendido com atenção, respeito e técnica apurada.</p>
+        <p class="section-sub" style="margin-top:1rem;">Com mais de 9 anos de estrada, construímos uma reputação sólida baseada em qualidade sem concessões, ambiente acolhedor e uma equipe que respira arte na tesoura.</p>
+
+        <div class="sobre-diferenciais">
+          <div class="diferencial-item">
+            <span class="dif-icon">🏆</span>
+            <div>
+              <strong>Prêmio Melhor Barbearia 2023</strong>
+              <span>Eleita pela revista Estilo Urbano</span>
+            </div>
+          </div>
+          <div class="diferencial-item">
+            <span class="dif-icon">✂️</span>
+            <div>
+              <strong>Técnicas Exclusivas</strong>
+              <span>Cortes clássicos e contemporâneos</span>
+            </div>
+          </div>
+          <div class="diferencial-item">
+            <span class="dif-icon">🪒</span>
+            <div>
+              <strong>Navalha Tradicional</strong>
+              <span>Ritual completo de barba</span>
+            </div>
+          </div>
+          <div class="diferencial-item">
+            <span class="dif-icon">💆</span>
+            <div>
+              <strong>Tratamentos Premium</strong>
+              <span>Hidratação, pigmentação e mais</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sobre-visual reveal">
+        <div class="sobre-card-principal">
+          <div class="sobre-foto-placeholder">
+            <div class="foto-icon">✂️</div>
+            <p>Foto da Barbearia</p>
+          </div>
+          <div class="sobre-stats">
+            <div class="stat-item">
+              <strong>9+</strong>
+              <span>Anos de Experiência</span>
+            </div>
+            <div class="stat-item">
+              <strong>4</strong>
+              <span>Barbeiros Especialistas</span>
+            </div>
+            <div class="stat-item">
+              <strong>98%</strong>
+              <span>Satisfação dos Clientes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SERVIÇOS ═══════════════════════════ -->
+  <section class="servicos" id="servicos">
+    <div class="servicos-inner">
+      <div class="section-header reveal">
+        <span class="section-label">Nossos Serviços</span>
+        <h2 class="section-title">O que oferecemos <span class="gradient-text">para você</span></h2>
+        <p class="section-sub">Do corte clássico ao tratamento premium, cada serviço é executado com precisão e cuidado para realçar o melhor de você.</p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card card-featured" data-delay="0">
+          <div class="card-icon-wrap">
+            <span>✂️</span>
+          </div>
+          <h3>Corte Clássico</h3>
+          <p>O corte que nunca sai de moda. Tesoura e máquina em harmonia perfeita, com acabamento impecável e consultoria de estilo incluída.</p>
+          <div class="card-price">A partir de <strong>R$ 40</strong></div>
+          <div class="card-tags">
+            <span>Degradê</span>
+            <span>Navalhado</span>
+            <span>Social</span>
+          </div>
+        </div>
+
+        <div class="service-card" data-delay="100">
+          <div class="card-icon-wrap"><span>🪒</span></div>
+          <h3>Barba na Navalha</h3>
+          <p>Ritual completo com toalha quente, creme de barba artesanal, navalha de aço e hidratação final. Uma experiência única.</p>
+          <div class="card-price">A partir de <strong>R$ 35</strong></div>
+          <div class="card-tags"><span>Modelagem</span><span>Navalha</span></div>
+        </div>
+
+        <div class="service-card" data-delay="200">
+          <div class="card-icon-wrap"><span>✨</span></div>
+          <h3>Corte + Barba</h3>
+          <p>O combo mais completo da casa. Corte personalizado mais barba na navalha com todos os rituais. O pacote ideal para o homem exigente.</p>
+          <div class="card-price">A partir de <strong>R$ 65</strong></div>
+          <div class="card-tags"><span>Mais Pedido</span><span>Combo</span></div>
+        </div>
+
+        <div class="service-card" data-delay="300">
+          <div class="card-icon-wrap"><span>💆</span></div>
+          <h3>Hidratação Capilar</h3>
+          <p>Tratamento profundo que devolve brilho, força e saúde aos fios. Indicado para todos os tipos de cabelo, especialmente os ressecados.</p>
+          <div class="card-price">A partir de <strong>R$ 45</strong></div>
+          <div class="card-tags"><span>Tratamento</span><span>Nutrição</span></div>
+        </div>
+
+        <div class="service-card" data-delay="400">
+          <div class="card-icon-wrap"><span>🎨</span></div>
+          <h3>Pigmentação de Barba</h3>
+          <p>Cobertura natural de fios brancos e preenchimento de falhas. Resultado imediato, com acabamento profissional e duração de até 4 semanas.</p>
+          <div class="card-price">A partir de <strong>R$ 55</strong></div>
+          <div class="card-tags"><span>Coloração</span><span>Preenchimento</span></div>
+        </div>
+
+        <div class="service-card" data-delay="500">
+          <div class="card-icon-wrap"><span>👦</span></div>
+          <h3>Corte Infantil</h3>
+          <p>Ambiente acolhedor e barbeiros pacientes para garantir que os pequenos saiam felizes e bem cuidados. Até 12 anos.</p>
+          <div class="card-price">A partir de <strong>R$ 30</strong></div>
+          <div class="card-tags"><span>Infantil</span><span>Até 12 anos</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ BARBEIROS ═══════════════════════════ -->
+  <section class="barbeiros" id="barbeiros">
+    <div class="barbeiros-inner">
+      <div class="section-header reveal">
+        <span class="section-label">Nossa Equipe</span>
+        <h2 class="section-title">Conheça os <span class="gradient-text">barbeiros</span></h2>
+        <p class="section-sub">Profissionais apaixonados pela arte da barbearia, com anos de experiência e técnica refinada para transformar seu visual.</p>
+      </div>
+
+      <div class="team-grid">
+
+        <div class="team-card reveal" data-delay="0">
+          <div class="team-foto">
+            <div class="foto-placeholder">
+              <span>MB</span>
+            </div>
+            <div class="team-badge">Fundador</div>
+          </div>
+          <div class="team-info">
+            <h3>Marcos Oliveira</h3>
+            <span class="team-role">Master Barber · 15 anos</span>
+            <p>Especialista em cortes clássicos e barba na navalha. Formado em São Paulo com certificação internacional em técnicas de barbearia tradicional.</p>
+            <div class="team-especialidades">
+              <span>Degradê</span>
+              <span>Navalha</span>
+              <span>Clássicos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card reveal" data-delay="120">
+          <div class="team-foto">
+            <div class="foto-placeholder">
+              <span>RS</span>
+            </div>
+          </div>
+          <div class="team-info">
+            <h3>Rafael Santos</h3>
+            <span class="team-role">Barber Senior · 8 anos</span>
+            <p>Mestre em degradês e cortes contemporâneos. Especialista em cabelos crespos e cacheados, com técnica precisa e olhar artístico.</p>
+            <div class="team-especialidades">
+              <span>Afro</span>
+              <span>Degradê</span>
+              <span>Texturas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card reveal" data-delay="240">
+          <div class="team-foto">
+            <div class="foto-placeholder">
+              <span>LC</span>
+            </div>
+          </div>
+          <div class="team-info">
+            <h3>Lucas Costa</h3>
+            <span class="team-role">Barber · 5 anos</span>
+            <p>Jovem talento com especialização em pigmentação de barba e cortes modernos. Referência em tratamentos capilares masculinos.</p>
+            <div class="team-especialidades">
+              <span>Pigmentação</span>
+              <span>Modernos</span>
+              <span>Tratamentos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card reveal" data-delay="360">
+          <div class="team-foto">
+            <div class="foto-placeholder">
+              <span>FA</span>
+            </div>
+          </div>
+          <div class="team-info">
+            <h3>Felipe Alves</h3>
+            <span class="team-role">Barber · 4 anos</span>
+            <p>Especialista em cortes sociais e corporativos. Atende com pontualidade e qualidade profissionais que prezam pela discrição e excelência.</p>
+            <div class="team-especialidades">
+              <span>Social</span>
+              <span>Corporativo</span>
+              <span>Barba</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ GALERIA ═══════════════════════════ -->
+  <section class="galeria" id="galeria">
+    <div class="galeria-inner">
+      <div class="section-header reveal">
+        <span class="section-label">Galeria de Cortes</span>
+        <h2 class="section-title">Trabalhos que <span class="gradient-text">falam por si</span></h2>
+        <p class="section-sub">Cada corte é uma obra. Confira alguns dos nossos trabalhos e inspire-se para o seu próximo visual.</p>
+      </div>
+
+      <div class="gallery-grid reveal">
+        <div class="gallery-item gallery-item-lg">
+          <div class="gallery-placeholder">
+            <span>✂️</span>
+            <p>Degradê Premium</p>
+          </div>
+          <div class="gallery-overlay">
+            <span>Degradê Premium</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span>🪒</span>
+            <p>Barba Modelada</p>
+          </div>
+          <div class="gallery-overlay">
+            <span>Barba Modelada</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span>💈</span>
+            <p>Corte Clássico</p>
+          </div>
+          <div class="gallery-overlay">
+            <span>Corte Clássico</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span>✨</span>
+            <p>Combo Completo</p>
+          </div>
+          <div class="gallery-overlay">
+            <span>Combo Completo</span>
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span>🎨</span>
+            <p>Pigmentação</p>
+          </div>
+          <div class="gallery-overlay">
+            <span>Pigmentação</span>
+          </div>
+        </div>
+        <div class="gallery-item gallery-item-tall">
+          <div class="gallery-placeholder">
+            <span>💆</span>
+            <p>Tratamento Premium</p>
+          </div>
+          <div class="gallery-overlay">
+            <span>Tratamento Premium</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ AVALIAÇÕES ═══════════════════════════ -->
+  <section class="avaliacoes" id="avaliacoes">
+    <div class="avaliacoes-inner">
+      <div class="section-header reveal">
+        <span class="section-label">Avaliações</span>
+        <h2 class="section-title">O que nossos clientes <span class="gradient-text">falam</span></h2>
+        <div class="rating-global reveal">
+          <div class="stars">★★★★★</div>
+          <strong>4.9</strong>
+          <span>com base em +320 avaliações no Google</span>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+
+        <div class="review-card reveal" data-delay="0">
+          <div class="review-stars">★★★★★</div>
+          <p>"Melhor barbearia que já fui. O Marcos tem uma precisão incrível no degradê. Ambiente impecável, atendimento nota 10. Não troco por nada."</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">JM</div>
+            <div>
+              <strong>João Mendes</strong>
+              <span>Cliente há 3 anos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="120">
+          <div class="review-stars">★★★★★</div>
+          <p>"A barba na navalha é uma experiência à parte. Toalha quente, ritual completo, acabamento perfeito. Saí me sentindo outro homem. Super recomendo!"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">RP</div>
+            <div>
+              <strong>Ricardo Pinto</strong>
+              <span>Cliente há 2 anos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="240">
+          <div class="review-stars">★★★★★</div>
+          <p>"Levo meu filho lá todo mês. O Lucas é super paciente com crianças e o resultado é sempre lindo. Ambiente limpo e acolhedor. Nota 10 sem dúvida!"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">AS</div>
+            <div>
+              <strong>André Silva</strong>
+              <span>Cliente há 4 anos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="360">
+          <div class="review-stars">★★★★★</div>
+          <p>"Fiz pigmentação de barba com o Rafael e ficou natural demais. Ninguém acreditou que era pigmentação. Durou mais de um mês. Resultado incrível!"</p>
+          <div class="reviewer">
+            <div class="reviewer-avatar">CB</div>
+            <div>
+              <strong>Carlos Braga</strong>
+              <span>Cliente há 1 ano</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ LOCALIZAÇÃO ═══════════════════════════ -->
+  <section class="localizacao" id="localizacao">
+    <div class="localizacao-inner">
+      <div class="section-header reveal">
+        <span class="section-label">Onde Estamos</span>
+        <h2 class="section-title">Venha nos <span class="gradient-text">visitar</span></h2>
+      </div>
+
+      <div class="local-content reveal">
+        <div class="local-info">
+          <div class="local-item">
+            <span class="local-icon">📍</span>
+            <div>
+              <strong>Endereço</strong>
+              <p>Rua das Flores, 123 — Centro<br />Sua Cidade — UF</p>
+            </div>
+          </div>
+          <div class="local-item">
+            <span class="local-icon">🕐</span>
+            <div>
+              <strong>Horários</strong>
+              <p>Segunda a Sexta: 9h às 20h<br />Sábado: 8h às 18h<br />Domingo: Fechado</p>
+            </div>
+          </div>
+          <div class="local-item">
+            <span class="local-icon">📞</span>
+            <div>
+              <strong>Contato</strong>
+              <p>(00) 99999-0000<br />@syntrabarber</p>
+            </div>
+          </div>
+          <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C+gostaria+de+agendar+um+hor%C3%A1rio!" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg local-cta">
+            <span class="btn-glow"></span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+            Falar no WhatsApp
+          </a>
+        </div>
+
+        <div class="map-container">
+          <div class="map-placeholder">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247376.92497688!2d-38.7049052!3d-12.9718498!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7161b7de6e56af:0x7a2fc33571f46b5d!2sSalvador%2C%20BA!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+              width="100%"
+              height="100%"
+              style="border:0; border-radius: 16px;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Localização SYNTRA Barber">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CTA FINAL ═══════════════════════════ -->
+  <section class="cta-final">
+    <div class="cta-final-inner reveal">
+      <div class="cta-orb cta-orb-1"></div>
+      <div class="cta-orb cta-orb-2"></div>
+      <span class="section-label">Pronto para o próximo nível?</span>
+      <h2 class="section-title">Agende agora e <span class="gradient-text">transforme seu visual</span></h2>
+      <p class="section-sub">Vagas limitadas por dia para garantir atendimento exclusivo. Reserve o seu horário agora pelo WhatsApp.</p>
+      <div class="cta-final-actions">
+        <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C+gostaria+de+agendar+um+hor%C3%A1rio!" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg">
+          <span class="btn-glow"></span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+          Agendar Pelo WhatsApp
+        </a>
+        <a href="#servicos" class="btn btn-outline btn-lg">Ver Todos os Serviços</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-glow"></div>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">SB</span>
+          <span class="logo-text">SYNTRA <em>BARBER</em></span>
+        </div>
+        <p>Barbearia premium com barbeiros especializados. Cortes precisos, barba na navalha e tratamentos exclusivos para o homem moderno.</p>
+        <a href="mailto:contato@syntrabarber.com.br" class="footer-email">contato@syntrabarber.com.br</a>
+        <div class="footer-social">
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram SYNTRA Barber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp SYNTRA Barber">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Serviços</h4>
+          <a href="#servicos">Corte Clássico</a>
+          <a href="#servicos">Barba na Navalha</a>
+          <a href="#servicos">Corte + Barba</a>
+          <a href="#servicos">Hidratação Capilar</a>
+          <a href="#servicos">Pigmentação de Barba</a>
+        </div>
+        <div class="footer-col">
+          <h4>A Barbearia</h4>
+          <a href="#sobre">Nossa História</a>
+          <a href="#barbeiros">Os Barbeiros</a>
+          <a href="#galeria">Galeria</a>
+          <a href="#avaliacoes">Avaliações</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <a href="#localizacao">Endereço</a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="#localizacao">Horários</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 SYNTRA Barber · Todos os direitos reservados</p>
+      <p>Site desenvolvido por <a href="https://syntra.tec.br" target="_blank" rel="noopener noreferrer" style="color:var(--gold-light)">Syntra Digital</a></p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C+gostaria+de+agendar+um+hor%C3%A1rio!" target="_blank" rel="noopener noreferrer" class="wpp-float" aria-label="Falar no WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+    <span>Agendar</span>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
