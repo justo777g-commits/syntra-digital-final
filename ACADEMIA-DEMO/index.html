@@ -1,1 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syntra Academy — Musculação, Personal Trainer e Condicionamento Físico</title>
+  <meta name="description" content="Syntra Academy: a academia premium que transforma corpos e mentalidades. Musculação, personal trainer, modalidades exclusivas e resultados reais." />
+  <meta property="og:title" content="Syntra Academy — Treine com Propósito" />
+  <meta property="og:description" content="Musculação, personal trainer, crossfit, spinning e muito mais. Venha conhecer a academia que vai mudar sua vida." />
+  <meta property="og:type" content="website" />
+  <meta name="keywords" content="Syntra Academy, academia, musculação, personal trainer, condicionamento físico, crossfit, spinning" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23E53935'/><text y='24' x='4' font-size='20' font-family='Arial' font-weight='900' fill='white'>SA</text></svg>" />
+</head>
+<body>
 
+  <!-- CANVAS BACKGROUND -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- CURSOR GLOW -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-mark">SA</span>
+        <span class="logo-text">SYNTRA <em>ACADEMY</em></span>
+      </a>
+      <div class="nav-links">
+        <a href="#servicos">Modalidades</a>
+        <a href="#treinadores">Treinadores</a>
+        <a href="#planos">Planos</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#contato" class="nav-cta btn btn-primary btn-sm">Aula Experimental</a>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#servicos">Modalidades</a>
+      <a href="#treinadores">Treinadores</a>
+      <a href="#planos">Planos</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#contato">Aula Experimental</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-grid-lines"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Academia Premium · Resultados Reais
+      </div>
+
+      <h1 class="hero-title reveal">
+        <span class="line line-1">Seu corpo tem</span>
+        <span class="line line-2 gradient-text">potencial</span>
+        <span class="line line-3">ilimitado.</span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        Musculação · Personal Trainer · Modalidades Exclusivas<br />
+        A academia que transforma corpos e mentalidades.
+      </p>
+
+      <div class="hero-actions reveal">
+
+        <a href="#contato" class="btn btn-primary">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 6v4l3 3"/></svg>
+          Aula Experimental
+        </a>
+
+        <a href="#treinadores" class="btn btn-fire">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Conheça os Treinadores
+        </a>
+
+        <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C+quero+agendar+minha+aula+experimental+na+Syntra+Academy!" target="_blank" rel="noopener noreferrer" class="btn btn-outline" aria-label="WhatsApp Syntra Academy">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+          WhatsApp
+        </a>
+
+        <a href="#planos" class="btn btn-outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Ver Planos
+        </a>
+
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="holo-ring ring-1"></div>
+      <div class="holo-ring ring-2"></div>
+      <div class="holo-ring ring-3"></div>
+      <div class="hero-badge-float">
+        <div class="float-icon">🔥</div>
+        <div class="float-text">
+          <strong>Resultados Reais</strong>
+          <span>Método comprovado</span>
+        </div>
+      </div>
+      <div class="hero-stat-float stat-2">
+        <strong>+500</strong>
+        <span>Alunos Ativos</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SOBRE ═══════════════════════════ -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-inner">
+      <div class="sobre-content reveal">
+        <span class="section-label">Nossa História</span>
+        <h2 class="section-title">
+          Fundada com <span class="gradient-text">paixão</span><br />por movimento
+        </h2>
+        <p class="sobre-desc">
+          A Syntra Academy nasceu em 2018 com uma missão clara: criar um espaço onde cada aluno se sentisse visto, motivado e capaz de superar seus próprios limites. Fundada por Rafael Mendes, ex-atleta e especialista em treinamento funcional, a academia cresceu de uma sala pequena para um complexo premium com mais de 1.200 m².
+        </p>
+        <p class="sobre-desc">
+          Hoje somos referência regional em musculação, personal training e modalidades coletivas. Nosso diferencial está nas pessoas — uma equipe de treinadores apaixonados que tratam cada aluno como único.
+        </p>
+        <div class="sobre-stats">
+          <div class="stat-item">
+            <strong>+500</strong>
+            <span>Alunos ativos</span>
+          </div>
+          <div class="stat-item">
+            <strong>8 anos</strong>
+            <span>De experiência</span>
+          </div>
+          <div class="stat-item">
+            <strong>12</strong>
+            <span>Modalidades</span>
+          </div>
+          <div class="stat-item">
+            <strong>98%</strong>
+            <span>Satisfação</span>
+          </div>
+        </div>
+      </div>
+      <div class="sobre-visual reveal">
+        <div class="sobre-card">
+          <div class="sobre-card-icon">🏋️</div>
+          <h3>Nossa Missão</h3>
+          <p>Transformar vidas através do movimento, oferecendo estrutura de elite, suporte especializado e um ambiente que inspira resultados duradouros.</p>
+        </div>
+        <div class="sobre-card sobre-card-alt">
+          <div class="sobre-card-icon">⚡</div>
+          <h3>Nossa Visão</h3>
+          <p>Ser a academia mais completa e acolhedora da região, reconhecida pelos resultados reais e pelo impacto positivo na qualidade de vida dos nossos alunos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ MODALIDADES ═══════════════════════════ -->
+  <section class="services" id="servicos">
+    <div class="section-header">
+      <span class="section-label">O que oferecemos</span>
+      <h2 class="section-title">Modalidades para <span class="gradient-text">cada objetivo</span><br />e cada estilo de vida</h2>
+      <p class="section-sub">De musculação ao funcional — temos a modalidade certa para o seu nível e sua meta.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card card-featured" data-delay="0">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 5v14M18 5v14M4 9h2M4 15h2M18 9h2M18 15h2M10 9h4M10 15h4"/></svg>
+        </div>
+        <h3>Musculação</h3>
+        <p>Equipamentos de última geração, acompanhamento individualizado e programas de treino personalizados para o seu objetivo.</p>
+        <div class="card-tags"><span>Hipertrofia</span><span>Força</span><span>Definição</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="50">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="5" r="2"/><path d="M12 7v8M9 10l3-3 3 3M9 19l3-3 3 3"/></svg>
+        </div>
+        <h3>Personal Trainer</h3>
+        <p>Treinamento exclusivo com foco total em você. Metas definidas, evolução medida e resultados acelerados.</p>
+        <div class="card-tags"><span>Exclusivo</span><span>Metas</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="100">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>Funcional</h3>
+        <p>Movimentos naturais do corpo com alta intensidade. Condicionamento, agilidade e resistência em aulas dinâmicas.</p>
+        <div class="card-tags"><span>Condicionamento</span><span>Agilidade</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="150">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Spinning</h3>
+        <p>Ciclismo indoor com ritmo intenso, música ao vivo e instrutores motivadores. Queima calórica máxima em 45 minutos.</p>
+        <div class="card-tags"><span>Cardio</span><span>Energia</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="200">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/><path d="M12 8l-4 4 4 4 4-4-4-4z"/></svg>
+        </div>
+        <h3>Yoga & Pilates</h3>
+        <p>Equilíbrio entre corpo e mente. Flexibilidade, postura e consciência corporal com instrutores certificados.</p>
+        <div class="card-tags"><span>Flexibilidade</span><span>Postura</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="250">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Avaliação Física</h3>
+        <p>Anamnese completa, bioimpedância, medidas e montagem de ficha de treino com base no seu perfil individual.</p>
+        <div class="card-tags"><span>Bioimpedância</span><span>Evolução</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="300">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3 6.5 7 1-5 4.9 1.2 7L12 18l-6.2 3.4L7 14.4 2 9.5l7-1z"/></svg>
+        </div>
+        <h3>Lutas & Artes Marciais</h3>
+        <p>Muay Thai, Jiu-Jitsu e Boxe para todos os níveis. Disciplina, condicionamento e autodefesa em um só lugar.</p>
+        <div class="card-tags"><span>Muay Thai</span><span>Jiu-Jitsu</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card card-featured-gold" data-delay="350">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <h3>Programa de Emagrecimento</h3>
+        <p>Protocolo completo: treino + acompanhamento nutricional + suporte psicológico. Resultados medidos e celebrados.</p>
+        <div class="card-tags"><span>Protocolo</span><span>Nutrição</span><span>Resultado</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="400">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        </div>
+        <h3>Crossfit</h3>
+        <p>Alta intensidade, trabalho em equipe e superação diária. Aulas variadas que nunca ficam iguais e nunca ficam monótonas.</p>
+        <div class="card-tags"><span>WOD</span><span>Intensidade</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card service-cta-card" data-delay="450">
+        <p>Não encontrou sua modalidade?</p>
+        <h3>Temos mais opções</h3>
+        <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          Falar com a equipe →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ TREINADORES ═══════════════════════════ -->
+  <section class="treinadores" id="treinadores">
+    <div class="section-header">
+      <span class="section-label">Nossa Equipe</span>
+      <h2 class="section-title">Conheça os <span class="gradient-text">treinadores</span><br />que vão transformar você</h2>
+      <p class="section-sub">Profissionais certificados, apaixonados e prontos para levar você ao próximo nível.</p>
+    </div>
+
+    <div class="trainers-grid">
+
+      <div class="trainer-card reveal">
+        <div class="trainer-photo">
+          <div class="trainer-avatar" style="background: linear-gradient(135deg, #E53935, #FF7043);">RM</div>
+          <div class="trainer-badge">Fundador</div>
+        </div>
+        <h3>Rafael Mendes</h3>
+        <span class="trainer-role">Musculação & Funcional</span>
+        <p>Ex-atleta com 15 anos de experiência. Especialista em hipertrofia e condicionamento físico. CREF 012345-G/SP</p>
+        <div class="trainer-tags">
+          <span>Hipertrofia</span><span>Funcional</span><span>Performance</span>
+        </div>
+      </div>
+
+      <div class="trainer-card reveal" data-delay="100">
+        <div class="trainer-photo">
+          <div class="trainer-avatar" style="background: linear-gradient(135deg, #FF7043, #FFA726);">JC</div>
+        </div>
+        <h3>Juliana Costa</h3>
+        <span class="trainer-role">Personal Trainer</span>
+        <p>Especialista em emagrecimento e recomposição corporal. Pós-graduada em fisiologia do exercício. CREF 054321-G/SP</p>
+        <div class="trainer-tags">
+          <span>Emagrecimento</span><span>Feminino</span><span>Nutrição</span>
+        </div>
+      </div>
+
+      <div class="trainer-card reveal" data-delay="200">
+        <div class="trainer-photo">
+          <div class="trainer-avatar" style="background: linear-gradient(135deg, #B71C1C, #E53935);">MS</div>
+        </div>
+        <h3>Marcos Silva</h3>
+        <span class="trainer-role">Crossfit & Lutas</span>
+        <p>Praticante de Jiu-Jitsu faixa preta e coach certificado em CrossFit Level 2. Formado em Educação Física. CREF 098765-G/SP</p>
+        <div class="trainer-tags">
+          <span>CrossFit</span><span>Jiu-Jitsu</span><span>Força</span>
+        </div>
+      </div>
+
+      <div class="trainer-card reveal" data-delay="300">
+        <div class="trainer-photo">
+          <div class="trainer-avatar" style="background: linear-gradient(135deg, #FF5722, #FFA000);">LO</div>
+        </div>
+        <h3>Lara Oliveira</h3>
+        <span class="trainer-role">Yoga & Pilates</span>
+        <p>Instrutora certificada em Hatha Yoga e Pilates Solo e Aparelhos. Especialista em saúde feminina e gestante. CREF 112233-G/SP</p>
+        <div class="trainer-tags">
+          <span>Yoga</span><span>Pilates</span><span>Saúde</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PLANOS ═══════════════════════════ -->
+  <section class="planos" id="planos">
+    <div class="planos-bg-glow"></div>
+    <div class="section-header">
+      <span class="section-label">Planos & Investimento</span>
+      <h2 class="section-title">Escolha o plano <span class="gradient-text">ideal para você</span></h2>
+      <p class="section-sub">Sem contrato obrigatório no início. Treine com liberdade e evolua no seu ritmo.</p>
+    </div>
+
+    <div class="planos-grid">
+
+      <div class="plano-card reveal">
+        <div class="plano-header">
+          <span class="plano-label">Essencial</span>
+          <div class="plano-preco">
+            <span class="preco-valor">R$ 89</span>
+            <span class="preco-periodo">/mês</span>
+          </div>
+        </div>
+        <ul class="plano-items">
+          <li><span>✓</span> Acesso à musculação</li>
+          <li><span>✓</span> Avaliação física inicial</li>
+          <li><span>✓</span> Ficha de treino mensal</li>
+          <li><span>✓</span> 1 modalidade coletiva</li>
+          <li class="disabled"><span>✗</span> Personal trainer</li>
+          <li class="disabled"><span>✗</span> Acompanhamento nutricional</li>
+        </ul>
+        <a href="#contato" class="btn btn-outline btn-lg" style="width:100%; justify-content:center;">Começar Agora</a>
+      </div>
+
+      <div class="plano-card plano-destaque reveal" data-delay="100">
+        <div class="plano-popular">Mais Popular</div>
+        <div class="plano-header">
+          <span class="plano-label">Premium</span>
+          <div class="plano-preco">
+            <span class="preco-valor">R$ 159</span>
+            <span class="preco-periodo">/mês</span>
+          </div>
+        </div>
+        <ul class="plano-items">
+          <li><span>✓</span> Acesso à musculação</li>
+          <li><span>✓</span> Avaliação física completa</li>
+          <li><span>✓</span> Ficha de treino quinzenal</li>
+          <li><span>✓</span> Modalidades ilimitadas</li>
+          <li><span>✓</span> 4 sessões de personal/mês</li>
+          <li class="disabled"><span>✗</span> Acompanhamento nutricional</li>
+        </ul>
+        <a href="#contato" class="btn btn-fire btn-lg" style="width:100%; justify-content:center;">Quero o Premium</a>
+      </div>
+
+      <div class="plano-card reveal" data-delay="200">
+        <div class="plano-header">
+          <span class="plano-label">Elite</span>
+          <div class="plano-preco">
+            <span class="preco-valor">R$ 249</span>
+            <span class="preco-periodo">/mês</span>
+          </div>
+        </div>
+        <ul class="plano-items">
+          <li><span>✓</span> Acesso total à academia</li>
+          <li><span>✓</span> Avaliação física mensal</li>
+          <li><span>✓</span> Ficha de treino semanal</li>
+          <li><span>✓</span> Modalidades ilimitadas</li>
+          <li><span>✓</span> Personal trainer ilimitado</li>
+          <li><span>✓</span> Acompanhamento nutricional</li>
+        </ul>
+        <a href="#contato" class="btn btn-primary btn-lg" style="width:100%; justify-content:center;">Quero o Elite</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ AVALIAÇÕES ═══════════════════════════ -->
+  <section class="avaliacoes" id="avaliacoes">
+    <div class="section-header">
+      <span class="section-label">Depoimentos</span>
+      <h2 class="section-title">Quem treina aqui <span class="gradient-text">não para mais</span></h2>
+      <p class="section-sub">Resultados reais de alunos reais. Veja o que eles dizem sobre a Syntra Academy.</p>
+    </div>
+
+    <div class="avaliacoes-grid">
+
+      <div class="avaliacao-card reveal">
+        <div class="avaliacao-stars">★★★★★</div>
+        <p>"Perdi 18kg em 6 meses com o programa de emagrecimento. A Juliana foi incrível, me acompanhou em cada passo. Nunca pensei que conseguiria isso!"</p>
+        <div class="avaliacao-autor">
+          <div class="autor-avatar" style="background: linear-gradient(135deg, #E53935, #FF7043);">PA</div>
+          <div>
+            <strong>Patricia Alves</strong>
+            <span>Aluna há 8 meses</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="avaliacao-card reveal" data-delay="100">
+        <div class="avaliacao-stars">★★★★★</div>
+        <p>"Vim sem saber nada de academia. Hoje treino 5x na semana e me sinto outra pessoa. A equipe me recebeu sem julgamento e me ensinou tudo do zero."</p>
+        <div class="avaliacao-autor">
+          <div class="autor-avatar" style="background: linear-gradient(135deg, #FF7043, #FFA726);">CS</div>
+          <div>
+            <strong>Carlos Santos</strong>
+            <span>Aluno há 1 ano</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="avaliacao-card reveal" data-delay="200">
+        <div class="avaliacao-stars">★★★★★</div>
+        <p>"As aulas de Yoga com a Lara transformaram minha postura e minha saúde mental. Indico para todo mundo que sofre com ansiedade como eu sofria."</p>
+        <div class="avaliacao-autor">
+          <div class="autor-avatar" style="background: linear-gradient(135deg, #B71C1C, #E53935);">MF</div>
+          <div>
+            <strong>Mariana Ferreira</strong>
+            <span>Aluna há 6 meses</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="avaliacao-card reveal" data-delay="300">
+        <div class="avaliacao-stars">★★★★★</div>
+        <p>"Estrutura impecável, equipamentos de ponta e personal trainer que realmente se importa. Melhor investimento que fiz na minha saúde."</p>
+        <div class="avaliacao-autor">
+          <div class="autor-avatar" style="background: linear-gradient(135deg, #FF5722, #FFA000);">RL</div>
+          <div>
+            <strong>Ricardo Lima</strong>
+            <span>Aluno há 2 anos</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ LOCALIZAÇÃO ═══════════════════════════ -->
+  <section class="localizacao" id="localizacao">
+    <div class="section-header">
+      <span class="section-label">Onde Estamos</span>
+      <h2 class="section-title">Fácil de <span class="gradient-text">encontrar</span></h2>
+    </div>
+    <div class="localizacao-inner">
+      <div class="localizacao-info reveal">
+        <div class="loc-item">
+          <div class="loc-icon">📍</div>
+          <div>
+            <strong>Endereço</strong>
+            <span>Av. das Academias, 1200 — Bairro Centro<br/>São Paulo, SP — CEP 01000-000</span>
+          </div>
+        </div>
+        <div class="loc-item">
+          <div class="loc-icon">⏰</div>
+          <div>
+            <strong>Horários</strong>
+            <span>Segunda a Sexta: 05h — 23h<br/>Sábado: 07h — 18h | Domingo: 08h — 14h</span>
+          </div>
+        </div>
+        <div class="loc-item">
+          <div class="loc-icon">📞</div>
+          <div>
+            <strong>Contato</strong>
+            <span>(11) 99999-0000<br/>contato@syntraacademy.com.br</span>
+          </div>
+        </div>
+        <div class="loc-item">
+          <div class="loc-icon">🅿️</div>
+          <div>
+            <strong>Estacionamento</strong>
+            <span>Estacionamento próprio gratuito<br/>para alunos durante o treino</span>
+          </div>
+        </div>
+      </div>
+      <div class="localizacao-mapa reveal" data-delay="200">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.3356596946207!2d-46.65427902378786!3d-23.543503578823543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c5e9d44775%3A0x7c7bead66f6b4f56!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
+          width="100%" height="350" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy"
+          title="Localização Syntra Academy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ CONTATO ═══════════════════════════ -->
+  <section class="contato" id="contato">
+    <div class="contato-inner">
+      <div class="afil-badge">🎯 Primeira aula gratuita</div>
+      <h2 class="section-title">
+        Comece hoje · <span class="gradient-text">Sua aula</span> · é grátis
+      </h2>
+      <p class="section-sub">
+        Agende sua aula experimental sem compromisso. Conheça a estrutura, converse com os treinadores e sinta a diferença da Syntra Academy.
+      </p>
+      <div class="afil-steps">
+        <div class="afil-step">
+          <div class="step-num">01</div>
+          <h4>Entre em contato</h4>
+          <p>Fale via WhatsApp ou preencha o formulário abaixo.</p>
+        </div>
+        <div class="afil-step-arrow">→</div>
+        <div class="afil-step">
+          <div class="step-num">02</div>
+          <h4>Agende sua aula</h4>
+          <p>Escolha o melhor dia e horário para você.</p>
+        </div>
+        <div class="afil-step-arrow">→</div>
+        <div class="afil-step">
+          <div class="step-num">03</div>
+          <h4>Transforme sua vida</h4>
+          <p>Venha treinar e sinta a diferença desde o primeiro dia.</p>
+        </div>
+      </div>
+      <div class="contato-actions">
+        <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C+quero+agendar+minha+aula+experimental+na+Syntra+Academy!" target="_blank" rel="noopener noreferrer" class="btn btn-fire btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+          Agendar pelo WhatsApp
+        </a>
+        <a href="tel:+5511999990000" class="btn btn-outline btn-lg">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Ligar Agora
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-glow"></div>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark" style="background: linear-gradient(135deg, #E53935, #FF7043); font-size: 0.7rem;">SA</span>
+          <span class="logo-text">SYNTRA <em>ACADEMY</em></span>
+        </div>
+        <p>Academia premium com estrutura de elite, equipe especializada e um ambiente que transforma corpos, mentalidades e vidas.</p>
+        <a href="mailto:contato@syntraacademy.com.br" class="footer-email">contato@syntraacademy.com.br</a>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Syntra Academy">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook Syntra Academy">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Syntra Academy">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Modalidades</h4>
+          <a href="#servicos">Musculação</a>
+          <a href="#servicos">Personal Trainer</a>
+          <a href="#servicos">Funcional</a>
+          <a href="#servicos">Spinning</a>
+          <a href="#servicos">CrossFit</a>
+        </div>
+        <div class="footer-col">
+          <h4>Mais Serviços</h4>
+          <a href="#servicos">Yoga & Pilates</a>
+          <a href="#servicos">Lutas</a>
+          <a href="#servicos">Avaliação Física</a>
+          <a href="#planos">Planos e Preços</a>
+          <a href="#treinadores">Treinadores</a>
+        </div>
+        <div class="footer-col">
+          <h4>Academia</h4>
+          <a href="#sobre">Nossa História</a>
+          <a href="#avaliacoes">Depoimentos</a>
+          <a href="#localizacao">Onde Estamos</a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="#contato">Aula Experimental</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Syntra Academy · Todos os direitos reservados</p>
+      <p>Desenvolvido com ❤️ · Powered by Syntra Digital</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/5500000000000?text=Ol%C3%A1%2C+quero+saber+mais+sobre+a+Syntra+Academy!" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="WhatsApp Syntra Academy">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
