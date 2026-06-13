@@ -1,1 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOME DA IMOBILIÁRIA — Realizando Sonhos</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f9f7f4;
+  --white:#ffffff;
+  --navy:#1c2b3a;
+  --navy2:#243447;
+  --gold:#c9913d;
+  --gold2:#e6b060;
+  --cream:#f0ebe3;
+  --text:#2a2a2a;
+  --gray:#7a7a7a;
+  --light:#eef2f6;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Work Sans',sans-serif;overflow-x:hidden;}
 
+/* BG ANIMADO */
+.bg-anim{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.bg-shape{position:absolute;border:1px solid rgba(201,145,61,.06);border-radius:50%;animation:shapePulse linear infinite;}
+.bg-shape:nth-child(1){width:800px;height:800px;top:-200px;right:-200px;animation-duration:20s;}
+.bg-shape:nth-child(2){width:500px;height:500px;bottom:10%;left:-100px;animation-duration:25s;animation-delay:5s;}
+@keyframes shapePulse{0%,100%{transform:scale(1) rotate(0deg);}50%{transform:scale(1.05) rotate(5deg);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;justify-content:space-between;align-items:center;background:rgba(249,247,244,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,145,61,.12);}
+.logo-nav{font-family:'Libre Baskerville',serif;font-size:22px;color:var(--navy);text-decoration:none;letter-spacing:.5px;}
+.logo-nav span{color:var(--gold);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:14px;font-weight:500;transition:.3s;letter-spacing:.5px;}
+.nav-links a:hover{color:var(--navy);}
+.nav-cta{background:var(--navy);color:#fff;padding:12px 28px;font-size:14px;font-weight:500;text-decoration:none;transition:.3s;letter-spacing:.5px;}
+.nav-cta:hover{background:var(--navy2);}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;background:var(--navy);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 60px;padding-top:76px;overflow:hidden;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(to top,var(--bg),transparent);}
+.hero-bg{position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Ccircle cx='30' cy='30' r='.5' fill='rgba(255,255,255,.06)'/%3E%3C/svg%3E");}
+.hero-content{position:relative;z-index:2;}
+.hero-tag{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+.hero-tag span{width:32px;height:1px;background:var(--gold);}
+.hero-tag p{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.hero h1{font-family:'Libre Baskerville',serif;font-size:clamp(42px,5vw,68px);color:#fff;line-height:1.15;margin-bottom:24px;}
+.hero h1 em{color:var(--gold2);font-style:italic;}
+.hero p{color:rgba(255,255,255,.6);font-size:17px;line-height:1.8;max-width:460px;margin-bottom:40px;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:#fff;padding:16px 36px;font-size:15px;font-weight:600;text-decoration:none;transition:.3s;display:inline-block;letter-spacing:.5px;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,145,61,.4);}
+.btn-outline{background:transparent;color:#fff;padding:16px 36px;font-size:15px;font-weight:500;border:1px solid rgba(255,255,255,.3);text-decoration:none;transition:.3s;display:inline-block;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero-visual{position:relative;z-index:2;padding:40px 0;}
+.property-cards{display:flex;flex-direction:column;gap:16px;}
+.prop-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:20px;display:flex;align-items:center;gap:16px;transition:.3s;backdrop-filter:blur(10px);}
+.prop-card:hover{background:rgba(255,255,255,.11);border-color:var(--gold);}
+.prop-emoji{font-size:40px;width:60px;text-align:center;}
+.prop-info strong{display:block;color:#fff;font-size:15px;font-weight:500;margin-bottom:3px;}
+.prop-info span{font-size:13px;color:rgba(255,255,255,.5);}
+.prop-price{margin-left:auto;color:var(--gold2);font-family:'Libre Baskerville',serif;font-size:16px;font-weight:700;white-space:nowrap;}
+
+/* SECTION */
+section{position:relative;z-index:1;padding:100px 60px;}
+.section-header{text-align:center;margin-bottom:64px;}
+.section-tag{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-weight:500;}
+.section-title{font-family:'Libre Baskerville',serif;font-size:clamp(36px,5vw,54px);color:var(--navy);line-height:1.2;}
+.section-title em{color:var(--gold);font-style:italic;}
+.divider{width:40px;height:2px;background:var(--gold);margin:16px auto 0;}
+
+/* SOBRE */
+.sobre{background:var(--white);}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;}
+.sobre-img-box{background:linear-gradient(135deg,var(--cream),var(--light));height:460px;display:flex;align-items:center;justify-content:center;font-size:120px;position:relative;overflow:hidden;}
+.sobre-img-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(to right,var(--navy),var(--gold));}
+.sobre-badge{position:absolute;bottom:-16px;right:24px;background:var(--gold);color:#fff;padding:14px 24px;}
+.sobre-badge strong{display:block;font-family:'Libre Baskerville',serif;font-size:28px;line-height:1;}
+.sobre-badge span{font-size:11px;letter-spacing:2px;text-transform:uppercase;}
+.sobre-text h2{font-family:'Libre Baskerville',serif;font-size:44px;color:var(--navy);margin-bottom:20px;line-height:1.2;}
+.sobre-text h2 em{color:var(--gold);font-style:italic;}
+.sobre-text p{color:var(--gray);line-height:1.9;margin-bottom:14px;font-size:15px;}
+.sobre-stats{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;}
+.stat-item{padding:20px;background:var(--bg);border-left:3px solid var(--gold);}
+.stat-item strong{font-family:'Libre Baskerville',serif;font-size:32px;color:var(--navy);display:block;}
+.stat-item span{font-size:12px;color:var(--gray);letter-spacing:1px;}
+
+/* CORRETORES */
+.corretores{background:var(--bg);}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+.team-card{background:var(--white);overflow:hidden;box-shadow:0 2px 20px rgba(28,43,58,.06);transition:.4s;cursor:pointer;}
+.team-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(201,145,61,.15);}
+.team-photo{height:260px;background:linear-gradient(135deg,var(--cream),var(--light));display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;}
+.team-photo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--navy),var(--gold));}
+.team-info{padding:20px 24px;}
+.team-info h3{font-family:'Libre Baskerville',serif;font-size:19px;color:var(--navy);margin-bottom:4px;}
+.team-info .role{font-size:11px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;font-weight:600;}
+.team-info .creci{font-size:11px;color:var(--gray);margin-top:2px;}
+.team-info .spec{font-size:13px;color:var(--gray);margin-top:8px;line-height:1.5;}
+.team-contact{display:flex;gap:8px;margin-top:12px;}
+.team-contact a{padding:6px 14px;font-size:12px;text-decoration:none;transition:.3s;font-weight:500;}
+.team-contact .wa{background:var(--navy);color:#fff;}
+.team-contact .ig{border:1px solid var(--gold);color:var(--gold);}
+.team-contact a:hover{opacity:.8;}
+
+/* SERVIÇOS */
+.servicos{background:var(--navy);}
+.servicos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+.servico-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:36px;transition:.4s;}
+.servico-card:hover{background:rgba(201,145,61,.1);border-color:rgba(201,145,61,.3);}
+.servico-icon{font-size:44px;margin-bottom:20px;}
+.servico-card h3{font-family:'Libre Baskerville',serif;font-size:22px;color:#fff;margin-bottom:10px;}
+.servico-card p{color:rgba(255,255,255,.5);font-size:14px;line-height:1.7;}
+
+/* GALERIA */
+.galeria{background:var(--bg);}
+.galeria-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,180px);gap:8px;max-width:1100px;margin:0 auto;}
+.galeria-item{background:linear-gradient(135deg,var(--cream),var(--light));display:flex;align-items:center;justify-content:center;font-size:50px;cursor:pointer;transition:.4s;position:relative;}
+.galeria-item:first-child{grid-column:span 2;grid-row:span 2;font-size:90px;}
+.galeria-item::after{content:'Ver';position:absolute;inset:0;background:rgba(28,43,58,.85);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;letter-spacing:3px;text-transform:uppercase;opacity:0;transition:.3s;}
+.galeria-item:hover::after{opacity:1;}
+
+/* AVALIAÇÕES */
+.avaliacoes{background:var(--white);}
+.aval-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+.aval-card{background:var(--bg);padding:32px;border-bottom:3px solid var(--gold);}
+.stars{color:var(--gold);font-size:14px;margin-bottom:12px;}
+.aval-card p{color:var(--gray);font-size:15px;line-height:1.8;margin-bottom:20px;}
+.aval-author{display:flex;align-items:center;gap:12px;}
+.aval-avatar{width:44px;height:44px;background:linear-gradient(135deg,var(--navy),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:15px;}
+.aval-author strong{display:block;font-size:14px;color:var(--navy);}
+.aval-author span{font-size:12px;color:var(--gray);}
+
+/* MAPA */
+.localizacao{background:var(--bg);}
+.mapa-container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;}
+.mapa-info h3{font-family:'Libre Baskerville',serif;font-size:32px;color:var(--navy);margin-bottom:28px;}
+.info-item{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start;}
+.info-icon{width:44px;height:44px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.info-item strong{display:block;font-size:12px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;font-weight:600;}
+.info-item span{font-size:14px;color:var(--gray);}
+.mapa-embed{height:380px;background:linear-gradient(135deg,var(--cream),var(--light));display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gray);}
+
+/* CTA */
+.cta-final{background:linear-gradient(135deg,var(--navy),#0d1f2e);text-align:center;padding:100px 60px;}
+.cta-final h2{font-family:'Libre Baskerville',serif;font-size:clamp(40px,5vw,66px);color:#fff;margin-bottom:20px;line-height:1.2;}
+.cta-final h2 em{color:var(--gold2);font-style:italic;}
+.cta-final p{color:rgba(255,255,255,.6);font-size:17px;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto;}
+
+/* FOOTER */
+footer{background:#0d1a26;padding:40px 60px;text-align:center;}
+footer p{color:rgba(255,255,255,.3);font-size:13px;}
+footer a{color:var(--gold);text-decoration:none;}
+.footer-logo{font-family:'Libre Baskerville',serif;font-size:28px;color:#fff;margin-bottom:12px;}
+.footer-logo span{color:var(--gold);}
+
+/* WHATSAPP */
+.whatsapp-btn{position:fixed;bottom:30px;right:30px;z-index:999;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(37,211,102,.4);text-decoration:none;transition:.3s;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4);}50%{box-shadow:0 4px 40px rgba(37,211,102,.7);}}
+.whatsapp-btn:hover{transform:scale(1.1);}
+
+/* POPUP */
+.popup-overlay{position:fixed;inset:0;background:rgba(13,26,38,.9);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.4s;backdrop-filter:blur(6px);}
+.popup-overlay.active{opacity:1;pointer-events:all;}
+.popup-box{background:#fff;width:90%;max-width:460px;padding:48px;position:relative;animation:slideUp .4s ease;}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.popup-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;}
+.popup-icon{font-size:48px;margin-bottom:16px;}
+.popup-box h3{font-family:'Libre Baskerville',serif;font-size:30px;color:var(--navy);margin-bottom:8px;}
+.popup-box p{color:var(--gray);font-size:15px;line-height:1.7;margin-bottom:24px;}
+.popup-box .btn-gold{width:100%;text-align:center;display:block;}
+.popup-note{font-size:12px;color:var(--gray);text-align:center;margin-top:12px;}
+
+/* EDIT BANNER */
+.edit-banner{background:linear-gradient(90deg,#f5efe6,#fdf5e6);border-bottom:2px solid var(--gold);padding:10px 40px;text-align:center;font-size:13px;color:var(--navy);position:relative;z-index:200;}
+
+@media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}section{padding:70px 20px;}.hero{grid-template-columns:1fr;padding:80px 20px 60px;}.hero-visual{display:none;}.sobre-grid,.mapa-container{grid-template-columns:1fr;}.galeria-grid{grid-template-columns:1fr 1fr;}.galeria-item:first-child{grid-column:span 2;}}
+</style>
+</head>
+<body>
+
+<div class="edit-banner">✏️ DEMONSTRAÇÃO SYNTRA DIGITAL — <strong>Personalize: nome, cores, logo e fotos antes de publicar</strong></div>
+
+<div class="bg-anim">
+  <div class="bg-shape"></div><div class="bg-shape"></div>
+</div>
+
+<nav>
+  <a href="#" class="logo-nav">[Nome da <span>Imobiliária]</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#corretores">Corretores</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#galeria">Imóveis</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="showPopup();return false;">Falar com Corretor</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag"><span></span><p>Imobiliária — [Cidade]</p></div>
+    <h1>O imóvel certo<br>para o momento<br><em>certo da sua vida.</em></h1>
+    <p>Mais de [X] anos conectando famílias ao imóvel dos seus sonhos em [Cidade]. Corretores especializados, portfólio exclusivo e uma experiência de compra sem complicações.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-gold" onclick="showPopup();return false;">Quero uma Simulação 🏠</a>
+      <a href="#servicos" class="btn-outline">Nossos Serviços</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="property-cards">
+      <div class="prop-card"><div class="prop-emoji">🏠</div><div class="prop-info"><strong>Casa 3 quartos — Bairro X</strong><span>180m² · 3 suítes · 2 vagas</span></div><div class="prop-price">R$ 650.000</div></div>
+      <div class="prop-card"><div class="prop-emoji">🏢</div><div class="prop-info"><strong>Apartamento Garden — Bairro Y</strong><span>95m² · 2 suítes · 1 vaga</span></div><div class="prop-price">R$ 420.000</div></div>
+      <div class="prop-card"><div class="prop-emoji">🏡</div><div class="prop-info"><strong>Terreno — Condomínio Z</strong><span>360m² · pronto para construir</span></div><div class="prop-price">R$ 280.000</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div>
+      <div class="sobre-img-box">🏠<div class="sobre-badge"><strong>[X]+</strong><span>Anos</span></div></div>
+    </div>
+    <div class="sobre-text">
+      <p class="section-tag">Sobre a Imobiliária</p>
+      <h2>Tradição e <em>confiança</em><br>no mercado imobiliário</h2>
+      <p>Fundada por <strong>[Nome do Fundador]</strong>, a <strong>[Nome da Imobiliária]</strong> é referência em [Cidade] na intermediação de imóveis residenciais, comerciais e de alto padrão.</p>
+      <p>Com uma equipe de corretores credenciados pelo CRECI e um portfólio seleto de imóveis, entregamos não apenas uma transação, mas a realização de um sonho.</p>
+      <div class="sobre-stats">
+        <div class="stat-item"><strong>500+</strong><span>Imóveis vendidos</span></div>
+        <div class="stat-item"><strong>[X]+</strong><span>Anos de mercado</span></div>
+        <div class="stat-item"><strong>98%</strong><span>Satisfação dos clientes</span></div>
+        <div class="stat-item"><strong>8</strong><span>Corretores especializados</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="corretores" id="corretores">
+  <div class="section-header">
+    <p class="section-tag">Nossa Equipe</p>
+    <h2 class="section-title">Conheça quem vai<br>encontrar seu <em>imóvel ideal</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card"><div class="team-photo">🏠</div><div class="team-info"><h3>[Nome Corretor 1]</h3><p class="role">Corretor Sênior</p><p class="creci">CRECI-XX 000000</p><p class="spec">Especialista em Alto Padrão e Condomínios</p><div class="team-contact"><a href="#" class="wa">WhatsApp</a><a href="#" class="ig">Instagram</a></div></div></div>
+    <div class="team-card"><div class="team-photo">🏢</div><div class="team-info"><h3>[Nome Corretor 2]</h3><p class="role">Corretora</p><p class="creci">CRECI-XX 000000</p><p class="spec">Especialista em Imóveis Comerciais</p><div class="team-contact"><a href="#" class="wa">WhatsApp</a><a href="#" class="ig">Instagram</a></div></div></div>
+    <div class="team-card"><div class="team-photo">🏡</div><div class="team-info"><h3>[Nome Corretor 3]</h3><p class="role">Corretor</p><p class="creci">CRECI-XX 000000</p><p class="spec">Especialista em Financiamento e Primeiro Imóvel</p><div class="team-contact"><a href="#" class="wa">WhatsApp</a><a href="#" class="ig">Instagram</a></div></div></div>
+    <div class="team-card"><div class="team-photo">🏘️</div><div class="team-info"><h3>[Nome Corretor 4]</h3><p class="role">Corretora</p><p class="creci">CRECI-XX 000000</p><p class="spec">Especialista em Locação e Investimento</p><div class="team-contact"><a href="#" class="wa">WhatsApp</a><a href="#" class="ig">Instagram</a></div></div></div>
+  </div>
+</section>
+
+<section class="servicos" id="servicos">
+  <div class="section-header">
+    <p class="section-tag" style="color:rgba(201,145,61,.8);">O que fazemos</p>
+    <h2 class="section-title" style="color:#fff;">Serviços completos<br>para compra, venda e locação</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="servicos-grid">
+    <div class="servico-card"><div class="servico-icon">🔑</div><h3>Compra de Imóveis</h3><p>Encontramos o imóvel certo para seu perfil, orçamento e objetivo. Do primeiro contato ao registro em cartório.</p></div>
+    <div class="servico-card"><div class="servico-icon">📋</div><h3>Venda de Imóveis</h3><p>Avaliação gratuita, divulgação estratégica e negociação especializada para vender rápido e com segurança.</p></div>
+    <div class="servico-card"><div class="servico-icon">🏘️</div><h3>Locação</h3><p>Gestão completa de aluguel: locatários qualificados, contratos seguros e administração profissional.</p></div>
+    <div class="servico-card"><div class="servico-icon">💰</div><h3>Financiamento</h3><p>Simulação e consultoria de financiamento imobiliário nos principais bancos. Aprovação mais rápida e segura.</p></div>
+    <div class="servico-card"><div class="servico-icon">📊</div><h3>Avaliação de Imóveis</h3><p>Laudos técnicos de avaliação para compra, venda, partilha ou garantia bancária.</p></div>
+    <div class="servico-card"><div class="servico-icon">🏗️</div><h3>Lançamentos</h3><p>Parcerias exclusivas com construtoras para oferecer os melhores lançamentos em [Cidade].</p></div>
+  </div>
+</section>
+
+<section class="galeria" id="galeria">
+  <div class="section-header">
+    <p class="section-tag">Portfólio</p>
+    <h2 class="section-title">Imóveis em<br><em>destaque</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="galeria-grid">
+    <div class="galeria-item">🏠</div>
+    <div class="galeria-item">🏢</div>
+    <div class="galeria-item">🏡</div>
+    <div class="galeria-item">🏘️</div>
+    <div class="galeria-item">🏗️</div>
+  </div>
+</section>
+
+<section class="avaliacoes">
+  <div class="section-header">
+    <p class="section-tag">Depoimentos</p>
+    <h2 class="section-title">Clientes que<br><em>realizaram</em> seus sonhos</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="aval-grid">
+    <div class="aval-card"><div class="stars">★★★★★</div><p>O corretor [Nome] nos atendeu com paciência do início ao fim. Encontramos o apartamento perfeito e o financiamento foi aprovado em tempo recorde. Recomendo muito!</p><div class="aval-author"><div class="aval-avatar">R</div><div><strong>Roberto e Camila</strong><span>Compradores — 1º Imóvel</span></div></div></div>
+    <div class="aval-card"><div class="stars">★★★★★</div><p>Vendi minha casa em 22 dias! A equipe [Nome da Imobiliária] fez uma divulgação incrível e o processo foi transparente do começo ao fim. Empresa de confiança!</p><div class="aval-author"><div class="aval-avatar">S</div><div><strong>Sandra Moreira</strong><span>Vendedora</span></div></div></div>
+    <div class="aval-card"><div class="stars">★★★★★</div><p>Precisava de um imóvel comercial urgente e eles encontraram o lugar ideal em menos de uma semana. Profissionais sérios e comprometidos com o cliente.</p><div class="aval-author"><div class="aval-avatar">E</div><div><strong>Eduardo Nunes</strong><span>Investidor</span></div></div></div>
+  </div>
+</section>
+
+<section class="localizacao" id="contato">
+  <div class="mapa-container">
+    <div class="mapa-info">
+      <h3>Nossa Localização</h3>
+      <div class="info-item"><div class="info-icon">📍</div><div><strong>Endereço</strong><span>[Rua, Número — Bairro, Cidade]</span></div></div>
+      <div class="info-item"><div class="info-icon">🕐</div><div><strong>Atendimento</strong><span>Seg–Sex: 8h às 18h<br>Sáb: 9h às 13h</span></div></div>
+      <div class="info-item"><div class="info-icon">📱</div><div><strong>WhatsApp</strong><span>(XX) XXXXX-XXXX</span></div></div>
+      <a href="#" class="btn-gold" style="margin-top:24px;display:inline-block;" onclick="showPopup();return false;">Falar com Corretor</a>
+    </div>
+    <div class="mapa-embed">📍 Google Maps aqui</div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <p class="section-tag" style="color:rgba(201,145,61,.7);">Pronto para começar?</p>
+  <h2>Seu próximo imóvel<br>está a uma conversa<br><em>de distância.</em></h2>
+  <p>Fale com um corretor especializado e receba uma simulação personalizada sem compromisso.</p>
+  <a href="#" class="btn-gold" style="font-size:16px;padding:18px 48px;" onclick="showPopup();return false;">Quero minha Simulação Gratuita 🏠</a>
+</section>
+
+<footer>
+  <div class="footer-logo">[Nome da <span>Imobiliária]</span></div>
+  <p>[Endereço completo] — [Cidade/UF] — CRECI-XX 000000</p>
+  <p style="margin-top:10px;">Site desenvolvido por <a href="#">Syntra Digital</a></p>
+</footer>
+
+<a href="https://wa.me/55XXXXXXXXXXX" class="whatsapp-btn" target="_blank">💬</a>
+
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-icon">🏠</div>
+    <h3>Fale com um Corretor</h3>
+    <p>Entre em contato agora pelo WhatsApp e nosso time especializado vai te ajudar a encontrar ou vender o imóvel ideal.</p>
+    <a href="https://wa.me/55XXXXXXXXXXX" class="btn-gold" target="_blank" style="text-align:center;display:block;">Abrir WhatsApp Agora</a>
+    <p class="popup-note">✓ Simulação de financiamento gratuita</p>
+  </div>
+</div>
+
+<script>
+function showPopup(){document.getElementById('popup').classList.add('active');}
+function closePopup(){document.getElementById('popup').classList.remove('active');}
+document.getElementById('popup').addEventListener('click',function(e){if(e.target===this)closePopup();});
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:0.1});
+document.querySelectorAll('.team-card,.servico-card,.aval-card,.prop-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(30px)';el.style.transition='opacity .6s ease,transform .6s ease';observer.observe(el);});
+setTimeout(()=>{if(!sessionStorage.getItem('popupShown')){showPopup();sessionStorage.setItem('popupShown','1');}},8000);
+</script>
+</body>
+</html>
