@@ -1,1 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syntra Estética — Clínica de Estética Premium · Procedimentos · Beleza</title>
+  <meta name="description" content="Syntra Estética: clínica de estética premium com avaliação completa, tratamentos corporais, faciais e procedimentos estéticos avançados. Sua beleza, nossa missão." />
+  <meta property="og:title"       content="Syntra Estética — Realce sua Beleza Natural" />
+  <meta property="og:description" content="Procedimentos estéticos avançados, equipe especializada e ambiente premium para a sua transformação." />
+  <meta property="og:type"        content="website" />
+  <meta name="keywords" content="Syntra Estética, clínica estética, botox, preenchimento, limpeza de pele, massagem, peeling, estética avançada" />
 
+  <!-- Fontes: Cormorant Garamond (elegante) + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23C9748F'/><text y='22' x='6' font-size='16' font-family='serif' font-weight='700' fill='white'>SE</text></svg>" />
+</head>
+<body>
+
+  <!-- CANVAS BG -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- CURSOR GLOW -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- WHATSAPP FLUTUANTE -->
+  <div class="whatsapp-float">
+    <span class="whatsapp-tip">Solicite seu orçamento ✨</span>
+    <a href="https://wa.me/5500000000000?text=Ol%C3%A1!+Gostaria+de+um+or%C3%A7amento+da+Syntra+Est%C3%A9tica." target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="WhatsApp Syntra Estética">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+    </a>
+  </div>
+
+  <!-- ─── NAVEGAÇÃO ─────────────────────────────────────────── -->
+  <nav class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <span class="logo-mark">SE</span>
+        <span class="logo-text">Syntra <em>Estética</em></span>
+      </a>
+      <div class="nav-links">
+        <a href="#tratamentos">Tratamentos</a>
+        <a href="#equipe">Equipe</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#contato">Contato</a>
+        <a href="https://wa.me/5500000000000?text=Quero+agendar+uma+avalia%C3%A7%C3%A3o+na+Syntra+Est%C3%A9tica!" target="_blank" rel="noopener noreferrer" class="nav-cta">Agendar Avaliação</a>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <a href="#tratamentos">Tratamentos</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#diferenciais">Diferenciais</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#contato">Contato</a>
+      <a href="https://wa.me/5500000000000?text=Quero+agendar+uma+avalia%C3%A7%C3%A3o!" target="_blank" rel="noopener noreferrer">Agendar Avaliação</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════ HERO ═══════════════════════════ -->
+  <section class="hero" id="home">
+    <div class="hero-grid-lines"></div>
+
+    <div class="hero-content">
+
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Clínica de Estética Premium · Resultado Real
+      </div>
+
+      <h1 class="hero-title reveal">
+        <span class="line">Realce sua</span>
+        <span class="line gradient-text">beleza natural</span>
+        <span class="line">com confiança.</span>
+      </h1>
+
+      <p class="hero-sub reveal">
+        Avaliação estética personalizada · Procedimentos avançados · Ambiente sofisticado<br />
+        Cuide de você com a atenção que você merece — do início ao resultado final.
+      </p>
+
+      <div class="hero-actions reveal">
+
+        <a href="https://wa.me/5500000000000?text=Quero+solicitar+um+or%C3%A7amento+na+Syntra+Est%C3%A9tica!" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Solicitar Orçamento
+        </a>
+
+        <a href="#equipe" class="btn btn-gold btn-lg">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Conheça Nossa Clínica
+        </a>
+
+        <a href="#tratamentos" class="btn btn-outline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Ver Tratamentos
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Visual decorativo hero -->
+    <div class="hero-visual reveal">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="holo-ring ring-1"></div>
+      <div class="holo-ring ring-2"></div>
+      <div class="holo-ring ring-3"></div>
+      <div class="hero-badge-float">
+        <div class="float-icon">✨</div>
+        <div class="float-text">
+          <strong>Avaliação Gratuita</strong>
+          <span>Sem compromisso</span>
+        </div>
+      </div>
+      <div class="hero-stat-float">
+        <strong>+850</strong>
+        <span>clientes satisfeitas</span>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Descubra</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════ SOBRE / HISTÓRIA ════════════════════ -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-inner reveal">
+      <span class="section-label">Nossa História</span>
+      <h2 class="section-title">
+        Uma clínica fundada no amor<br />pela <span class="gradient-text">beleza autêntica</span>
+      </h2>
+      <p class="sobre-desc">
+        A Syntra Estética nasceu em 2015 da paixão da fundadora Dra. Beatriz Almeida por transformar autoestima em bem-estar. Com formação em Biomedicina e especialização em Estética Avançada, Beatriz criou um espaço onde cada cliente é tratada de forma única — ouvida, cuidada e valorizada em cada detalhe.
+      </p>
+      <p class="sobre-desc">
+        Hoje a clínica conta com uma equipe multidisciplinar de especialistas, equipamentos de última geração e uma filosofia clara: resultados naturais, sem exageros, que fazem você se reconhecer e se amar no espelho. Beleza não é padrão. É expressão.
+      </p>
+
+      <div class="sobre-stats">
+        <div class="stat-item">
+          <span class="stat-num">9+</span>
+          <span class="stat-label">Anos no mercado</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">+850</span>
+          <span class="stat-label">Clientes atendidas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Satisfação garantida</span>
+        </div>
+      </div>
+
+      <a href="https://wa.me/5500000000000?text=Quero+agendar+minha+avalia%C3%A7%C3%A3o+gratuita!" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <span class="btn-glow"></span>
+        Agendar minha avaliação gratuita →
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ TRATAMENTOS ═════════════════════ -->
+  <section class="services" id="tratamentos">
+    <div class="section-header">
+      <span class="section-label">O que oferecemos</span>
+      <h2 class="section-title">Tratamentos para cada <span class="gradient-text">objetivo</span><br />e cada tipo de pele</h2>
+      <p class="section-sub">Do facial ao corporal — procedimentos estéticos avançados com protocolos personalizados para o seu resultado.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- CARD DESTAQUE -->
+      <div class="service-card card-featured" data-delay="0">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Avaliação Estética Completa</h3>
+        <p>Ponto de partida para qualquer tratamento. Análise profunda da pele, biotipo corporal, histórico e objetivos para montar um protocolo 100% personalizado para você.</p>
+        <div class="card-tags"><span>Grátis na 1ª visita</span><span>Protocolo individual</span><span>Sem compromisso</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- FACIAL -->
+      <div class="service-card" data-delay="60">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        </div>
+        <h3>Tratamentos Faciais</h3>
+        <p>Limpeza de pele profunda, peeling químico, microagulhamento, radiofrequência facial e hidratação intensiva. Protocolos anti-aging e clareamento de manchas.</p>
+        <div class="card-tags"><span>Anti-aging</span><span>Clareamento</span><span>Hidratação</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="120">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Preenchimento & Botox</h3>
+        <p>Aplicação de toxina botulínica e preenchedores com ácido hialurônico para suavizar rugas, definir contornos e restaurar volume com naturalidade total.</p>
+        <div class="card-tags"><span>Botox</span><span>Ácido hialurônico</span><span>Natural</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- CORPORAL -->
+      <div class="service-card" data-delay="180">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Tratamentos Corporais</h3>
+        <p>Redução de medidas, drenagem linfática, massagem modeladora, criolipólise e ultrassom cavitacional para remodelar seu corpo com segurança e eficácia.</p>
+        <div class="card-tags"><span>Modelagem</span><span>Redução</span><span>Celulite</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="240">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        </div>
+        <h3>Massagem Relaxante & Terapêutica</h3>
+        <p>Técnicas de massagem sueca, pedras quentes, aromaterapia e reflexologia para aliviar tensões, melhorar a circulação e restaurar seu equilíbrio.</p>
+        <div class="card-tags"><span>Relaxamento</span><span>Circulação</span><span>Bem-estar</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="300">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3>Laser & Luz Pulsada</h3>
+        <p>Depilação a laser definitiva, fotorejuvenescimento e tratamento de vasinhos e manchas com tecnologia de ponta e protocolos seguros para todos os fototipos.</p>
+        <div class="card-tags"><span>Depilação</span><span>Manchas</span><span>Definitivo</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- DESTAQUE GOLD -->
+      <div class="service-card card-featured-gold" data-delay="360">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Protocolo Ouro — Transformação Completa</h3>
+        <p>Nosso programa mais completo: avaliação + tratamento facial + corporal + sessões de laser + drenagem e acompanhamento personalizado mês a mês para resultados que você vai ver.</p>
+        <div class="card-tags"><span>Premium</span><span>Resultado garantido</span><span>Acompanhamento total</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <div class="service-card" data-delay="420">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Microblading & Design de Sobrancelha</h3>
+        <p>Técnicas de micropigmentação, microblading fio a fio e design de sobrancelha para realçar o olhar com naturalidade e precisão milimétrica.</p>
+        <div class="card-tags"><span>Microblading</span><span>Design</span><span>Duradouro</span></div>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- CTA CARD -->
+      <div class="service-card service-cta-card" data-delay="480">
+        <p>Não sabe qual tratamento é ideal?</p>
+        <h3>Faça sua avaliação gratuita</h3>
+        <a href="https://wa.me/5500000000000?text=Quero+fazer+a+avalia%C3%A7%C3%A3o+gratuita+na+Syntra+Est%C3%A9tica!" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          Agendar agora →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ EQUIPE ════════════════════════════ -->
+  <section class="equipe" id="equipe">
+    <div class="equipe-bg-glow"></div>
+    <div class="equipe-inner">
+      <div class="section-header">
+        <span class="section-label">Especialistas</span>
+        <h2 class="section-title">Nossa equipe de <span class="gradient-text">profissionais</span><br />apaixonadas pelo que fazem</h2>
+        <p class="section-sub">Cada profissional da Syntra Estética é especialista em sua área, com formação continuada e dedicação total ao resultado de cada cliente.</p>
+      </div>
+
+      <div class="equipe-grid">
+
+        <div class="profissional-card reveal">
+          <div class="profissional-avatar">BA</div>
+          <h3>Dra. Beatriz Almeida</h3>
+          <div class="profissional-role">Fundadora · Biomédica Esteta</div>
+          <p>Biomédica com especialização em Estética Avançada e mais de 12 anos de experiência. Referência em protocolos faciais, preenchimentos e rejuvenescimento.</p>
+          <div class="profissional-tags">
+            <span>Facial Avançado</span><span>Preenchimento</span><span>Rejuvenescimento</span>
+          </div>
+        </div>
+
+        <div class="profissional-card reveal" data-delay="100">
+          <div class="profissional-avatar">CS</div>
+          <h3>Camila Souza</h3>
+          <div class="profissional-role">Esteticista · Laser</div>
+          <p>Especialista em depilação a laser, fotorejuvenescimento e tratamento de manchas. Certificada em múltiplas tecnologias de luz pulsada e radiofrequência.</p>
+          <div class="profissional-tags">
+            <span>Laser</span><span>Manchas</span><span>Fotorejuvenescimento</span>
+          </div>
+        </div>
+
+        <div class="profissional-card reveal" data-delay="200">
+          <div class="profissional-avatar">LP</div>
+          <h3>Larissa Pires</h3>
+          <div class="profissional-role">Esteticista Corporal</div>
+          <p>Especialista em tratamentos corporais, drenagem linfática e redução de medidas. Formada pela Faculdade de Estética de São Paulo com pós em Terapias Manuais.</p>
+          <div class="profissional-tags">
+            <span>Corporal</span><span>Drenagem</span><span>Modelagem</span>
+          </div>
+        </div>
+
+        <div class="profissional-card reveal" data-delay="300">
+          <div class="profissional-avatar">TN</div>
+          <h3>Tainara Nogueira</h3>
+          <div class="profissional-role">Micropigmentadora · Design</div>
+          <p>Especialista em microblading fio a fio, design de sobrancelha e micropigmentação de lábios. Mais de 600 procedimentos realizados com satisfação total.</p>
+          <div class="profissional-tags">
+            <span>Microblading</span><span>Design</span><span>Micropigmentação</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ DIFERENCIAIS ════════════════════ -->
+  <section class="diferenciais" id="diferenciais">
+    <div class="diferenciais-inner">
+      <div class="section-header">
+        <span class="section-label">Por que nos escolher</span>
+        <h2 class="section-title">Diferenciais que fazem<br />a <span class="gradient-text">diferença</span></h2>
+        <p class="section-sub">Cada detalhe da Syntra Estética foi pensado para que você viva a melhor experiência de cuidado.</p>
+      </div>
+
+      <div class="diferenciais-grid">
+
+        <div class="dif-item reveal">
+          <span class="dif-icon">🔬</span>
+          <h4>Tecnologia de Ponta</h4>
+          <p>Equipamentos de última geração certificados pela ANVISA. Protocolos atualizados com as mais recentes evidências científicas da estética avançada.</p>
+        </div>
+
+        <div class="dif-item reveal" data-delay="80">
+          <span class="dif-icon">🌸</span>
+          <h4>Atendimento Humanizado</h4>
+          <p>Cada cliente é recebida com exclusividade e atenção total. Sem pressa, sem padrão genérico — o seu cuidado é feito do seu jeito, no seu tempo.</p>
+        </div>
+
+        <div class="dif-item reveal" data-delay="160">
+          <span class="dif-icon">✨</span>
+          <h4>Resultados Naturais</h4>
+          <p>Nossa filosofia é realçar a beleza que já existe em você. Resultados discretos, elegantes e que preservam a sua essência — nada de exageros.</p>
+        </div>
+
+        <div class="dif-item reveal" data-delay="240">
+          <span class="dif-icon">🛡️</span>
+          <h4>Segurança & Higiene Total</h4>
+          <p>Protocolos rigorosos de biossegurança, materiais descartáveis e ambiente esterilizado. Sua saúde é nossa prioridade absoluta em cada procedimento.</p>
+        </div>
+
+        <div class="dif-item reveal" data-delay="320">
+          <span class="dif-icon">📋</span>
+          <h4>Protocolo Personalizado</h4>
+          <p>Nenhum tratamento começa sem uma avaliação completa. Montamos um protocolo único para o seu biotipo, pele e objetivo — sem receita de bolo.</p>
+        </div>
+
+        <div class="dif-item reveal" data-delay="400">
+          <span class="dif-icon">💬</span>
+          <h4>Suporte Pós-Procedimento</h4>
+          <p>Acompanhamento ativo após cada sessão via WhatsApp. Tiramos dúvidas, acompanhamos sua evolução e ajustamos o protocolo sempre que necessário.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ GALERIA ═════════════════════════ -->
+  <section class="galeria" id="galeria">
+    <div class="galeria-inner">
+      <div class="section-header">
+        <span class="section-label">Nossa clínica</span>
+        <h2 class="section-title">Ambiente <span class="gradient-text">sofisticado</span><br />pensado para você</h2>
+        <p class="section-sub">Cabines privativas, iluminação premium e espaço aconchegante para que você relaxe e se entregue ao cuidado que merece.</p>
+      </div>
+
+      <div class="galeria-grid">
+        <div class="gal-item reveal">
+          <div class="gal-icon">🌸</div>
+          <span class="gal-label">Recepção Premium</span>
+        </div>
+        <div class="gal-item reveal" data-delay="80">
+          <div class="gal-icon">✨</div>
+          <span class="gal-label">Cabine Facial</span>
+        </div>
+        <div class="gal-item reveal" data-delay="160">
+          <div class="gal-icon">💆</div>
+          <span class="gal-label">Sala de Massagem</span>
+        </div>
+        <div class="gal-item reveal" data-delay="240">
+          <div class="gal-icon">🔬</div>
+          <span class="gal-label">Sala de Laser</span>
+        </div>
+        <div class="gal-item reveal" data-delay="320">
+          <div class="gal-icon">🌿</div>
+          <span class="gal-label">Espaço Relax</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════ AVALIAÇÕES ══════════════════════ -->
+  <section class="avaliacoes" id="avaliacoes">
+    <div class="avaliacoes-inner">
+      <div class="section-header">
+        <span class="section-label">O que dizem nossas clientes</span>
+        <h2 class="section-title">Resultados que<br /><span class="gradient-text">falam por si só</span></h2>
+        <p class="section-sub">Mais de 850 clientes já viveram a experiência Syntra Estética. Veja o que elas têm a dizer sobre a transformação.</p>
+      </div>
+
+      <div class="avaliacoes-grid">
+
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Fiz o protocolo completo de peeling + microagulhamento com a Dra. Beatriz e a diferença na minha pele foi absurda. Manchas sumiram, textura melhorou demais. Me sinto outra pessoa!"</p>
+          <div class="review-author">
+            <div class="review-avatar">AM</div>
+            <div class="review-info">
+              <strong>Aline M.</strong>
+              <span>Cliente há 10 meses</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="100">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Fiz botox pela primeira vez aqui e amei o resultado. A Dra. Beatriz explicou tudo com calma, o resultado ficou completamente natural. Nunca mais vou em outro lugar!"</p>
+          <div class="review-author">
+            <div class="review-avatar">RS</div>
+            <div class="review-info">
+              <strong>Renata S.</strong>
+              <span>Cliente há 1 ano e meio</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="200">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"A depilação a laser com a Camila foi incrível. Depois de anos sofrendo, resolvi o problema de vez. O cuidado antes, durante e depois do procedimento foi impecável."</p>
+          <div class="review-author">
+            <div class="review-avatar">PC</div>
+            <div class="review-info">
+              <strong>Priscila C.</strong>
+              <span>Cliente há 8 meses</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="300">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"O microblading da Tainara ficou perfeito! A sobrancelha parece natural, simétrica e duradoura. Recebi elogios de todo mundo. É talento puro mesmo."</p>
+          <div class="review-author">
+            <div class="review-avatar">JB</div>
+            <div class="review-info">
+              <strong>Juliana B.</strong>
+              <span>Cliente há 6 meses</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="400">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Ambiente incrível, equipe super atenciosa e os resultados do tratamento corporal com a Larissa foram surpreendentes. Perdi 8cm de medidas no primeiro mês!"</p>
+          <div class="review-author">
+            <div class="review-avatar">MC</div>
+            <div class="review-info">
+              <strong>Marina C.</strong>
+              <span>Cliente há 4 meses</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card reveal" data-delay="500">
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Comecei com uma simples avaliação e hoje sigo o Protocolo Ouro há 6 meses. A transformação na minha pele, no meu corpo e principalmente na minha autoestima foi real."</p>
+          <div class="review-author">
+            <div class="review-avatar">FO</div>
+            <div class="review-info">
+              <strong>Fernanda O.</strong>
+              <span>Cliente há 6 meses</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════ CONTATO / MAPA ═════════════════ -->
+  <section class="contato" id="contato">
+    <div class="contato-inner">
+
+      <div class="contato-info">
+        <div class="section-header" style="text-align:left;">
+          <span class="section-label">Venha nos conhecer</span>
+          <h2 class="section-title">Estamos prontas<br />para te <span class="gradient-text">receber</span></h2>
+          <p class="section-sub">Localização central, ambiente aconchegante e estacionamento fácil. Agende pelo WhatsApp e garanta seu horário.</p>
+        </div>
+
+        <div class="contato-item reveal">
+          <div class="contato-item-icon">📍</div>
+          <div class="contato-item-text">
+            <strong>Endereço</strong>
+            <span>Rua das Flores, 320 — Sala 12 · Bairro Nobre · Sua Cidade – XX</span>
+          </div>
+        </div>
+
+        <div class="contato-item reveal" data-delay="100">
+          <div class="contato-item-icon">🕐</div>
+          <div class="contato-item-text">
+            <strong>Horário de Atendimento</strong>
+            <span>Seg–Sex: 09h às 19h · Sáb: 09h às 16h · Dom: Fechado</span>
+          </div>
+        </div>
+
+        <div class="contato-item reveal" data-delay="200">
+          <div class="contato-item-icon">📞</div>
+          <div class="contato-item-text">
+            <strong>WhatsApp / Telefone</strong>
+            <span>(00) 00000-0000 · Atendimento rápido e personalizado</span>
+          </div>
+        </div>
+
+        <div class="contato-item reveal" data-delay="300">
+          <div class="contato-item-icon">📧</div>
+          <div class="contato-item-text">
+            <strong>E-mail</strong>
+            <span>contato@syntraestetica.com.br</span>
+          </div>
+        </div>
+
+        <a href="https://wa.me/5500000000000?text=Quero+agendar+um+hor%C3%A1rio+na+Syntra+Est%C3%A9tica!" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg reveal" data-delay="400" style="width:fit-content;">
+          <span class="btn-glow"></span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0z"/></svg>
+          Agendar pelo WhatsApp
+        </a>
+      </div>
+
+      <div class="map-embed reveal" data-delay="150">
+        <!-- Substitua o src pelo iframe real do Google Maps da clínica -->
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.2!2d-46.6!3d-23.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQ2zDrW5pY2E!5e0!3m2!1spt!2sbr!4v1"
+          title="Localização Syntra Estética"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════════════════ CTA FINAL ══════════════════════ -->
+  <section class="cta-final" id="orcamento">
+    <div class="cta-final-inner">
+      <div class="cta-badge">✨ Avaliação gratuita · Sem compromisso · Resultado garantido</div>
+      <h2 class="section-title">
+        Comece agora a sua<br /><span class="gradient-text">transformação</span>
+      </h2>
+      <p class="section-sub">
+        A sua jornada de autoestima e beleza começa com um simples passo. Solicite seu orçamento e receba um atendimento único, feito exclusivamente para você.
+      </p>
+
+      <div class="cta-steps">
+        <div class="cta-step">
+          <div class="step-num">01</div>
+          <h4>Entre em contato</h4>
+          <p>Fale via WhatsApp e descreva seu objetivo — a equipe responde rápido.</p>
+        </div>
+        <div class="cta-step-arrow">→</div>
+        <div class="cta-step">
+          <div class="step-num">02</div>
+          <h4>Avaliação gratuita</h4>
+          <p>Venha à clínica para uma análise completa da sua pele e corpo, sem custo.</p>
+        </div>
+        <div class="cta-step-arrow">→</div>
+        <div class="cta-step">
+          <div class="step-num">03</div>
+          <h4>Seu protocolo</h4>
+          <p>Receba um protocolo exclusivo e inicie sua transformação com segurança.</p>
+        </div>
+      </div>
+
+      <a href="https://wa.me/5500000000000?text=Quero+solicitar+meu+or%C3%A7amento+e+agendar+minha+avalia%C3%A7%C3%A3o+gratuita!" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">
+        <span class="btn-glow"></span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Solicitar meu orçamento agora
+      </a>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════ FOOTER ══════════════════════ -->
+  <footer class="footer">
+    <div class="footer-glow"></div>
+    <div class="footer-inner">
+
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">SE</span>
+          <span class="logo-text">Syntra <em>Estética</em></span>
+        </div>
+        <p>Clínica de estética premium comprometida com resultados naturais, segurança e o cuidado que você merece — do primeiro ao último procedimento.</p>
+        <a href="mailto:contato@syntraestetica.com.br" class="footer-email">contato@syntraestetica.com.br</a>
+        <div class="footer-social">
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0z"/></svg>
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.03a8.25 8.25 0 004.84 1.56V7.13a4.85 4.85 0 01-1.07-.44z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Tratamentos</h4>
+          <a href="#tratamentos">Avaliação Estética</a>
+          <a href="#tratamentos">Faciais</a>
+          <a href="#tratamentos">Corporais</a>
+          <a href="#tratamentos">Laser</a>
+          <a href="#tratamentos">Microblading</a>
+        </div>
+        <div class="footer-col">
+          <h4>Clínica</h4>
+          <a href="#sobre">Nossa História</a>
+          <a href="#equipe">Equipe</a>
+          <a href="#diferenciais">Diferenciais</a>
+          <a href="#galeria">Nossa Estrutura</a>
+          <a href="#avaliacoes">Avaliações</a>
+        </div>
+        <div class="footer-col">
+          <h4>Fale Conosco</h4>
+          <a href="#contato">Localização</a>
+          <a href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="mailto:contato@syntraestetica.com.br">E-mail</a>
+          <a href="#orcamento">Solicitar Orçamento</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Syntra Estética · Todos os direitos reservados</p>
+      <p>Demonstração desenvolvida por <strong>Syntra Digital</strong> · syntra.tec.br</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
