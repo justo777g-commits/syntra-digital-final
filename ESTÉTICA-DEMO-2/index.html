@@ -1,1 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOME DO ESTÚDIO — Clínica de Estética</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdf9f6;
+  --white:#ffffff;
+  --rose:#c4788a;
+  --rose2:#e8a0b0;
+  --nude:#e8d5c4;
+  --nude2:#f2e8df;
+  --dark:#2a1f1a;
+  --text:#3d2c28;
+  --gray:#8a7a76;
+  --gold:#b8956a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Jost',sans-serif;overflow-x:hidden;}
 
+/* BG ANIMADO */
+.bg-anim{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.petal{position:absolute;border-radius:50% 0 50% 0;opacity:.06;animation:petalFloat linear infinite;}
+.petal:nth-child(1){width:300px;height:300px;background:var(--rose);top:10%;left:5%;animation-duration:25s;}
+.petal:nth-child(2){width:200px;height:200px;background:var(--gold);top:60%;right:10%;animation-duration:20s;animation-delay:5s;}
+.petal:nth-child(3){width:400px;height:400px;background:var(--nude);bottom:-10%;left:40%;animation-duration:30s;animation-delay:10s;}
+@keyframes petalFloat{0%,100%{transform:rotate(0deg) scale(1);}50%{transform:rotate(45deg) scale(1.1);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 60px;display:flex;justify-content:space-between;align-items:center;background:rgba(253,249,246,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(196,120,138,.15);}
+.logo-nav{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--dark);text-decoration:none;letter-spacing:2px;font-style:italic;}
+.logo-nav span{color:var(--rose);font-style:normal;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:13px;letter-spacing:2px;text-transform:uppercase;transition:.3s;}
+.nav-links a:hover{color:var(--rose);}
+.nav-cta{background:var(--rose);color:#fff;padding:12px 28px;border-radius:100px;font-size:13px;letter-spacing:1px;text-decoration:none;transition:.3s;}
+.nav-cta:hover{background:var(--rose2);}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 60px;padding-top:80px;overflow:hidden;}
+.hero-content{padding-right:40px;}
+.hero-label{display:inline-flex;align-items:center;gap:12px;margin-bottom:28px;}
+.hero-label::before,.hero-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--rose));}
+.hero-label::after{background:linear-gradient(to left,transparent,var(--rose));}
+.hero-label span{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(50px,6vw,82px);line-height:1.1;color:var(--dark);margin-bottom:24px;}
+.hero h1 em{color:var(--rose);font-style:italic;}
+.hero p{color:var(--gray);font-size:16px;line-height:1.9;max-width:440px;margin-bottom:40px;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-rose{background:var(--rose);color:#fff;padding:16px 36px;border-radius:100px;font-size:14px;font-weight:500;text-decoration:none;transition:.3s;display:inline-block;letter-spacing:1px;}
+.btn-rose:hover{background:var(--rose2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(196,120,138,.35);}
+.btn-nude{background:transparent;color:var(--dark);padding:16px 36px;border-radius:100px;font-size:14px;font-weight:500;border:1px solid var(--nude);text-decoration:none;transition:.3s;display:inline-block;letter-spacing:1px;}
+.btn-nude:hover{background:var(--nude2);}
+.hero-visual{position:relative;height:600px;display:flex;align-items:center;justify-content:center;}
+.hero-blob{position:absolute;width:420px;height:480px;background:linear-gradient(135deg,var(--nude2),var(--rose2));border-radius:60% 40% 70% 30%/40% 60% 40% 60%;animation:blobMorph 8s ease-in-out infinite;}
+@keyframes blobMorph{0%,100%{border-radius:60% 40% 70% 30%/40% 60% 40% 60%;}33%{border-radius:40% 60% 30% 70%/60% 40% 60% 40%;}66%{border-radius:70% 30% 50% 50%/30% 70% 50% 50%;}}
+.hero-emoji{font-size:140px;position:relative;z-index:2;animation:floatEmoji 4s ease-in-out infinite;}
+@keyframes floatEmoji{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
+.hero-float-1,.hero-float-2,.hero-float-3{position:absolute;background:var(--white);border-radius:12px;padding:14px 18px;box-shadow:0 8px 30px rgba(196,120,138,.15);z-index:3;}
+.hero-float-1{top:60px;left:20px;font-size:13px;color:var(--dark);}
+.hero-float-2{bottom:100px;right:0px;font-size:13px;color:var(--dark);}
+.hero-float-3{top:200px;right:20px;text-align:center;}
+.hero-float-1 strong,.hero-float-2 strong,.hero-float-3 strong{display:block;font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--rose);}
+
+/* SECTION BASE */
+section{position:relative;z-index:1;padding:100px 60px;}
+.section-header{text-align:center;margin-bottom:64px;}
+.section-tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5vw,58px);color:var(--dark);line-height:1.2;}
+.section-title em{color:var(--rose);font-style:italic;}
+.divider{width:40px;height:1px;background:var(--rose);margin:16px auto 0;}
+
+/* SOBRE */
+.sobre{background:var(--white);}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;}
+.sobre-img-wrap{position:relative;}
+.sobre-img-box{background:linear-gradient(135deg,var(--nude2),var(--rose2));height:480px;border-radius:20px 20px 80px 20px;display:flex;align-items:center;justify-content:center;font-size:120px;overflow:hidden;position:relative;}
+.sobre-img-box::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--rose),var(--gold));}
+.sobre-tag{position:absolute;bottom:-20px;right:20px;background:var(--rose);color:#fff;border-radius:100px;padding:12px 24px;font-size:13px;letter-spacing:1px;}
+.sobre-text h2{font-family:'Cormorant Garamond',serif;font-size:48px;color:var(--dark);margin-bottom:20px;line-height:1.2;}
+.sobre-text p{color:var(--gray);line-height:1.9;margin-bottom:14px;font-size:15px;}
+.sobre-list{list-style:none;margin-top:24px;}
+.sobre-list li{padding:8px 0;border-bottom:1px solid var(--nude2);font-size:14px;display:flex;align-items:center;gap:12px;}
+.sobre-list li::before{content:'✦';color:var(--rose);font-size:10px;}
+
+/* ESTETICISTAS */
+.esteticistas{background:var(--bg);}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;max-width:1100px;margin:0 auto;}
+.team-card{background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 2px 20px rgba(196,120,138,.08);transition:.4s;cursor:pointer;text-align:center;}
+.team-card:hover{transform:translateY(-8px);box-shadow:0 16px 48px rgba(196,120,138,.2);}
+.team-photo{height:240px;background:linear-gradient(135deg,var(--nude2),var(--rose2));display:flex;align-items:center;justify-content:center;font-size:80px;}
+.team-info{padding:20px;}
+.team-info h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--dark);margin-bottom:4px;}
+.team-info .role{font-size:11px;color:var(--rose);letter-spacing:3px;text-transform:uppercase;}
+.team-info .spec{font-size:13px;color:var(--gray);margin-top:8px;line-height:1.5;}
+.team-ig{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:12px;color:var(--rose);text-decoration:none;transition:.3s;}
+.team-ig:hover{color:var(--dark);}
+
+/* SERVIÇOS */
+.servicos{background:var(--dark);}
+.servicos .section-title{color:#fff;}
+.servicos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;max-width:1100px;margin:0 auto;background:rgba(255,255,255,.05);}
+.servico-item{background:var(--dark);padding:40px;transition:.4s;cursor:default;border:1px solid transparent;}
+.servico-item:hover{background:#3a2a25;border-color:rgba(196,120,138,.3);}
+.servico-icon{font-size:36px;margin-bottom:16px;}
+.servico-item h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;margin-bottom:8px;}
+.servico-item p{color:rgba(255,255,255,.5);font-size:14px;line-height:1.7;}
+.servico-tag{display:inline-block;margin-top:14px;padding:5px 14px;border:1px solid rgba(196,120,138,.4);border-radius:100px;font-size:11px;color:var(--rose2);letter-spacing:1px;}
+
+/* GALERIA */
+.galeria{background:var(--white);}
+.galeria-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,200px);gap:12px;max-width:1100px;margin:0 auto;border-radius:20px;overflow:hidden;}
+.galeria-item{background:linear-gradient(135deg,var(--nude2),var(--rose2));display:flex;align-items:center;justify-content:center;font-size:50px;cursor:pointer;transition:.4s;position:relative;}
+.galeria-item:first-child{grid-row:span 2;font-size:90px;}
+.galeria-item::after{content:'Ver +';position:absolute;inset:0;background:rgba(196,120,138,.8);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif;font-size:14px;letter-spacing:3px;text-transform:uppercase;opacity:0;transition:.3s;}
+.galeria-item:hover::after{opacity:1;}
+
+/* AVALIAÇÕES */
+.avaliacoes{background:var(--bg);}
+.aval-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+.aval-card{background:var(--white);border-radius:16px;padding:32px;position:relative;overflow:hidden;}
+.aval-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--rose),var(--gold));}
+.stars{color:var(--rose);font-size:14px;margin-bottom:12px;}
+.aval-card p{color:var(--gray);font-size:15px;line-height:1.8;margin-bottom:20px;}
+.aval-author{display:flex;align-items:center;gap:12px;}
+.aval-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:15px;}
+.aval-author strong{display:block;font-size:14px;color:var(--dark);}
+.aval-author span{font-size:12px;color:var(--gray);}
+
+/* LOCALIZAÇÃO */
+.localizacao{background:var(--white);}
+.mapa-container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:48px;align-items:start;}
+.mapa-info h3{font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--dark);margin-bottom:28px;}
+.info-item{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start;}
+.info-icon{width:44px;height:44px;background:var(--nude2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.info-item strong{display:block;font-size:13px;color:var(--rose);font-weight:600;margin-bottom:3px;letter-spacing:1px;text-transform:uppercase;}
+.info-item span{font-size:14px;color:var(--gray);}
+.mapa-embed{height:380px;background:linear-gradient(135deg,var(--nude2),var(--rose2));border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--gray);}
+
+/* CTA */
+.cta-final{background:linear-gradient(135deg,var(--rose),#a05070);text-align:center;padding:100px 60px;}
+.cta-final h2{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6vw,72px);color:#fff;margin-bottom:20px;line-height:1.2;}
+.cta-final p{color:rgba(255,255,255,.75);font-size:17px;margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto;}
+
+/* FOOTER */
+footer{background:var(--dark);padding:48px 60px;text-align:center;}
+footer p{color:rgba(255,255,255,.35);font-size:13px;}
+footer a{color:var(--rose);text-decoration:none;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:32px;color:#fff;margin-bottom:12px;font-style:italic;}
+
+/* WHATSAPP */
+.whatsapp-btn{position:fixed;bottom:30px;right:30px;z-index:999;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(37,211,102,.4);text-decoration:none;transition:.3s;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4);}50%{box-shadow:0 4px 40px rgba(37,211,102,.7);}}
+.whatsapp-btn:hover{transform:scale(1.1);}
+
+/* POPUP */
+.popup-overlay{position:fixed;inset:0;background:rgba(42,31,26,.85);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.4s;backdrop-filter:blur(6px);}
+.popup-overlay.active{opacity:1;pointer-events:all;}
+.popup-box{background:#fff;border-radius:20px;width:90%;max-width:460px;padding:48px;position:relative;animation:slideUp .4s ease;text-align:center;}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.popup-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;}
+.popup-icon{font-size:48px;margin-bottom:16px;}
+.popup-box h3{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--dark);margin-bottom:8px;}
+.popup-box p{color:var(--gray);font-size:15px;line-height:1.7;margin-bottom:24px;}
+.popup-note{font-size:12px;color:var(--gray);margin-top:12px;}
+
+/* EDIT BANNER */
+.edit-banner{background:linear-gradient(90deg,#fdf0f3,#fce8ee);border-bottom:2px solid var(--rose);padding:10px 40px;text-align:center;font-size:13px;color:var(--dark);position:relative;z-index:200;}
+
+@media(max-width:768px){nav{padding:16px 20px;}.nav-links{display:none;}section{padding:70px 20px;}.hero{grid-template-columns:1fr;padding:80px 20px 40px;}.hero-visual{display:none;}.sobre-grid,.mapa-container{grid-template-columns:1fr;}.galeria-grid{grid-template-columns:1fr 1fr;}.galeria-item:first-child{grid-column:span 2;grid-row:span 1;}}
+</style>
+</head>
+<body>
+
+<div class="edit-banner">✏️ DEMONSTRAÇÃO SYNTRA DIGITAL — <strong>Personalize: nome, cores, logo e fotos antes de publicar</strong></div>
+
+<div class="bg-anim">
+  <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+</div>
+
+<nav>
+  <a href="#" class="logo-nav"><em>[Nome do</em> <span>Estúdio]</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#esteticistas">Equipe</a></li>
+    <li><a href="#servicos">Tratamentos</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="showPopup();return false;">Solicitar Orçamento</a>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-label"><span>Estética & Bem-estar — [Cidade]</span></div>
+    <h1>Beleza que<br>nasce do <em>cuidado</em><br>com você.</h1>
+    <p>Tratamentos estéticos personalizados que realçam sua beleza natural. Profissionais especializadas, produtos premium e um ambiente que transforma sua experiência.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-rose" onclick="showPopup();return false;">Quero meu Orçamento ✨</a>
+      <a href="#servicos" class="btn-nude">Ver Tratamentos</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-blob"></div>
+    <div class="hero-emoji">🌸</div>
+    <div class="hero-float-1"><strong>500+</strong> clientes satisfeitas</div>
+    <div class="hero-float-2"><strong>5★</strong> Google Avaliações</div>
+    <div class="hero-float-3"><strong>10+</strong><br><small style="font-size:10px;color:var(--gray);">Anos de experiência</small></div>
+  </div>
+</section>
+
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img-wrap">
+      <div class="sobre-img-box">🌺</div>
+      <div class="sobre-tag">✦ Especialistas em você</div>
+    </div>
+    <div class="sobre-text">
+      <p class="section-tag">Sobre o Estúdio</p>
+      <h2>Muito além da beleza. <em>É cuidado.</em></h2>
+      <p>O <strong>[Nome do Estúdio]</strong>, fundado por <strong>[Nome da Fundadora]</strong>, nasceu com uma missão: oferecer tratamentos estéticos que vão além da aparência e nutrem a autoestima de cada cliente.</p>
+      <p>Com uma equipe de esteticistas certificadas e produtos selecionados com rigor, criamos experiências que transformam corpo e mente.</p>
+      <ul class="sobre-list">
+        <li>Profissionais certificadas e atualizadas</li>
+        <li>Produtos de marcas premium</li>
+        <li>Atendimento individualizado</li>
+        <li>Ambiente climatizado e acolhedor</li>
+        <li>Protocolos exclusivos</li>
+        <li>Avaliação estética gratuita</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="esteticistas" id="esteticistas">
+  <div class="section-header">
+    <p class="section-tag">Nossa Equipe</p>
+    <h2 class="section-title">As profissionais<br>por trás do seu <em>cuidado</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card"><div class="team-photo">🌸</div><div class="team-info"><h3>[Nome 1]</h3><p class="role">Esteticista Sênior</p><p class="spec">Especialista em Drenagem Linfática e Massagem Modeladora</p><a href="#" class="team-ig">📷 @perfil</a></div></div>
+    <div class="team-card"><div class="team-photo">✨</div><div class="team-info"><h3>[Nome 2]</h3><p class="role">Esteticista</p><p class="spec">Especialista em Tratamentos Faciais e Peeling</p><a href="#" class="team-ig">📷 @perfil</a></div></div>
+    <div class="team-card"><div class="team-photo">💆</div><div class="team-info"><h3>[Nome 3]</h3><p class="role">Esteticista</p><p class="spec">Especialista em Radiofrequência e Criolipólise</p><a href="#" class="team-ig">📷 @perfil</a></div></div>
+    <div class="team-card"><div class="team-photo">🌿</div><div class="team-info"><h3>[Nome 4]</h3><p class="role">Terapeuta</p><p class="spec">Especialista em Terapias Orientais e Relaxamento</p><a href="#" class="team-ig">📷 @perfil</a></div></div>
+  </div>
+</section>
+
+<section class="servicos" id="servicos">
+  <div class="section-header">
+    <p class="section-tag" style="color:var(--rose2);">Tratamentos</p>
+    <h2 class="section-title">Cada procedimento,<br>um resultado extraordinário</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="servicos-grid">
+    <div class="servico-item"><div class="servico-icon">💆</div><h3>Drenagem Linfática</h3><p>Técnica manual que estimula o sistema linfático, reduzindo inchaços e melhorando a circulação.</p><span class="servico-tag">Corporal</span></div>
+    <div class="servico-item"><div class="servico-icon">✨</div><h3>Peeling Facial</h3><p>Renovação celular profunda com ácidos dermatológicos para pele renovada e luminosa.</p><span class="servico-tag">Facial</span></div>
+    <div class="servico-item"><div class="servico-icon">🔥</div><h3>Radiofrequência</h3><p>Tecnologia que estimula o colágeno, firmando e rejuvenescendo a pele com resultados visíveis.</p><span class="servico-tag">Tecnológico</span></div>
+    <div class="servico-item"><div class="servico-icon">❄️</div><h3>Criolipólise</h3><p>Eliminação de gordura localizada por resfriamento controlado. Sem cirurgia, sem dor.</p><span class="servico-tag">Corporal</span></div>
+    <div class="servico-item"><div class="servico-icon">🌿</div><h3>Massagem Relaxante</h3><p>Técnicas que liberam tensões, promovendo bem-estar completo de corpo e mente.</p><span class="servico-tag">Relaxamento</span></div>
+    <div class="servico-item"><div class="servico-icon">💎</div><h3>Design de Sobrancelhas</h3><p>Modelagem personalizada que emoldura seu rosto e realça sua expressão natural.</p><span class="servico-tag">Facial</span></div>
+  </div>
+</section>
+
+<section class="galeria" id="galeria">
+  <div class="section-header">
+    <p class="section-tag">Nosso Trabalho</p>
+    <h2 class="section-title">Resultados que<br><em>encantam</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="galeria-grid">
+    <div class="galeria-item">🌺</div>
+    <div class="galeria-item">✨</div>
+    <div class="galeria-item">💆</div>
+    <div class="galeria-item">🌸</div>
+    <div class="galeria-item">💎</div>
+  </div>
+</section>
+
+<section class="avaliacoes">
+  <div class="section-header">
+    <p class="section-tag">Depoimentos</p>
+    <h2 class="section-title">Quem já <em>sentiu</em><br>a diferença</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="aval-grid">
+    <div class="aval-card"><div class="stars">★★★★★</div><p>Fiz a drenagem linfática com a [Nome] e os resultados foram incríveis! Profissional atenciosa, ambiente lindo e um cuidado que vai além do tratamento.</p><div class="aval-author"><div class="aval-avatar">F</div><div><strong>Fernanda Lima</strong><span>Drenagem Linfática</span></div></div></div>
+    <div class="aval-card"><div class="stars">★★★★★</div><p>O peeling facial transformou minha pele! Depois de só 3 sessões minha pele ficou completamente diferente. Recomendo demais o estúdio [Nome]!</p><div class="aval-author"><div class="aval-avatar">J</div><div><strong>Julia Mendes</strong><span>Peeling Facial</span></div></div></div>
+    <div class="aval-card"><div class="stars">★★★★★</div><p>Ambiente super aconchegante, equipe atenciosa e tratamentos que realmente funcionam. Me sinto renovada a cada visita. Melhor decisão que tomei!</p><div class="aval-author"><div class="aval-avatar">P</div><div><strong>Patricia Costa</strong><span>Radiofrequência</span></div></div></div>
+  </div>
+</section>
+
+<section class="localizacao" id="contato">
+  <div class="mapa-container">
+    <div class="mapa-info">
+      <h3>Onde nos encontrar</h3>
+      <div class="info-item"><div class="info-icon">📍</div><div><strong>Endereço</strong><span>[Rua, Número — Bairro, Cidade]</span></div></div>
+      <div class="info-item"><div class="info-icon">🕐</div><div><strong>Horários</strong><span>Seg–Sex: 9h às 19h<br>Sáb: 9h às 16h</span></div></div>
+      <div class="info-item"><div class="info-icon">📱</div><div><strong>WhatsApp</strong><span>(XX) XXXXX-XXXX</span></div></div>
+      <a href="#" class="btn-rose" style="margin-top:24px;display:inline-block;" onclick="showPopup();return false;">Solicitar Orçamento</a>
+    </div>
+    <div class="mapa-embed">📍 Google Maps aqui</div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <p class="section-tag" style="color:rgba(255,255,255,.6);">Comece agora</p>
+  <h2>Você merece<br>se cuidar.</h2>
+  <p>Solicite seu orçamento personalizado e dê o primeiro passo para uma versão ainda mais radiante de você.</p>
+  <a href="#" class="btn-nude" style="font-size:16px;padding:18px 48px;" onclick="showPopup();return false;">Quero meu Orçamento ✨</a>
+</section>
+
+<footer>
+  <div class="footer-logo">[Nome do Estúdio]</div>
+  <p>[Endereço completo] — [Cidade/UF]</p>
+  <p style="margin-top:10px;">Site desenvolvido por <a href="#">Syntra Digital</a></p>
+</footer>
+
+<a href="https://wa.me/55XXXXXXXXXXX" class="whatsapp-btn" target="_blank">💬</a>
+
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-icon">✨</div>
+    <h3>Solicitar Orçamento</h3>
+    <p>Fale com nossa equipe pelo WhatsApp, descreva o que você deseja e receba um orçamento personalizado.</p>
+    <a href="https://wa.me/55XXXXXXXXXXX" class="btn-rose" target="_blank" style="width:100%;text-align:center;display:block;">Abrir WhatsApp Agora</a>
+    <p class="popup-note">✓ Avaliação estética gratuita na primeira visita</p>
+  </div>
+</div>
+
+<script>
+function showPopup(){document.getElementById('popup').classList.add('active');}
+function closePopup(){document.getElementById('popup').classList.remove('active');}
+document.getElementById('popup').addEventListener('click',function(e){if(e.target===this)closePopup();});
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:0.1});
+document.querySelectorAll('.team-card,.servico-item,.aval-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(30px)';el.style.transition='opacity .6s ease,transform .6s ease';observer.observe(el);});
+setTimeout(()=>{if(!sessionStorage.getItem('popupShown')){showPopup();sessionStorage.setItem('popupShown','1');}},8000);
+</script>
+</body>
+</html>
