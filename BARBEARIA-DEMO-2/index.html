@@ -1,1 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOME DA BARBEARIA — Cortes & Estilo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --gold: #c9a84c;
+  --gold2: #e8c97a;
+  --white: #f0ece4;
+  --gray: #888;
+  --red: #8b1a1a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;}
 
+/* ANIMATED BG */
+.bg-anim{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.bg-anim::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(201,168,76,.07) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(139,26,26,.08) 0%,transparent 50%);}
+.stripe{position:absolute;width:1px;background:linear-gradient(to bottom,transparent,rgba(201,168,76,.15),transparent);animation:stripeMove 8s linear infinite;}
+.stripe:nth-child(1){left:15%;height:60%;animation-delay:0s;animation-duration:9s;}
+.stripe:nth-child(2){left:35%;height:40%;animation-delay:2s;animation-duration:11s;}
+.stripe:nth-child(3){left:55%;height:70%;animation-delay:4s;animation-duration:7s;}
+.stripe:nth-child(4){left:75%;height:50%;animation-delay:1s;animation-duration:13s;}
+.stripe:nth-child(5){left:90%;height:35%;animation-delay:3s;animation-duration:10s;}
+@keyframes stripeMove{0%{top:-100%;opacity:0;}20%{opacity:1;}80%{opacity:1;}100%{top:100%;opacity:0;}}
+.scissors-bg{position:absolute;font-size:300px;opacity:.02;top:10%;right:-5%;animation:rotateSlow 30s linear infinite;}
+@keyframes rotateSlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(10,10,10,.95),transparent);backdrop-filter:blur(10px);}
+.logo-nav{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;color:var(--gold);text-decoration:none;}
+.logo-nav span{color:var(--white);}
+.nav-links{display:flex;gap:30px;list-style:none;}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:13px;letter-spacing:2px;text-transform:uppercase;transition:.3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{background:var(--gold);color:#000;padding:10px 24px;border-radius:2px;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;text-decoration:none;transition:.3s;}
+.nav-cta:hover{background:var(--gold2);}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;padding:0 40px;padding-top:80px;}
+.hero-content{max-width:700px;}
+.hero-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:24px;}
+.hero-tag span{width:40px;height:1px;background:var(--gold);}
+.hero-tag p{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,10vw,120px);line-height:.95;margin-bottom:24px;letter-spacing:2px;}
+.hero h1 em{color:var(--gold);font-style:normal;}
+.hero p{font-size:18px;color:var(--gray);line-height:1.7;max-width:480px;margin-bottom:40px;font-weight:300;}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{background:var(--gold);color:#000;padding:16px 36px;font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;transition:.3s;text-decoration:none;display:inline-block;}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--white);padding:16px 36px;font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:3px;text-transform:uppercase;font-weight:700;border:1px solid rgba(240,236,228,.3);cursor:pointer;transition:.3s;text-decoration:none;display:inline-block;}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero-badge{position:absolute;right:10%;top:50%;transform:translateY(-50%);text-align:center;animation:floatBadge 4s ease-in-out infinite;}
+@keyframes floatBadge{0%,100%{transform:translateY(-50%);}50%{transform:translateY(calc(-50% - 15px));}}
+.badge-circle{width:180px;height:180px;border:1px solid var(--gold);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;}
+.badge-circle::before{content:'';position:absolute;inset:8px;border:1px solid rgba(201,168,76,.3);border-radius:50%;}
+.badge-circle .num{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--gold);line-height:1;}
+.badge-circle .label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);}
+
+/* SECTION BASE */
+section{position:relative;z-index:1;padding:100px 40px;}
+.section-header{text-align:center;margin-bottom:60px;}
+.section-tag{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,72px);letter-spacing:2px;}
+.section-title em{color:var(--gold);font-style:normal;}
+.divider{width:60px;height:2px;background:var(--gold);margin:20px auto 0;}
+
+/* SOBRE */
+.sobre{background:var(--bg2);}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;margin:0 auto;}
+.sobre-img{position:relative;}
+.sobre-img-box{background:linear-gradient(135deg,#1a1a1a,#222);height:420px;display:flex;align-items:center;justify-content:center;font-size:100px;border:1px solid rgba(201,168,76,.2);position:relative;overflow:hidden;}
+.sobre-img-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+.sobre-badge{position:absolute;bottom:-20px;right:-20px;background:var(--gold);color:#000;width:100px;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.sobre-badge strong{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;}
+.sobre-badge span{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:600;}
+.sobre-text h2{font-family:'Bebas Neue',sans-serif;font-size:52px;margin-bottom:20px;letter-spacing:2px;}
+.sobre-text p{color:var(--gray);line-height:1.8;margin-bottom:16px;}
+.sobre-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px;}
+.stat-item{border-left:2px solid var(--gold);padding-left:16px;}
+.stat-item strong{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);}
+.stat-item span{display:block;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+
+/* BARBEIROS */
+.barbeiros{background:var(--bg);}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+.team-card{background:var(--bg2);border:1px solid rgba(201,168,76,.1);overflow:hidden;transition:.4s;cursor:pointer;}
+.team-card:hover{border-color:var(--gold);transform:translateY(-6px);}
+.team-photo{height:280px;background:linear-gradient(135deg,#1a1a1a,#252525);display:flex;align-items:center;justify-content:center;font-size:80px;position:relative;overflow:hidden;}
+.team-photo::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,var(--bg2),transparent);}
+.team-info{padding:20px;}
+.team-info h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.team-info .role{font-size:12px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;}
+.team-info .spec{font-size:13px;color:var(--gray);margin-top:8px;}
+.team-social{display:flex;gap:10px;margin-top:12px;}
+.team-social a{width:32px;height:32px;border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gold);text-decoration:none;transition:.3s;}
+.team-social a:hover{background:var(--gold);color:#000;}
+
+/* SERVIÇOS */
+.servicos{background:var(--bg2);}
+.servicos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;max-width:1100px;margin:0 auto;}
+.servico-item{background:var(--bg);padding:36px;border-bottom:2px solid transparent;transition:.4s;cursor:default;}
+.servico-item:hover{border-bottom-color:var(--gold);background:#111;}
+.servico-icon{font-size:36px;margin-bottom:16px;}
+.servico-item h3{font-family:'Barlow Condensed',sans-serif;font-size:22px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+.servico-item p{color:var(--gray);font-size:14px;line-height:1.7;}
+.servico-price{display:inline-block;margin-top:16px;font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);}
+.servico-price small{font-family:'Barlow',sans-serif;font-size:12px;color:var(--gray);margin-right:4px;}
+
+/* GALERIA */
+.galeria{background:var(--bg);}
+.galeria-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,200px);gap:4px;max-width:1100px;margin:0 auto;}
+.galeria-item{background:linear-gradient(135deg,#1a1a1a,#222);display:flex;align-items:center;justify-content:center;font-size:50px;overflow:hidden;cursor:pointer;transition:.4s;position:relative;}
+.galeria-item:first-child{grid-column:span 2;grid-row:span 2;font-size:90px;}
+.galeria-item::after{content:'Ver mais';position:absolute;inset:0;background:rgba(201,168,76,.85);color:#000;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:16px;letter-spacing:3px;text-transform:uppercase;font-weight:700;opacity:0;transition:.3s;}
+.galeria-item:hover::after{opacity:1;}
+
+/* AVALIACOES */
+.avaliacoes{background:var(--bg2);}
+.aval-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;max-width:1100px;margin:0 auto;}
+.aval-card{background:var(--bg);padding:32px;border:1px solid rgba(201,168,76,.1);position:relative;}
+.aval-card::before{content:'"';position:absolute;top:16px;right:24px;font-family:'Bebas Neue',sans-serif;font-size:80px;color:rgba(201,168,76,.1);line-height:1;}
+.stars{color:var(--gold);font-size:14px;margin-bottom:12px;}
+.aval-card p{color:var(--gray);font-size:15px;line-height:1.7;margin-bottom:20px;}
+.aval-author{display:flex;align-items:center;gap:12px;}
+.aval-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--red));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:#000;}
+.aval-author strong{display:block;font-size:14px;}
+.aval-author span{font-size:12px;color:var(--gray);}
+
+/* MAPA */
+.localizacao{background:var(--bg);}
+.mapa-container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start;}
+.mapa-info h3{font-family:'Bebas Neue',sans-serif;font-size:36px;margin-bottom:24px;}
+.info-item{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start;}
+.info-icon{width:44px;height:44px;background:rgba(201,168,76,.1);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.info-item strong{display:block;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.info-item span{font-size:14px;color:var(--gray);}
+.mapa-embed{height:380px;background:linear-gradient(135deg,#1a1a1a,#222);display:flex;align-items:center;justify-content:center;font-size:40px;border:1px solid rgba(201,168,76,.2);color:var(--gray);font-family:'Barlow Condensed',sans-serif;letter-spacing:3px;text-transform:uppercase;}
+
+/* CTA FINAL */
+.cta-final{background:linear-gradient(135deg,#0d0d0d,#1a1008);text-align:center;border-top:1px solid rgba(201,168,76,.2);}
+.cta-final h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(50px,8vw,100px);letter-spacing:2px;margin-bottom:20px;}
+.cta-final h2 em{color:var(--gold);font-style:normal;}
+.cta-final p{color:var(--gray);font-size:18px;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto;}
+
+/* FOOTER */
+footer{background:#050505;padding:40px;text-align:center;border-top:1px solid #1a1a1a;}
+footer p{color:var(--gray);font-size:13px;}
+footer a{color:var(--gold);text-decoration:none;}
+
+/* WHATSAPP BTN */
+.whatsapp-btn{position:fixed;bottom:30px;right:30px;z-index:999;background:#25D366;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(37,211,102,.4);text-decoration:none;transition:.3s;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4);}50%{box-shadow:0 4px 40px rgba(37,211,102,.7);}}
+.whatsapp-btn:hover{transform:scale(1.1);}
+
+/* POPUP */
+.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.4s;backdrop-filter:blur(4px);}
+.popup-overlay.active{opacity:1;pointer-events:all;}
+.popup-box{background:var(--bg2);border:1px solid var(--gold);width:90%;max-width:480px;padding:48px;position:relative;animation:slideUp .4s ease;}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.popup-close{position:absolute;top:16px;right:20px;background:none;border:none;color:var(--gray);font-size:24px;cursor:pointer;transition:.3s;}
+.popup-close:hover{color:var(--gold);}
+.popup-icon{font-size:48px;margin-bottom:16px;}
+.popup-box h3{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;margin-bottom:8px;}
+.popup-box p{color:var(--gray);font-size:15px;line-height:1.7;margin-bottom:24px;}
+.popup-box .btn-primary{width:100%;text-align:center;display:block;}
+.popup-note{font-size:12px;color:var(--gray);text-align:center;margin-top:12px;}
+
+/* EDIT BANNER */
+.edit-banner{background:linear-gradient(90deg,#1a0a00,#2a1500,#1a0a00);border-bottom:2px solid var(--gold);padding:12px 40px;text-align:center;font-size:13px;letter-spacing:2px;color:var(--gold);position:relative;z-index:200;}
+.edit-banner strong{color:var(--white);}
+
+@media(max-width:768px){
+  nav{padding:16px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:0 20px;padding-top:80px;}
+  .hero-badge{display:none;}
+  section{padding:70px 20px;}
+  .sobre-grid,.mapa-container{grid-template-columns:1fr;}
+  .galeria-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .galeria-item:first-child{grid-column:span 2;grid-row:span 1;}
+}
+</style>
+</head>
+<body>
+
+<!-- EDIT BANNER -->
+<div class="edit-banner">
+  ✏️ DEMONSTRAÇÃO SYNTRA DIGITAL — <strong>Personalize: nome, cores, logo e fotos antes de publicar</strong>
+</div>
+
+<!-- BG ANIMADO -->
+<div class="bg-anim">
+  <div class="stripe"></div><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div><div class="stripe"></div>
+  <div class="scissors-bg">✂</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo-nav">NOME DA<span>BARBEARIA</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#barbeiros">Barbeiros</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="showPopup()">Agendar Agora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-tag"><span></span><p>Barbearia Premium — [Cidade]</p></div>
+    <h1>CORTE.<br><em>ESTILO.</em><br>IDENTIDADE.</h1>
+    <p>Muito mais que um corte. Uma experiência masculina completa. Profissionais especializados, ambiente exclusivo e resultados que falam por si.</p>
+    <div class="hero-btns">
+      <a href="#" class="btn-primary" onclick="showPopup();return false;">Agendar Horário ✂</a>
+      <a href="#sobre" class="btn-outline">Conheça a Barbearia</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <div class="badge-circle">
+      <span class="num">10+</span>
+      <span class="label">Anos de Tradição</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img">
+      <div class="sobre-img-box">✂️</div>
+      <div class="sobre-badge"><strong>★</strong><span>Premium</span></div>
+    </div>
+    <div class="sobre-text">
+      <p class="section-tag">Nossa História</p>
+      <h2>TRADIÇÃO QUE TRANSFORMA</h2>
+      <p>Fundada por <strong>[Nome do Fundador]</strong>, a <strong>[Nome da Barbearia]</strong> nasceu da paixão pelo cuidado masculino e da crença de que todo homem merece um espaço onde se sinta valorizado.</p>
+      <p>Localizada no coração de [Cidade], somos referência em cortes clássicos, modernos e no atendimento personalizado que vai muito além da tesoura.</p>
+      <div class="sobre-stats">
+        <div class="stat-item"><strong>500+</strong><span>Clientes Mensais</span></div>
+        <div class="stat-item"><strong>10+</strong><span>Anos de Mercado</span></div>
+        <div class="stat-item"><strong>5★</strong><span>Avaliação Google</span></div>
+        <div class="stat-item"><strong>4</strong><span>Barbeiros Especialistas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BARBEIROS -->
+<section class="barbeiros" id="barbeiros">
+  <div class="section-header">
+    <p class="section-tag">Nossos Profissionais</p>
+    <h2 class="section-title">QUEM VAI TE<em> TRANSFORMAR</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-photo">💈</div>
+      <div class="team-info">
+        <h3>[Nome do Barbeiro 1]</h3>
+        <p class="role">Master Barber</p>
+        <p class="spec">Especialista em cortes clássicos e degradê</p>
+        <div class="team-social"><a href="#">ig</a><a href="#">wa</a></div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">✂️</div>
+      <div class="team-info">
+        <h3>[Nome do Barbeiro 2]</h3>
+        <p class="role">Barbeiro Sênior</p>
+        <p class="spec">Especialista em barba e navalhagem</p>
+        <div class="team-social"><a href="#">ig</a><a href="#">wa</a></div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">🪒</div>
+      <div class="team-info">
+        <h3>[Nome do Barbeiro 3]</h3>
+        <p class="role">Barbeiro Especialista</p>
+        <p class="spec">Cortes modernos e coloração</p>
+        <div class="team-social"><a href="#">ig</a><a href="#">wa</a></div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo">💇</div>
+      <div class="team-info">
+        <h3>[Nome do Barbeiro 4]</h3>
+        <p class="role">Barbeiro Junior</p>
+        <p class="spec">Estilos urbanos e texturizados</p>
+        <div class="team-social"><a href="#">ig</a><a href="#">wa</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="servicos" id="servicos">
+  <div class="section-header">
+    <p class="section-tag">O que oferecemos</p>
+    <h2 class="section-title">NOSSOS <em>SERVIÇOS</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="servicos-grid">
+    <div class="servico-item">
+      <div class="servico-icon">✂️</div>
+      <h3>Corte Tradicional</h3>
+      <p>Cortes clássicos executados com precisão e técnica apurada.</p>
+      <span class="servico-price"><small>a partir de</small>R$ 45</span>
+    </div>
+    <div class="servico-item">
+      <div class="servico-icon">🪒</div>
+      <h3>Barba Completa</h3>
+      <p>Modelagem, hidratação e finalização com produtos premium.</p>
+      <span class="servico-price"><small>a partir de</small>R$ 35</span>
+    </div>
+    <div class="servico-item">
+      <div class="servico-icon">💈</div>
+      <h3>Combo Completo</h3>
+      <p>Corte + barba + sobrancelha com experiência completa.</p>
+      <span class="servico-price"><small>a partir de</small>R$ 70</span>
+    </div>
+    <div class="servico-item">
+      <div class="servico-icon">🧔</div>
+      <h3>Degradê Americano</h3>
+      <p>Técnica americana com acabamento perfeito e preciso.</p>
+      <span class="servico-price"><small>a partir de</small>R$ 50</span>
+    </div>
+    <div class="servico-item">
+      <div class="servico-icon">💆</div>
+      <h3>Hidratação Capilar</h3>
+      <p>Tratamento profundo para cabelos ressecados ou danificados.</p>
+      <span class="servico-price"><small>a partir de</small>R$ 40</span>
+    </div>
+    <div class="servico-item">
+      <div class="servico-icon">👤</div>
+      <h3>Sobrancelha</h3>
+      <p>Design de sobrancelha masculino que realça sua expressão.</p>
+      <span class="servico-price"><small>a partir de</small>R$ 20</span>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <div class="section-header">
+    <p class="section-tag">Nosso Trabalho</p>
+    <h2 class="section-title">GALERIA DE <em>ESTILOS</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="galeria-grid">
+    <div class="galeria-item">✂️</div>
+    <div class="galeria-item">💈</div>
+    <div class="galeria-item">🪒</div>
+    <div class="galeria-item">🧔</div>
+    <div class="galeria-item">💇</div>
+  </div>
+</section>
+
+<!-- AVALIAÇÕES -->
+<section class="avaliacoes" id="avaliacoes">
+  <div class="section-header">
+    <p class="section-tag">O que falam de nós</p>
+    <h2 class="section-title">AVALIAÇÕES <em>REAIS</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="aval-grid">
+    <div class="aval-card">
+      <div class="stars">★★★★★</div>
+      <p>Melhor barbearia da cidade! O [Nome do Barbeiro] entende exatamente o que você quer. Ambiente incrível, atendimento de primeira.</p>
+      <div class="aval-author"><div class="aval-avatar">M</div><div><strong>Marcos Oliveira</strong><span>Cliente há 3 anos</span></div></div>
+    </div>
+    <div class="aval-card">
+      <div class="stars">★★★★★</div>
+      <p>Fui pela primeira vez e já sou cliente fiel. O degradê ficou impecável e a barba modelada perfeita. Super recomendo!</p>
+      <div class="aval-author"><div class="aval-avatar">R</div><div><strong>Rafael Santos</strong><span>Novo cliente</span></div></div>
+    </div>
+    <div class="aval-card">
+      <div class="stars">★★★★★</div>
+      <p>Lugar diferenciado, produto de qualidade e profissionais que realmente entendem do negócio. Minha barbearia de confiança.</p>
+      <div class="aval-author"><div class="aval-avatar">L</div><div><strong>Lucas Ferreira</strong><span>Cliente há 1 ano</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCALIZAÇÃO -->
+<section class="localizacao" id="contato">
+  <div class="mapa-container">
+    <div class="mapa-info">
+      <h3>ONDE ESTAMOS</h3>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <div><strong>Endereço</strong><span>[Rua, Número — Bairro, Cidade]</span></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🕐</div>
+        <div><strong>Horários</strong><span>Seg–Sáb: 9h às 20h<br>Dom: 9h às 14h</span></div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📱</div>
+        <div><strong>WhatsApp</strong><span>(XX) XXXXX-XXXX</span></div>
+      </div>
+      <a href="#" class="btn-primary" style="margin-top:24px;display:inline-block;" onclick="showPopup();return false;">Agendar pelo WhatsApp</a>
+    </div>
+    <div class="mapa-embed">📍 GOOGLE MAPS AQUI</div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <p class="section-tag">Reserve seu horário</p>
+  <h2>PRONTO PARA<br><em>SUA MELHOR</em><br>VERSÃO?</h2>
+  <p>Não espere. Agende agora e garanta o melhor atendimento da cidade.</p>
+  <a href="#" class="btn-primary" onclick="showPopup();return false;">Quero Agendar Agora ✂</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--gold);margin-bottom:12px;">NOME DA BARBEARIA</p>
+  <p>[Endereço completo] — [Cidade/UF]</p>
+  <p style="margin-top:12px;">Site desenvolvido por <a href="#">Syntra Digital</a></p>
+</footer>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/55XXXXXXXXXXX" class="whatsapp-btn" target="_blank">💬</a>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-icon">💈</div>
+    <h3>FALE COM A GENTE</h3>
+    <p>Agende seu horário agora pelo WhatsApp ou aguarde que entraremos em contato. Rápido, fácil e sem complicação.</p>
+    <a href="https://wa.me/55XXXXXXXXXXX" class="btn-primary" target="_blank">Abrir WhatsApp Agora</a>
+    <p class="popup-note">✓ Resposta em até 5 minutos no horário de funcionamento</p>
+  </div>
+</div>
+
+<script>
+function showPopup(){document.getElementById('popup').classList.add('active');}
+function closePopup(){document.getElementById('popup').classList.remove('active');}
+document.getElementById('popup').addEventListener('click',function(e){if(e.target===this)closePopup();});
+// Scroll animations
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}});},{threshold:0.1});
+document.querySelectorAll('.team-card,.servico-item,.aval-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(30px)';el.style.transition='opacity .6s ease, transform .6s ease';observer.observe(el);});
+// Auto popup after 8s
+setTimeout(()=>{if(!sessionStorage.getItem('popupShown')){showPopup();sessionStorage.setItem('popupShown','1');}},8000);
+</script>
+</body>
+</html>
