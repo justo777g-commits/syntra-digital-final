@@ -1,1 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syntra Digital — Experiências Digitais Premium</title>
+  <meta name="description" content="Syntra Digital cria sites premium, landing pages de alta conversão e experiências digitais sob medida para marcas que querem ser percebidas em outro nível." />
+  <meta name="keywords" content="agência digital premium, sites premium, design estratégico, identidade visual, landing page, presença digital" />
+  <meta property="og:title" content="Syntra Digital — Experiências Digitais Premium" />
+  <meta property="og:description" content="Design estratégico, performance e autoridade para marcas de alto padrão." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://syntradigital.com.br" />
+  <meta name="theme-color" content="#0B0B0B" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
 
+  <!-- CANVAS BACKGROUND -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-follower" id="cursor-follower" aria-hidden="true"></div>
+
+  <!-- LOADER -->
+  <div class="loader" id="loader" aria-label="Carregando" role="status">
+    <div class="loader-inner">
+      <div class="loader-logo">SYNTRA</div>
+      <div class="loader-bar"><div class="loader-fill" id="loader-fill"></div></div>
+      <div class="loader-text">Inicializando experiência</div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header" id="header" role="banner">
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#inicio" class="logo" aria-label="Syntra Digital — Página inicial">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">SYNTRA <span class="logo-accent">DIGITAL</span></span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#inicio" class="nav-link">Início</a></li>
+        <li><a href="#experiencia" class="nav-link">Experiência</a></li>
+        <li><a href="#solucoes" class="nav-link">Soluções</a></li>
+        <li><a href="#diferenciais" class="nav-link">Diferenciais</a></li>
+        <li><a href="#portfolio" class="nav-link">Portfólio</a></li>
+        <li><a href="#proposta" class="nav-link">Proposta</a></li>
+      </ul>
+
+      <a href="#contato" class="btn-header" aria-label="Solicitar proposta">
+        <span>Solicitar proposta</span>
+        <span class="btn-glow" aria-hidden="true"></span>
+      </a>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu" role="dialog" aria-label="Menu de navegação" aria-hidden="true">
+      <ul role="list">
+        <li><a href="#inicio" class="mobile-link">Início</a></li>
+        <li><a href="#experiencia" class="mobile-link">Experiência</a></li>
+        <li><a href="#solucoes" class="mobile-link">Soluções</a></li>
+        <li><a href="#diferenciais" class="mobile-link">Diferenciais</a></li>
+        <li><a href="#portfolio" class="mobile-link">Portfólio</a></li>
+        <li><a href="#proposta" class="mobile-link">Proposta</a></li>
+        <li><a href="#contato" class="mobile-link mobile-cta">Solicitar proposta</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="inicio" aria-label="Apresentação Syntra Digital">
+      <div class="hero-grid" aria-hidden="true">
+        <div class="hero-grid-lines"></div>
+      </div>
+
+      <!-- Floating orbs -->
+      <div class="orb orb-1" aria-hidden="true"></div>
+      <div class="orb orb-2" aria-hidden="true"></div>
+      <div class="orb orb-3" aria-hidden="true"></div>
+
+      <!-- Geometric shapes -->
+      <div class="geo geo-1" aria-hidden="true"></div>
+      <div class="geo geo-2" aria-hidden="true"></div>
+      <div class="geo geo-3" aria-hidden="true"></div>
+
+      <!-- Scan line -->
+      <div class="scan-line" aria-hidden="true"></div>
+
+      <div class="hero-container">
+        <div class="hero-eyebrow reveal-up">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          <span>Estúdio digital de alto padrão</span>
+          <span class="eyebrow-line" aria-hidden="true"></span>
+        </div>
+
+        <h1 class="hero-title reveal-up" style="--delay:0.1s">
+          <span class="title-line">Sites premium para</span>
+          <span class="title-line title-accent">marcas que querem ser</span>
+          <span class="title-line">percebidas em outro nível.</span>
+        </h1>
+
+        <p class="hero-sub reveal-up" style="--delay:0.2s">
+          Criamos experiências digitais com design estratégico, performance de alto padrão e arquitetura pensada para transmitir autoridade, gerar confiança e converter visitantes em clientes.
+        </p>
+
+        <div class="hero-actions reveal-up" style="--delay:0.3s">
+          <a href="#contato" class="btn-primary" aria-label="Solicitar proposta premium">
+            <span class="btn-text">Solicitar proposta premium</span>
+            <span class="btn-icon" aria-hidden="true">→</span>
+            <span class="btn-shine" aria-hidden="true"></span>
+          </a>
+          <a href="#experiencia" class="btn-ghost" aria-label="Ver nossa experiência">
+            <span>Ver experiência</span>
+            <span class="btn-arrow" aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <div class="hero-badges reveal-up" style="--delay:0.4s" aria-label="Diferenciais">
+          <div class="badge">
+            <span class="badge-icon" aria-hidden="true">◈</span>
+            <span>Design estratégico</span>
+          </div>
+          <div class="badge">
+            <span class="badge-icon" aria-hidden="true">◈</span>
+            <span>Alta performance</span>
+          </div>
+          <div class="badge">
+            <span class="badge-icon" aria-hidden="true">◈</span>
+            <span>Experiência sob medida</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Glass Panel -->
+      <div class="hero-glass reveal-right" aria-hidden="true">
+        <div class="glass-panel">
+          <div class="glass-header">
+            <div class="glass-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="glass-title">syntra.studio</span>
+          </div>
+          <div class="glass-metrics">
+            <div class="metric">
+              <span class="metric-val" data-count="98">0</span><span class="metric-unit">%</span>
+              <span class="metric-label">Performance Score</span>
+            </div>
+            <div class="metric-divider" aria-hidden="true"></div>
+            <div class="metric">
+              <span class="metric-val" data-count="100">0</span><span class="metric-unit">%</span>
+              <span class="metric-label">Mobile Ready</span>
+            </div>
+            <div class="metric-divider" aria-hidden="true"></div>
+            <div class="metric">
+              <span class="metric-val" data-count="100">0</span><span class="metric-unit">%</span>
+              <span class="metric-label">SEO Score</span>
+            </div>
+          </div>
+          <div class="glass-bars" aria-hidden="true">
+            <div class="bar-row">
+              <span>Design</span>
+              <div class="bar"><div class="bar-fill" style="--w:95%"></div></div>
+            </div>
+            <div class="bar-row">
+              <span>Performance</span>
+              <div class="bar"><div class="bar-fill" style="--w:98%"></div></div>
+            </div>
+            <div class="bar-row">
+              <span>Conversão</span>
+              <div class="bar"><div class="bar-fill" style="--w:90%"></div></div>
+            </div>
+          </div>
+          <div class="glass-status">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span>Sistema operacional</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-scroll-indicator" aria-label="Role para baixo">
+        <div class="scroll-line"></div>
+        <span>Explorar</span>
+      </div>
+    </section>
+
+    <!-- ===== AUTHORITY ===== -->
+    <section class="authority" id="autoridade" aria-labelledby="authority-title">
+      <div class="container">
+        <div class="authority-grid">
+          <div class="authority-left reveal-left">
+            <span class="section-tag">Por que importa</span>
+            <h2 class="section-title" id="authority-title">
+              Seu site não é uma página.<br/>
+              <span class="gold">É o seu ativo comercial mais poderoso.</span>
+            </h2>
+            <p class="authority-text">
+              No mundo digital de hoje, a primeira impressão acontece antes da primeira conversa. Seu site comunica preço, credibilidade e profissionalismo em segundos — antes mesmo que o visitante leia uma palavra.
+            </p>
+            <p class="authority-text">
+              Uma presença digital de alto padrão não é custo. É investimento estratégico que posiciona sua marca, filtra clientes ideais e sustenta propostas de maior valor.
+            </p>
+            <div class="authority-stats">
+              <div class="stat-item">
+                <span class="stat-num">0.05<span class="stat-s">s</span></span>
+                <span class="stat-desc">para formar a primeira impressão do visitante</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-num">75<span class="stat-s">%</span></span>
+                <span class="stat-desc">dos usuários julgam a credibilidade pelo design</span>
+              </div>
+            </div>
+          </div>
+          <div class="authority-right reveal-right">
+            <div class="authority-cards">
+              <div class="auth-card glass-card">
+                <div class="auth-card-icon" aria-hidden="true">⬡</div>
+                <h3>Autoridade percebida</h3>
+                <p>Um site premium eleva instantaneamente como sua marca é percebida no mercado.</p>
+              </div>
+              <div class="auth-card glass-card">
+                <div class="auth-card-icon" aria-hidden="true">◎</div>
+                <h3>Confiança genuína</h3>
+                <p>Design estratégico transmite segurança e profissionalismo antes da primeira conversa.</p>
+              </div>
+              <div class="auth-card glass-card">
+                <div class="auth-card-icon" aria-hidden="true">◈</div>
+                <h3>Conversão qualificada</h3>
+                <p>Arquitetura pensada para guiar o visitante à ação certa no momento certo.</p>
+              </div>
+              <div class="auth-card glass-card">
+                <div class="auth-card-icon" aria-hidden="true">◬</div>
+                <h3>Posicionamento de valor</h3>
+                <p>Sustente preços premium com uma presença digital à altura da sua entrega.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="services" id="solucoes" aria-labelledby="services-title">
+      <div class="services-bg" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <span class="section-tag">O que criamos</span>
+          <h2 class="section-title" id="services-title">Soluções digitais<br/><span class="gold">sob medida</span></h2>
+          <p class="section-sub">Cada projeto é construído do zero para refletir a identidade única da sua marca e os objetivos específicos do seu negócio.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card reveal-up" style="--delay:0s" aria-label="Sites institucionais premium">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="4" y="8" width="40" height="30" rx="3" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 16h40" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="10" cy="12" r="1.5" fill="currentColor"/>
+                <circle cx="15" cy="12" r="1.5" fill="currentColor"/>
+                <circle cx="20" cy="12" r="1.5" fill="currentColor"/>
+                <path d="M12 24h8M12 28h16M12 32h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <rect x="30" y="21" width="10" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="service-content">
+              <h3>Sites Institucionais Premium</h3>
+              <p>Presença digital completa e estratégica que posiciona sua marca com autoridade, confiança e identidade visual de alto padrão.</p>
+            </div>
+            <div class="service-arrow" aria-hidden="true">→</div>
+            <div class="service-glow" aria-hidden="true"></div>
+          </article>
+
+          <article class="service-card reveal-up" style="--delay:0.1s" aria-label="Landing pages de conversão">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M24 8L40 16V32L24 40L8 32V16L24 8Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M24 8V40M8 16L40 32M40 16L8 32" stroke="currentColor" stroke-width="1" stroke-opacity="0.4"/>
+                <circle cx="24" cy="24" r="4" fill="currentColor" fill-opacity="0.3" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="service-content">
+              <h3>Landing Pages de Conversão</h3>
+              <p>Páginas de aterrissagem com arquitetura persuasiva, design focado em ação e estrutura otimizada para capturar e converter leads qualificados.</p>
+            </div>
+            <div class="service-arrow" aria-hidden="true">→</div>
+            <div class="service-glow" aria-hidden="true"></div>
+          </article>
+
+          <article class="service-card reveal-up" style="--delay:0.2s" aria-label="Identidade visual digital">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M24 8V16M24 32V40M8 24H16M32 24H40" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="service-content">
+              <h3>Identidade Visual Digital</h3>
+              <p>Sistemas visuais coesos que comunicam os valores da sua marca com consistência e sofisticação em todos os pontos de contato digitais.</p>
+            </div>
+            <div class="service-arrow" aria-hidden="true">→</div>
+            <div class="service-glow" aria-hidden="true"></div>
+          </article>
+
+          <article class="service-card reveal-up" style="--delay:0s" aria-label="Catálogos e páginas comerciais">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="8" y="6" width="24" height="36" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="16" y="6" width="24" height="36" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M22 16h10M22 22h10M22 28h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <rect x="22" y="32" width="8" height="4" rx="1" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="service-content">
+              <h3>Catálogos e Páginas Comerciais</h3>
+              <p>Vitrines digitais elegantes que apresentam produtos e serviços com apelo visual premium, facilitando a jornada de compra e decisão.</p>
+            </div>
+            <div class="service-arrow" aria-hidden="true">→</div>
+            <div class="service-glow" aria-hidden="true"></div>
+          </article>
+
+          <article class="service-card reveal-up" style="--delay:0.1s" aria-label="Automação de atendimento">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="6" y="10" width="28" height="20" rx="3" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M14 30L10 38h16l-4-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="34" cy="30" r="8" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M31 30l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M14 18h12M14 22h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="service-content">
+              <h3>Automação de Atendimento</h3>
+              <p>Integração inteligente de fluxos de comunicação, formulários estratégicos e conexões com WhatsApp para agilizar e profissionalizar o relacionamento com clientes.</p>
+            </div>
+            <div class="service-arrow" aria-hidden="true">→</div>
+            <div class="service-glow" aria-hidden="true"></div>
+          </article>
+
+          <article class="service-card reveal-up" style="--delay:0.2s" aria-label="Sistemas e soluções sob medida">
+            <div class="service-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M24 6L42 16v16L24 42 6 32V16L24 6Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M24 6v36M6 16l36 16M42 16L6 32" stroke="currentColor" stroke-width="1" stroke-opacity="0.3"/>
+                <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="24" cy="24" r="2" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="service-content">
+              <h3>Sistemas e Soluções Sob Medida</h3>
+              <p>Desenvolvimento de sistemas customizados, portais, integrações e soluções tecnológicas que suportam o crescimento e a operação da sua empresa.</p>
+            </div>
+            <div class="service-arrow" aria-hidden="true">→</div>
+            <div class="service-glow" aria-hidden="true"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROCESS ===== -->
+    <section class="process" id="experiencia" aria-labelledby="process-title">
+      <div class="container">
+        <div class="section-header reveal-up">
+          <span class="section-tag">Nossa metodologia</span>
+          <h2 class="section-title" id="process-title">Do diagnóstico ao<br/><span class="gold">lançamento perfeito</span></h2>
+          <p class="section-sub">Um processo estruturado e colaborativo que garante resultados consistentes e uma experiência de projeto à altura do seu investimento.</p>
+        </div>
+
+        <div class="process-timeline" role="list">
+          <div class="process-step reveal-up" style="--delay:0s" role="listitem">
+            <div class="step-number" aria-hidden="true">01</div>
+            <div class="step-content">
+              <div class="step-icon" aria-hidden="true">◉</div>
+              <h3>Diagnóstico</h3>
+              <p>Imersão profunda no negócio, público-alvo e objetivos estratégicos para entender onde você está e onde quer chegar.</p>
+            </div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="process-step reveal-up" style="--delay:0.1s" role="listitem">
+            <div class="step-number" aria-hidden="true">02</div>
+            <div class="step-content">
+              <div class="step-icon" aria-hidden="true">◉</div>
+              <h3>Estratégia</h3>
+              <p>Definição da arquitetura da informação, posicionamento visual e estratégia de conteúdo alinhada aos seus objetivos de negócio.</p>
+            </div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="process-step reveal-up" style="--delay:0.2s" role="listitem">
+            <div class="step-number" aria-hidden="true">03</div>
+            <div class="step-content">
+              <div class="step-icon" aria-hidden="true">◉</div>
+              <h3>Design</h3>
+              <p>Criação de interfaces únicas e exclusivas com identidade visual forte, experiência do usuário refinada e estética de alto padrão.</p>
+            </div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="process-step reveal-up" style="--delay:0.3s" role="listitem">
+            <div class="step-number" aria-hidden="true">04</div>
+            <div class="step-content">
+              <div class="step-icon" aria-hidden="true">◉</div>
+              <h3>Desenvolvimento</h3>
+              <p>Construção técnica com código limpo, performance otimizada, responsividade total e integração de todas as funcionalidades planejadas.</p>
+            </div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="process-step reveal-up" style="--delay:0.4s" role="listitem">
+            <div class="step-number" aria-hidden="true">05</div>
+            <div class="step-content">
+              <div class="step-icon" aria-hidden="true">◉</div>
+              <h3>Lançamento</h3>
+              <p>Publicação técnica completa com configuração de domínio, SSL, velocidade e todos os detalhes para uma estreia impecável.</p>
+            </div>
+            <div class="step-connector" aria-hidden="true"></div>
+          </div>
+
+          <div class="process-step reveal-up" style="--delay:0.5s" role="listitem">
+            <div class="step-number" aria-hidden="true">06</div>
+            <div class="step-content">
+              <div class="step-icon" aria-hidden="true">◉</div>
+              <h3>Otimização</h3>
+              <p>Acompanhamento pós-lançamento com ajustes estratégicos baseados em dados reais para maximizar performance e conversão.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DIFFERENTIALS ===== -->
+    <section class="differentials" id="diferenciais" aria-labelledby="diff-title">
+      <div class="diff-bg" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-header reveal-up">
+          <span class="section-tag">Por que a Syntra</span>
+          <h2 class="section-title" id="diff-title">O padrão que nos<br/><span class="gold">diferencia</span></h2>
+        </div>
+
+        <div class="diff-grid">
+          <div class="diff-card reveal-up glass-card" style="--delay:0s" aria-label="Layout exclusivo">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="4" y="4" width="32" height="32" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M4 14h32M14 14v22" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M20 20h10M20 25h7M20 30h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>Layout Exclusivo</h3>
+            <p>Nenhum template. Cada projeto é desenhado do zero com identidade própria e direção criativa única para a sua marca.</p>
+            <div class="diff-tag">100% customizado</div>
+          </div>
+
+          <div class="diff-card reveal-up glass-card" style="--delay:0.1s" aria-label="Responsividade total">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="2" y="8" width="28" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="30" y="12" width="8" height="14" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 32h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="14" cy="26" r="1" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>Responsividade Total</h3>
+            <p>Experiência impecável em todos os dispositivos — do smartphone à tela grande, sem concessões de qualidade ou usabilidade.</p>
+            <div class="diff-tag">Mobile-first</div>
+          </div>
+
+          <div class="diff-card reveal-up glass-card" style="--delay:0.2s" aria-label="SEO estrutural">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="18" cy="18" r="12" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M27 27l9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M12 18h12M18 12v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h3>SEO Estrutural</h3>
+            <p>Arquitetura técnica otimizada para mecanismos de busca desde a fundação — código semântico, velocidade e estrutura de conteúdo estratégica.</p>
+            <div class="diff-tag">Indexação otimizada</div>
+          </div>
+
+          <div class="diff-card reveal-up glass-card" style="--delay:0s" aria-label="Performance otimizada">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M20 4l3.5 10.5H34L25.5 21 29 31.5 20 25l-9 6.5 3.5-10.5L6 14.5h10.5L20 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Performance Otimizada</h3>
+            <p>Velocidade de carregamento premium com código enxuto, assets otimizados e as melhores práticas de performance web aplicadas.</p>
+            <div class="diff-tag">Core Web Vitals</div>
+          </div>
+
+          <div class="diff-card reveal-up glass-card" style="--delay:0.1s" aria-label="Arquitetura escalável">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <rect x="14" y="4" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="4" y="26" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="24" y="26" width="12" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M20 14v6M10 26v-6h20v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Arquitetura Escalável</h3>
+            <p>Estrutura técnica pensada para crescer com o seu negócio — fácil de expandir, integrar e evoluir sem reconstruir do zero.</p>
+            <div class="diff-tag">Pronto para crescer</div>
+          </div>
+
+          <div class="diff-card reveal-up glass-card" style="--delay:0.2s" aria-label="Experiência premium">
+            <div class="diff-icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M20 6C12.27 6 6 12.27 6 20s6.27 14 14 14 14-6.27 14-14S27.73 6 20 6Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M20 10v10l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Experiência Premium</h3>
+            <p>Microinterações, animações refinadas e atenção obsessiva a cada detalhe — porque a qualidade da experiência define a percepção do valor da sua marca.</p>
+            <div class="diff-tag">Alto padrão</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PORTFOLIO ===== -->
+    <section class="portfolio" id="portfolio" aria-labelledby="portfolio-title">
+      <div class="container">
+        <div class="section-header reveal-up">
+          <span class="section-tag">Projetos</span>
+          <h2 class="section-title" id="portfolio-title">Experiências que<br/><span class="gold">transformam marcas</span></h2>
+          <p class="section-sub">Modelos demonstrativos de projetos em diferentes segmentos. Cada conceito reflete nossa capacidade criativa e técnica.</p>
+        </div>
+
+        <div class="portfolio-filter reveal-up" role="tablist" aria-label="Filtrar projetos">
+          <button class="filter-btn active" role="tab" aria-selected="true" data-filter="all">Todos</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="corporate">Corporativo</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="commerce">Comercial</button>
+          <button class="filter-btn" role="tab" aria-selected="false" data-filter="service">Serviços</button>
+        </div>
+
+        <div class="portfolio-grid" role="list">
+          <article class="portfolio-card reveal-up" data-category="corporate" role="listitem" aria-label="Marca corporativa — modelo demonstrativo">
+            <div class="portfolio-visual" aria-hidden="true">
+              <div class="pv-bg pv-1"></div>
+              <div class="pv-overlay"></div>
+              <div class="pv-content">
+                <div class="pv-lines">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="pv-logo">MC</div>
+                <div class="pv-nav">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <div class="portfolio-meta">
+                <span class="portfolio-cat">Corporativo</span>
+                <span class="demo-badge" aria-label="Modelo demonstrativo">Demo</span>
+              </div>
+              <h3>Marca Corporativa</h3>
+              <p>Site institucional com posicionamento premium, área de serviços e presença digital de alto padrão.</p>
+              <div class="portfolio-tags">
+                <span>Institucional</span>
+                <span>Premium</span>
+                <span>Corporativo</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal-up" data-category="service" role="listitem" style="--delay:0.1s" aria-label="Serviço especializado — modelo demonstrativo">
+            <div class="portfolio-visual" aria-hidden="true">
+              <div class="pv-bg pv-2"></div>
+              <div class="pv-overlay"></div>
+              <div class="pv-content">
+                <div class="pv-lines">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="pv-logo">SE</div>
+                <div class="pv-nav">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <div class="portfolio-meta">
+                <span class="portfolio-cat">Serviços</span>
+                <span class="demo-badge" aria-label="Modelo demonstrativo">Demo</span>
+              </div>
+              <h3>Serviço Especializado</h3>
+              <p>Landing page de conversão para prestador de serviços com foco em geração de leads qualificados.</p>
+              <div class="portfolio-tags">
+                <span>Landing Page</span>
+                <span>Conversão</span>
+                <span>Leads</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal-up" data-category="commerce" role="listitem" style="--delay:0.2s" aria-label="Loja moderna — modelo demonstrativo">
+            <div class="portfolio-visual" aria-hidden="true">
+              <div class="pv-bg pv-3"></div>
+              <div class="pv-overlay"></div>
+              <div class="pv-content">
+                <div class="pv-lines">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="pv-logo">LM</div>
+                <div class="pv-nav">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <div class="portfolio-meta">
+                <span class="portfolio-cat">Comercial</span>
+                <span class="demo-badge" aria-label="Modelo demonstrativo">Demo</span>
+              </div>
+              <h3>Loja Moderna</h3>
+              <p>Vitrine digital elegante com catálogo de produtos, identidade visual forte e experiência de compra refinada.</p>
+              <div class="portfolio-tags">
+                <span>E-commerce</span>
+                <span>Catálogo</span>
+                <span>Design</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal-up" data-category="corporate" role="listitem" style="--delay:0s" aria-label="Negócio local premium — modelo demonstrativo">
+            <div class="portfolio-visual" aria-hidden="true">
+              <div class="pv-bg pv-4"></div>
+              <div class="pv-overlay"></div>
+              <div class="pv-content">
+                <div class="pv-lines">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="pv-logo">NL</div>
+                <div class="pv-nav">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <div class="portfolio-meta">
+                <span class="portfolio-cat">Corporativo</span>
+                <span class="demo-badge" aria-label="Modelo demonstrativo">Demo</span>
+              </div>
+              <h3>Negócio Local Premium</h3>
+              <p>Presença digital que valoriza o negócio local com posicionamento profissional e captação de clientes online.</p>
+              <div class="portfolio-tags">
+                <span>Local</span>
+                <span>Premium</span>
+                <span>Captação</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal-up" data-category="service" role="listitem" style="--delay:0.1s" aria-label="Projeto institucional — modelo demonstrativo">
+            <div class="portfolio-visual" aria-hidden="true">
+              <div class="pv-bg pv-5"></div>
+              <div class="pv-overlay"></div>
+              <div class="pv-content">
+                <div class="pv-lines">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="pv-logo">PI</div>
+                <div class="pv-nav">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <div class="portfolio-meta">
+                <span class="portfolio-cat">Serviços</span>
+                <span class="demo-badge" aria-label="Modelo demonstrativo">Demo</span>
+              </div>
+              <h3>Projeto Institucional</h3>
+              <p>Site completo para instituição com área de conteúdo, apresentação da equipe e formulários de contato estratégicos.</p>
+              <div class="portfolio-tags">
+                <span>Institucional</span>
+                <span>Conteúdo</span>
+                <span>Profissional</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="portfolio-card reveal-up" data-category="commerce" role="listitem" style="--delay:0.2s" aria-label="Solução comercial — modelo demonstrativo">
+            <div class="portfolio-visual" aria-hidden="true">
+              <div class="pv-bg pv-6"></div>
+              <div class="pv-overlay"></div>
+              <div class="pv-content">
+                <div class="pv-lines">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="pv-logo">SC</div>
+                <div class="pv-nav">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <div class="portfolio-info">
+              <div class="portfolio-meta">
+                <span class="portfolio-cat">Comercial</span>
+                <span class="demo-badge" aria-label="Modelo demonstrativo">Demo</span>
+              </div>
+              <h3>Solução Comercial</h3>
+              <p>Página de vendas com arquitetura de funil, apresentação de oferta e chamadas para ação estrategicamente posicionadas.</p>
+              <div class="portfolio-tags">
+                <span>Vendas</span>
+                <span>Funil</span>
+                <span>Estratégia</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VALUE ===== -->
+    <section class="value" id="valor" aria-labelledby="value-title">
+      <div class="container">
+        <div class="value-inner glass-card reveal-up">
+          <div class="value-left">
+            <span class="section-tag">Retorno estratégico</span>
+            <h2 class="section-title" id="value-title">Por que investir em<br/><span class="gold">presença premium?</span></h2>
+            <p class="value-text">Um site de alto padrão não é apenas estética — é uma ferramenta estratégica que trabalha 24 horas por dia para profissionalizar sua marca e apoiar suas vendas.</p>
+          </div>
+          <div class="value-right">
+            <div class="value-items">
+              <div class="value-item">
+                <div class="value-check" aria-hidden="true">✦</div>
+                <div>
+                  <strong>Eleva a percepção de valor da marca</strong>
+                  <p>Um design premium comunica qualidade antes mesmo da primeira conversa.</p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-check" aria-hidden="true">✦</div>
+                <div>
+                  <strong>Gera confiança e credibilidade</strong>
+                  <p>Visitantes confiam mais em marcas com presença digital profissional e consistente.</p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-check" aria-hidden="true">✦</div>
+                <div>
+                  <strong>Apoia o processo comercial</strong>
+                  <p>Um site estratégico facilita negociações, justifica preços e reduz objeções.</p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-check" aria-hidden="true">✦</div>
+                <div>
+                  <strong>Fortalece o posicionamento</strong>
+                  <p>Define claramente quem você é, o que faz e para quem — atraindo o perfil certo de cliente.</p>
+                </div>
+              </div>
+              <div class="value-item">
+                <div class="value-check" aria-hidden="true">✦</div>
+                <div>
+                  <strong>Profissionaliza a marca</strong>
+                  <p>Uniformiza todos os pontos de contato digitais com consistência e sofisticação.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="cta-section" id="proposta" aria-labelledby="cta-title">
+      <div class="cta-bg" aria-hidden="true"></div>
+      <div class="orb orb-cta-1" aria-hidden="true"></div>
+      <div class="orb orb-cta-2" aria-hidden="true"></div>
+      <div class="container">
+        <div class="cta-inner reveal-up">
+          <div class="cta-badge" aria-hidden="true">
+            <span class="badge-dot"></span>
+            Vagas limitadas para novos projetos
+          </div>
+          <h2 class="cta-title" id="cta-title">
+            Pronto para apresentar sua<br/>
+            <span class="gold">marca em alto padrão?</span>
+          </h2>
+          <p class="cta-text">
+            Criamos experiências digitais sob medida para empresas que querem vender melhor, transmitir autoridade e se posicionar com mais valor no mercado.
+          </p>
+          <div class="cta-actions">
+            <a href="#contato" class="btn-primary btn-large" aria-label="Quero minha proposta">
+              <span class="btn-text">Quero minha proposta</span>
+              <span class="btn-icon" aria-hidden="true">→</span>
+              <span class="btn-shine" aria-hidden="true"></span>
+            </a>
+            <div class="cta-note">Resposta em até 24 horas úteis</div>
+          </div>
+          <div class="cta-features" aria-label="O que está incluído">
+            <div class="cta-feat">
+              <span aria-hidden="true">◈</span> Diagnóstico gratuito
+            </div>
+            <div class="cta-feat">
+              <span aria-hidden="true">◈</span> Proposta personalizada
+            </div>
+            <div class="cta-feat">
+              <span aria-hidden="true">◈</span> Sem compromisso
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact" id="contato" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-left reveal-left">
+            <span class="section-tag">Entre em contato</span>
+            <h2 class="section-title" id="contact-title">Vamos construir<br/><span class="gold">algo extraordinário.</span></h2>
+            <p class="contact-desc">Preencha o formulário ao lado e nossa equipe entrará em contato para entender seu projeto e apresentar a proposta ideal.</p>
+
+            <div class="contact-info" aria-label="Informações de contato">
+              <div class="contact-item">
+                <span class="ci-icon" aria-hidden="true">◈</span>
+                <div>
+                  <strong>WhatsApp</strong>
+                  <span>Atendimento direto e ágil</span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <span class="ci-icon" aria-hidden="true">◈</span>
+                <div>
+                  <strong>E-mail</strong>
+                  <span>contato@syntradigital.com.br</span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <span class="ci-icon" aria-hidden="true">◈</span>
+                <div>
+                  <strong>Resposta</strong>
+                  <span>Em até 24 horas úteis</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-right reveal-right">
+            <div class="form-wrapper glass-card">
+              <form id="contact-form" class="contact-form" novalidate aria-label="Formulário de contato">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="nome">Nome completo <span aria-hidden="true">*</span></label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome" required aria-required="true" autocomplete="name" />
+                  </div>
+                  <div class="form-group">
+                    <label for="empresa">Empresa</label>
+                    <input type="text" id="empresa" name="empresa" placeholder="Nome da empresa" autocomplete="organization" />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="whatsapp">WhatsApp <span aria-hidden="true">*</span></label>
+                    <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required aria-required="true" autocomplete="tel" />
+                  </div>
+                  <div class="form-group">
+                    <label for="tipo">Tipo de projeto</label>
+                    <select id="tipo" name="tipo" aria-label="Selecione o tipo de projeto">
+                      <option value="" disabled selected>Selecione...</option>
+                      <option value="site-institucional">Site Institucional</option>
+                      <option value="landing-page">Landing Page</option>
+                      <option value="identidade-visual">Identidade Visual</option>
+                      <option value="catalogo">Catálogo Digital</option>
+                      <option value="sistema">Sistema/Portal</option>
+                      <option value="outro">Outro</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="mensagem">Mensagem</label>
+                  <textarea id="mensagem" name="mensagem" rows="4" placeholder="Conte um pouco sobre seu projeto, objetivos e prazo desejado..." aria-label="Mensagem sobre seu projeto"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full" aria-label="Enviar solicitação de proposta">
+                  <span class="btn-text">Enviar solicitação</span>
+                  <span class="btn-icon" aria-hidden="true">→</span>
+                  <span class="btn-shine" aria-hidden="true"></span>
+                </button>
+              </form>
+
+              <!-- SUCCESS STATE -->
+              <div class="form-success" id="form-success" aria-live="polite" aria-atomic="true" hidden>
+                <div class="success-icon" aria-hidden="true">✦</div>
+                <h3>Solicitação enviada!</h3>
+                <p>Recebemos suas informações e entraremos em contato em breve. Obrigado pelo interesse em fazer parte da Syntra Digital.</p>
+                <a href="#" class="btn-ghost success-wa" id="whatsapp-btn" aria-label="Falar via WhatsApp">
+                  <span>Falar via WhatsApp</span>
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-grid-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#inicio" class="logo" aria-label="Syntra Digital — Voltar ao início">
+            <span class="logo-mark" aria-hidden="true"></span>
+            <span class="logo-text">SYNTRA <span class="logo-accent">DIGITAL</span></span>
+          </a>
+          <p class="footer-tagline">Design estratégico para marcas<br/>que querem ser percebidas em<br/>outro nível.</p>
+          <div class="footer-socials" aria-label="Redes sociais">
+            <a href="#" class="social-link" aria-label="Instagram da Syntra Digital">Ig</a>
+            <a href="#" class="social-link" aria-label="LinkedIn da Syntra Digital">Li</a>
+            <a href="#" class="social-link" aria-label="Behance da Syntra Digital">Be</a>
+          </div>
+        </div>
+
+        <nav class="footer-nav" aria-label="Navegação do rodapé">
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul role="list">
+              <li><a href="#inicio">Início</a></li>
+              <li><a href="#autoridade">Sobre</a></li>
+              <li><a href="#solucoes">Soluções</a></li>
+              <li><a href="#portfolio">Portfólio</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Soluções</h4>
+            <ul role="list">
+              <li><a href="#solucoes">Sites Institucionais</a></li>
+              <li><a href="#solucoes">Landing Pages</a></li>
+              <li><a href="#solucoes">Identidade Visual</a></li>
+              <li><a href="#solucoes">Catálogos Digitais</a></li>
+              <li><a href="#solucoes">Sistemas Web</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul role="list">
+              <li><a href="mailto:contato@syntradigital.com.br">contato@syntradigital.com.br</a></li>
+              <li><a href="#contato">Solicitar proposta</a></li>
+              <li><span>Atendimento via WhatsApp</span></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Syntra Digital. Todos os direitos reservados.</p>
+        <p class="footer-made">Feito com precisão e propósito.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
