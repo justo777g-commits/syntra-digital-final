@@ -1,1 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vera Costa Corretora de Imóveis | Aracaju, Lançamentos e Casa no Abaís</title>
+  <meta name="description" content="Atendimento imobiliário em Aracaju e região com Vera Costa, CRECI-SE 4553 PF. Imóveis na planta, locação urbana, casa de praia no Abaís, simulação e suporte documental." />
+  <meta name="keywords" content="Vera Costa corretora, corretora de imóveis Aracaju, imóveis na planta Sergipe, casa de praia Abaís, aluguel de temporada Abaís, locação urbana Aracaju, CRECI Sergipe" />
+  <meta name="author" content="Vera Costa Corretora de Imóveis" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#080808" />
 
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Vera Costa Corretora de Imóveis" />
+  <meta property="og:title" content="Vera Costa Corretora de Imóveis — Aracaju e região" />
+  <meta property="og:description" content="Imóveis na planta, locação, casa de praia no Abaís e orientação imobiliária com atendimento direto e personalizado." />
+  <meta property="og:image" content="assets/og-vera-costa.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Vera Costa Corretora de Imóveis",
+    "description": "Corretagem imobiliária, imóveis na planta, locação urbana, aluguel de temporada e suporte documental em Aracaju e região.",
+    "telephone": "+55 79 99805-3449",
+    "image": "assets/logo-vera-costa.webp",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rua Paraíba, 362",
+      "addressLocality": "Aracaju",
+      "addressRegion": "SE",
+      "addressCountry": "BR"
+    },
+    "areaServed": ["Aracaju", "Sergipe", "Estância", "Praia do Abaís"],
+    "sameAs": [
+      "https://www.instagram.com/vera.costacorretora",
+      "https://maps.app.goo.gl/Mgmn93a46rHaFrt59",
+      "https://www.airbnb.com.br/rooms/1263059098975847934"
+    ]
+  }
+  </script>
+</head>
+<body class="loader-active">
+  <div class="site-loader" id="siteLoader" data-loader-version="3" role="dialog" aria-modal="true" aria-label="Apresentação de Vera Costa Corretora de Imóveis">
+    <video
+      class="site-loader-video"
+      id="siteIntroVideo"
+      muted
+      playsinline
+      preload="auto"
+      poster="assets/intro-desktop-poster.webp"
+      data-desktop-src="assets/intro-desktop.mp4"
+      data-mobile-src="assets/intro-mobile.mp4"
+      data-desktop-poster="assets/intro-desktop-poster.webp"
+      data-mobile-poster="assets/intro-mobile-poster.webp"
+      aria-label="Apresentação visual de Vera Costa">
+    </video>
+    <div class="site-loader-shade" aria-hidden="true"></div>
+    <div class="site-loader-content">
+      <img src="assets/favicon.png" alt="" width="64" height="64" />
+      <strong>Vera Costa</strong>
+      <span>Corretora de Imóveis · CRECI-SE 4553 PF</span>
+      <div class="site-loader-progress" aria-hidden="true"><i></i></div>
+      <p id="siteLoaderStatus" aria-live="polite">Preparando sua experiência imobiliária</p>
+    </div>
+    <button class="site-loader-skip" id="siteLoaderSkip" type="button">Pular apresentação</button>
+  </div>
+  <noscript><style>body{overflow:auto!important}.site-loader{display:none!important}</style></noscript>
+
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <header class="nav" id="mainNav">
+    <div class="nav-inner">
+      <a href="#inicio" class="nav-brand" aria-label="Vera Costa Corretora de Imóveis — início">
+        <img src="assets/favicon.png" alt="" width="44" height="44" />
+        <span>
+          <strong>Vera Costa</strong>
+          <small>Corretora de Imóveis</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#lancamentos">Lançamentos</a>
+        <a href="#abais">Casa no Abaís</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#vera">Vera Costa</a>
+        <a href="#localizacao">Localização</a>
+        <button class="nav-cta" type="button" data-open-typebot>Simular ou visitar</button>
+      </nav>
+
+      <button class="nav-hamburger" id="hamburger" type="button" aria-label="Abrir menu" aria-controls="navMobile" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <nav class="nav-mobile" id="navMobile" aria-label="Navegação móvel" aria-hidden="true">
+      <a href="#lancamentos">Lançamentos</a>
+      <a href="#abais">Casa no Abaís</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#vera">Vera Costa</a>
+      <a href="#localizacao">Localização</a>
+      <button type="button" data-open-typebot>Simular compra ou agendar visita</button>
+    </nav>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" id="inicio">
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="hero-badge reveal">
+            <span class="badge-dot"></span>
+            CRECI-SE 4553 PF · Aracaju e região
+          </div>
+
+          <h1 class="hero-title reveal">
+            Seu próximo imóvel começa com uma <span class="gradient-text">orientação segura.</span>
+          </h1>
+
+          <p class="hero-sub reveal">
+            Imóveis na planta, locação urbana, casa de praia no Abaís e suporte documental com atendimento direto de Vera Costa — presencial ou online.
+          </p>
+
+          <div class="hero-actions reveal">
+            <button class="btn btn-primary" type="button" data-open-typebot>
+              <span class="btn-glow"></span>
+              <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Simular compra ou agendar visita
+            </button>
+
+            <a class="btn btn-gold" href="#lancamentos">
+              <span class="btn-glow"></span>
+              <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M6 21V7l6-4 6 4v14M9 10h.01M15 10h.01M9 14h.01M15 14h.01"/></svg>
+              Ver imóveis e lançamentos
+            </a>
+          </div>
+
+          <div class="hero-quick-links reveal" aria-label="Links rápidos">
+            <a href="https://maps.app.goo.gl/Mgmn93a46rHaFrt59" target="_blank" rel="noopener noreferrer">Google Maps</a>
+            <a href="https://www.instagram.com/vera.costacorretora?igsh=MTZubHU0M2dhMDJ2cQ==" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.airbnb.com.br/rooms/1263059098975847934?unique_share_id=061ea66b-576e-454d-aaeb-5b4af16c3f66&viralityEntryPoint=1&s=76" target="_blank" rel="noopener noreferrer">Airbnb</a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-orbit orbit-1" aria-hidden="true"></div>
+          <div class="hero-orbit orbit-2" aria-hidden="true"></div>
+          <div class="portrait-frame">
+            <img src="assets/vera-hero.webp" alt="Vera Costa em seu ambiente profissional" width="760" height="760" fetchpriority="high" />
+            <div class="portrait-shine" aria-hidden="true"></div>
+          </div>
+          <div class="floating-card floating-card-top">
+            <span>Desde</span>
+            <strong>2010</strong>
+            <small>no mercado imobiliário</small>
+          </div>
+          <div class="floating-card floating-card-bottom">
+            <span>Formação</span>
+            <strong>TTI + RH</strong>
+            <small>atendimento técnico e humano</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-logo-card reveal">
+        <img src="assets/logo-vera-costa.webp" alt="Logo Vera Costa Corretora de Imóveis" width="1200" height="1200" />
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Credenciais e diferenciais">
+      <div class="trust-item"><strong>CRECI-SE 4553 PF</strong><span>Registro profissional</span></div>
+      <div class="trust-item"><strong>Desde 2010</strong><span>Experiência em negociações</span></div>
+      <div class="trust-item"><strong>TTI e RH</strong><span>Conhecimento técnico e relacionamento</span></div>
+      <div class="trust-item"><strong>Presencial + online</strong><span>Atendimento em Aracaju e região</span></div>
+    </section>
+
+    <section class="section section-launches" id="lancamentos">
+      <div class="section-header reveal">
+        <span class="section-label">Foco principal</span>
+        <h2>Empreendimentos na planta para diferentes <span class="gradient-text">momentos de vida</span></h2>
+        <p>Explore oito empreendimentos organizados em um catálogo digital, com plantas, lazer, localização, ficha técnica e um caminho direto para simulação ou visita.</p>
+      </div>
+
+      <div class="catalog-toolbar reveal">
+        <div>
+          <strong>Catálogo digital de lançamentos</strong>
+          <span>Abra o book digital de cada empreendimento sem sair do site.</span>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-open-typebot>Descobrir meu perfil de imóvel</button>
+      </div>
+
+      <div class="catalog-filters reveal" id="catalogFilters" aria-label="Filtrar empreendimentos">
+        <button type="button" class="is-active" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+        <button type="button" data-catalog-filter="mcmv" aria-pressed="false">Minha Casa Minha Vida</button>
+        <button type="button" data-catalog-filter="familia" aria-pressed="false">Família e lazer</button>
+        <button type="button" data-catalog-filter="premium" aria-pressed="false">Premium</button>
+      </div>
+
+      <div class="catalog-grid" id="catalogGrid" aria-live="polite"></div>
+      <p class="catalog-disclaimer reveal">Imagens ilustrativas e informações transcritas dos materiais comerciais. Valores, disponibilidade, subsídios e condições estão sujeitos à confirmação com a corretora e a incorporadora.</p>
+    </section>
+
+    <section class="section property-feature" id="abais">
+      <div class="property-content reveal">
+        <span class="section-label">Venda e temporada</span>
+        <h2>Casa de praia no <span class="gradient-text">Abaís</span></h2>
+        <p class="property-lead">Um espaço amplo e familiar em Estância, a aproximadamente 400 metros da praia, disponível para locação por temporada e também para venda.</p>
+
+        <div class="property-price">
+          <span>Valor de venda</span>
+          <strong>R$ 300.000</strong>
+        </div>
+
+        <div class="property-specs">
+          <span><strong>10 × 40 m</strong> terreno</span>
+          <span><strong>400 m²</strong> de área total</span>
+          <span><strong>≈ 400 m</strong> da praia</span>
+          <span><strong>Piscina</strong> e área de lazer</span>
+          <span><strong>Churrasqueira</strong> e cozinha</span>
+          <span><strong>Quartos, banheiros</strong> e ambientes familiares</span>
+        </div>
+
+        <p class="property-note">Acomodação preparada para momentos em família, com redes, espaço externo, piscina, utensílios e bicicleta disponível. Disponibilidade da temporada deve ser consultada no Airbnb.</p>
+
+        <div class="property-actions">
+          <a class="btn btn-airbnb" href="https://www.airbnb.com.br/rooms/1263059098975847934?unique_share_id=061ea66b-576e-454d-aaeb-5b4af16c3f66&viralityEntryPoint=1&s=76" target="_blank" rel="noopener noreferrer">
+            Consultar datas no Airbnb
+          </a>
+          <button class="btn btn-gold" type="button" data-open-typebot>Tenho interesse na compra</button>
+        </div>
+      </div>
+
+      <div class="property-gallery reveal" aria-label="Galeria da casa de praia no Abaís">
+        <button class="gallery-main" type="button" data-lightbox="assets/abais-fachada.webp" aria-label="Ampliar foto da fachada da casa do Abaís">
+          <img src="assets/abais-fachada.webp" alt="Fachada e portão da casa de praia no Abaís" width="1400" height="1000" loading="lazy" />
+        </button>
+        <button type="button" data-lightbox="assets/abais-area-gourmet.webp" aria-label="Ampliar foto da área gourmet">
+          <img src="assets/abais-area-gourmet.webp" alt="Área gourmet com churrasqueira da casa do Abaís" width="900" height="700" loading="lazy" />
+        </button>
+        <button type="button" data-lightbox="assets/abais-piscina.webp" aria-label="Ampliar foto da área externa com piscina">
+          <img src="assets/abais-piscina.webp" alt="Quintal e piscina da casa do Abaís" width="900" height="700" loading="lazy" />
+        </button>
+        <button type="button" data-lightbox="assets/abais-quarto-1.webp" aria-label="Ampliar foto de um dos quartos">
+          <img src="assets/abais-quarto-1.webp" alt="Quarto mobiliado da casa do Abaís" width="900" height="700" loading="lazy" />
+        </button>
+        <button type="button" data-lightbox="assets/abais-pergolado.webp" aria-label="Ampliar foto do pergolado">
+          <img src="assets/abais-pergolado.webp" alt="Pergolado com redes na área externa" width="900" height="700" loading="lazy" />
+        </button>
+        <button class="gallery-more" type="button" data-lightbox="assets/abais-patio.webp" aria-label="Ver mais fotos da casa do Abaís">
+          <img src="assets/abais-patio.webp" alt="Varanda e espaço de convivência da casa do Abaís" width="900" height="700" loading="lazy" />
+          <span>Ver mais fotos</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="section" id="servicos">
+      <div class="section-header reveal">
+        <span class="section-label">Soluções imobiliárias</span>
+        <h2>Atendimento completo, da escolha do imóvel à <span class="gradient-text">segurança documental</span></h2>
+        <p>Uma orientação pessoal e estratégica para compradores, proprietários, investidores e famílias.</p>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card reveal">
+          <div class="service-icon">01</div>
+          <h3>Imóveis na planta</h3>
+          <p>Apresentação de lançamentos, comparação de plantas, condições comerciais, subsídios e simulação conforme o perfil do comprador.</p>
+          <span>Compra planejada</span>
+        </article>
+        <article class="service-card reveal" data-delay="70">
+          <div class="service-icon">02</div>
+          <h3>Primeiro imóvel</h3>
+          <p>Orientação clara para quem está começando, desde a análise inicial até a escolha da opção que cabe no orçamento familiar.</p>
+          <span>Atendimento educativo</span>
+        </article>
+        <article class="service-card reveal" data-delay="140">
+          <div class="service-icon">03</div>
+          <h3>Locação urbana</h3>
+          <p>Divulgação, seleção de interessados e apoio no processo de aluguel de casas, pontos comerciais e imóveis de renda.</p>
+          <span>Residencial e comercial</span>
+        </article>
+        <article class="service-card reveal" data-delay="210">
+          <div class="service-icon">04</div>
+          <h3>Temporada no litoral</h3>
+          <p>Locação de casa de praia para famílias e grupos, com consulta de disponibilidade e reserva por plataforma especializada.</p>
+          <span>Praia do Abaís</span>
+        </article>
+        <article class="service-card reveal" data-delay="280">
+          <div class="service-icon">05</div>
+          <h3>Compra e venda</h3>
+          <p>Intermediação de imóveis com atendimento direto, negociação responsável e comunicação transparente entre as partes.</p>
+          <span>Decisões seguras</span>
+        </article>
+        <article class="service-card reveal" data-delay="350">
+          <div class="service-icon">06</div>
+          <h3>Documentação imobiliária</h3>
+          <p>Apoio em procedimentos cartorários, análise de documentos, contratos e encaminhamento das etapas jurídicas da transação.</p>
+          <span>Suporte do início ao fim</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section vera-section" id="vera">
+      <div class="vera-photo reveal">
+        <img src="assets/vera-profissional.webp" alt="Vera Costa em apresentação profissional" width="1100" height="1100" loading="lazy" />
+        <div class="credential-card">
+          <strong>Vera Costa</strong>
+          <span>CRECI-SE 4553 PF</span>
+          <small>TTI · Técnica em Transações Imobiliárias</small>
+        </div>
+      </div>
+
+      <div class="vera-copy reveal">
+        <span class="section-label">Atendimento individualizado</span>
+        <h2>Experiência imobiliária com <span class="gradient-text">proximidade e responsabilidade</span></h2>
+        <p>Vera Costa realizou sua primeira venda de imóvel em 2010 e, desde então, construiu uma trajetória pautada na confiança, na escuta e no cuidado com cada negociação.</p>
+        <p>Além da formação como Técnica em Transações Imobiliárias, Vera é formada em Recursos Humanos — uma combinação que une conhecimento do mercado, capacidade de negociação e atenção verdadeira às necessidades de cada pessoa.</p>
+
+        <ul class="credential-list">
+          <li><span>✓</span> Registro profissional CRECI-SE 4553 PF</li>
+          <li><span>✓</span> Técnica em Transações Imobiliárias (TTI)</li>
+          <li><span>✓</span> Formação em Recursos Humanos</li>
+          <li><span>✓</span> Atendimento presencial em Aracaju e online</li>
+        </ul>
+
+        <div class="vera-actions">
+          <button class="btn btn-primary" type="button" data-open-typebot>Conversar sobre meu objetivo</button>
+          <a class="btn btn-outline" href="https://www.instagram.com/vera.costacorretora?igsh=MTZubHU0M2dhMDJ2cQ==" target="_blank" rel="noopener noreferrer">Conhecer o Instagram</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section history-section" id="historia">
+      <div class="history-copy reveal">
+        <span class="section-label">Nossa história</span>
+        <h2>Uma trajetória construída com <span class="gradient-text">trabalho, família e confiança</span></h2>
+        <p>A história profissional de Vera nasceu do desejo de orientar pessoas em decisões importantes. A primeira venda, em 2010, marcou o início de uma jornada que cresceu com dedicação, experiência prática e relacionamento próximo com cada cliente.</p>
+        <p>Os valores de família aparecem na forma de atender: acolher, ouvir, explicar com clareza e tratar cada negociação com a responsabilidade de quem sabe que um imóvel representa segurança, patrimônio e novos começos.</p>
+
+        <div class="timeline">
+          <div><strong>2010</strong><span>Primeira venda de imóvel e início da trajetória no mercado.</span></div>
+          <div><strong>Hoje</strong><span>Atuação em lançamentos, locações, temporada e suporte documental.</span></div>
+          <div><strong>Próximo passo</strong><span>Ampliar o atendimento digital sem perder a proximidade humana.</span></div>
+        </div>
+      </div>
+
+      <div class="family-gallery reveal" aria-label="Galeria da trajetória pessoal e familiar de Vera Costa">
+        <button type="button" class="family-main" data-lightbox="assets/familia-vera-1.webp" aria-label="Ampliar foto de Vera com familiar">
+          <img src="assets/familia-vera-1.webp" alt="Vera Costa em momento familiar" width="1100" height="900" loading="lazy" />
+        </button>
+        <button type="button" data-lightbox="assets/familia-vera-2.webp" aria-label="Ampliar foto da família de Vera">
+          <img src="assets/familia-vera-2.webp" alt="Vera Costa e familiares em passeio" width="1100" height="900" loading="lazy" />
+        </button>
+        <button type="button" data-lightbox="assets/familia-vera-3.webp" aria-label="Ampliar foto de Vera e familiares em evento">
+          <img src="assets/familia-vera-3.webp" alt="Vera Costa e familiares em evento" width="1100" height="900" loading="lazy" />
+        </button>
+        <button type="button" data-lightbox="assets/vera-salvador.webp" aria-label="Ampliar foto de Vera em Salvador">
+          <img src="assets/vera-salvador.webp" alt="Vera Costa em Salvador" width="1100" height="900" loading="lazy" />
+        </button>
+      </div>
+    </section>
+
+    <section class="section urban-section" id="locacao-urbana">
+      <div class="urban-image reveal">
+        <img src="assets/casa-urbana.webp" alt="Fachada de imóvel urbano de referência no bairro Siqueira Campos" width="900" height="1400" loading="lazy" />
+        <span>Imagem de referência · imóvel atualmente locado</span>
+      </div>
+      <div class="urban-copy reveal">
+        <span class="section-label">Locação urbana e imóveis de renda</span>
+        <h2>Experiência com imóveis residenciais e <span class="gradient-text">comerciais</span></h2>
+        <p>Vera também atua com locações urbanas, incluindo casas, pontos comerciais e propriedades com múltiplas unidades — oferecendo orientação para proprietários e interessados.</p>
+        <p>O imóvel de referência no Siqueira Campos reúne ponto comercial, garagem e unidades residenciais, demonstrando a experiência com propriedades de uso misto e geração de renda.</p>
+        <div class="info-box">
+          <strong>Precisa alugar ou disponibilizar um imóvel?</strong>
+          <span>Solicite uma análise inicial para entender o melhor caminho de divulgação e atendimento.</span>
+        </div>
+        <button class="btn btn-gold" type="button" data-open-typebot>Solicitar análise de locação</button>
+      </div>
+    </section>
+
+    <section class="section process-section">
+      <div class="section-header reveal">
+        <span class="section-label">Como funciona</span>
+        <h2>Um atendimento simples, direto e <span class="gradient-text">orientado ao seu objetivo</span></h2>
+      </div>
+      <div class="process-grid">
+        <article class="reveal"><span>1</span><h3>Conte o que procura</h3><p>Responda à simulação ou solicite uma visita com seus dados e preferências.</p></article>
+        <article class="reveal" data-delay="100"><span>2</span><h3>Receba opções compatíveis</h3><p>Vera avalia o perfil e apresenta imóveis, lançamentos ou caminhos adequados.</p></article>
+        <article class="reveal" data-delay="200"><span>3</span><h3>Avance com segurança</h3><p>Você recebe orientação durante a visita, negociação e documentação.</p></article>
+      </div>
+    </section>
+
+    <section class="section location-section" id="localizacao">
+      <div class="location-copy reveal">
+        <span class="section-label">Atendimento presencial</span>
+        <h2>Vera Costa Corretora de Imóveis em <span class="gradient-text">Aracaju</span></h2>
+        <p>Rua Paraíba, 362, Siqueira Campos, Aracaju — Sergipe.</p>
+        <p>O atendimento também pode ser realizado online para simulações, apresentação de imóveis e orientações iniciais.</p>
+        <div class="location-actions">
+          <a class="btn btn-gold" href="https://maps.app.goo.gl/Mgmn93a46rHaFrt59" target="_blank" rel="noopener noreferrer">Abrir no Google Maps</a>
+          <a class="btn btn-outline" href="https://wa.me/5579998053449?text=Ol%C3%A1%20Vera%20Costa%2C%20gostaria%20de%20fazer%20uma%20consulta%20imobili%C3%A1ria" target="_blank" rel="noopener noreferrer">Confirmar atendimento</a>
+        </div>
+      </div>
+      <div class="map-frame reveal">
+        <iframe
+          title="Mapa da Rua Paraíba, 362, Siqueira Campos, Aracaju"
+          src="https://www.google.com/maps?q=Rua%20Para%C3%ADba%2C%20362%2C%20Siqueira%20Campos%2C%20Aracaju%2C%20SE&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="final-cta-glow" aria-hidden="true"></div>
+      <div class="final-cta-inner reveal">
+        <img src="assets/favicon.png" alt="" width="72" height="72" />
+        <span class="section-label">Próximo passo</span>
+        <h2>Encontre uma opção que faça sentido para a sua realidade.</h2>
+        <p>Inicie uma simulação, agende uma visita ou fale diretamente com Vera Costa.</p>
+        <div class="final-actions">
+          <button class="btn btn-primary btn-lg" type="button" data-open-typebot>Iniciar simulação ou visita</button>
+          <a class="btn btn-outline btn-lg" href="https://wa.me/5579998053449?text=Ol%C3%A1%20Vera%20Costa%2C%20gostaria%20de%20fazer%20uma%20consulta%20imobili%C3%A1ria" target="_blank" rel="noopener noreferrer">Falar pelo WhatsApp</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="assets/favicon.png" alt="" width="52" height="52" />
+        <div><strong>Vera Costa</strong><span>Corretora de Imóveis</span></div>
+      </div>
+      <div class="footer-info">
+        <span>CRECI-SE 4553 PF</span>
+        <span>TTI — Técnica em Transações Imobiliárias</span>
+        <span>Formada em Recursos Humanos</span>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/vera.costacorretora?igsh=MTZubHU0M2dhMDJ2cQ==" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://maps.app.goo.gl/Mgmn93a46rHaFrt59" target="_blank" rel="noopener noreferrer">Google Maps</a>
+        <a href="https://www.airbnb.com.br/rooms/1263059098975847934?unique_share_id=061ea66b-576e-454d-aaeb-5b4af16c3f66&viralityEntryPoint=1&s=76" target="_blank" rel="noopener noreferrer">Airbnb</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="currentYear"></span> Vera Costa Corretora de Imóveis.</span>
+      <span>Rua Paraíba, 362 · Siqueira Campos · Aracaju/SE</span>
+    </div>
+  </footer>
+
+  <a class="whatsapp-float" href="https://wa.me/5579998053449?text=Ol%C3%A1%20Vera%20Costa%2C%20gostaria%20de%20fazer%20uma%20consulta%20imobili%C3%A1ria" target="_blank" rel="noopener noreferrer" aria-label="Falar com Vera Costa pelo WhatsApp">
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 0C5.373 0 0 5.373 0 12c0 2.117.554 4.104 1.523 5.824L0 24l6.335-1.508A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.626 0 11.999 0zm.001 21.818a9.818 9.818 0 0 1-5.012-1.371l-.36-.214-3.732.889.917-3.64-.235-.374A9.818 9.818 0 0 1 2.182 12c0-5.418 4.4-9.818 9.818-9.818 5.419 0 9.818 4.4 9.818 9.818 0 5.419-4.399 9.818-9.818 9.818z"/></svg>
+    <span>Suporte</span>
+  </a>
+
+  <dialog class="property-dialog" id="propertyDialog" aria-labelledby="propertyDialogTitle">
+    <div class="property-dialog-shell">
+      <header class="property-dialog-header">
+        <div>
+          <span>Book digital do empreendimento</span>
+          <strong id="propertyDialogTitle">Detalhes do empreendimento</strong>
+        </div>
+        <button type="button" data-close-property aria-label="Fechar detalhes do empreendimento">×</button>
+      </header>
+      <div class="property-dialog-content" id="propertyDialogContent"></div>
+    </div>
+  </dialog>
+
+  <dialog class="typebot-dialog" id="typebotDialog" aria-labelledby="typebotTitle">
+    <div class="dialog-header">
+      <div>
+        <strong id="typebotTitle">Simulação e visita técnica</strong>
+        <span>Atendimento imobiliário dentro do site</span>
+      </div>
+      <div class="dialog-header-actions">
+        <a id="typebotExternalHeader" href="https://typebot.co/corretor-de-im-veis-portf-lio-completo-2f5wgak" target="_blank" rel="noopener noreferrer" aria-label="Abrir o atendimento em uma nova aba">↗ Abrir fora</a>
+        <button type="button" data-close-typebot aria-label="Voltar ao site">← Voltar</button>
+      </div>
+    </div>
+    <div class="typebot-content" id="typebotContent">
+      <iframe id="typebotFrame" title="Atendimento de simulação imobiliária" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="microphone; camera; clipboard-write"></iframe>
+      <div class="typebot-placeholder" id="typebotPlaceholder">
+        <div class="placeholder-mark">VC</div>
+        <h3>Carregando o atendimento imobiliário…</h3>
+        <p id="typebotStatus" aria-live="polite">O formulário inteligente será aberto aqui dentro. Caso sua conexão impeça o carregamento, continue pelo WhatsApp.</p>
+        <div class="typebot-fallback-actions">
+          <a class="btn btn-gold" href="https://wa.me/5579998053449?text=Ol%C3%A1%20Vera%20Costa%2C%20gostaria%20de%20fazer%20uma%20consulta%20imobili%C3%A1ria" target="_blank" rel="noopener noreferrer">Continuar pelo WhatsApp</a>
+          <a class="btn btn-outline" id="typebotExternalLink" href="https://typebot.co/corretor-de-im-veis-portf-lio-completo-2f5wgak" target="_blank" rel="noopener noreferrer">Abrir atendimento em nova aba</a>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="lightbox-dialog" id="lightboxDialog" aria-label="Imagem ampliada">
+    <button class="lightbox-close" type="button" data-close-lightbox aria-label="Fechar imagem">×</button>
+    <img id="lightboxImage" alt="Imagem ampliada" />
+  </dialog>
+
+  <script src="script.js"></script>
+  <script>
+    window.setTimeout(function () {
+      var loader = document.getElementById('siteLoader');
+      if (!loader || loader.classList.contains('is-hidden')) return;
+      document.body.classList.remove('loader-active');
+      loader.classList.add('is-hidden');
+      loader.setAttribute('aria-hidden', 'true');
+    }, 9000);
+  </script>
+</body>
+</html>
