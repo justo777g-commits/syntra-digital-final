@@ -1,0 +1,2138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050817">
+  <meta name="description" content="Motor de composição simbólica e visual para criação de prompts contemplativos premium.">
+  <title>Gerador do Firmamento</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #050817;
+      --ink-2: #0a1028;
+      --ink-3: #111a3a;
+      --glass: rgba(12, 20, 48, .66);
+      --glass-strong: rgba(9, 15, 36, .91);
+      --line: rgba(231, 201, 132, .22);
+      --line-bright: rgba(246, 218, 151, .52);
+      --gold: #e2c17b;
+      --gold-soft: #f1d99f;
+      --gold-pale: #fff0c9;
+      --blue: #7ca8ff;
+      --violet: #b694ff;
+      --rose: #f2a9bc;
+      --text: #f7f2e8;
+      --muted: #aeb9d7;
+      --muted-2: #7885a8;
+      --danger: #ff9b9b;
+      --success: #a7e7cc;
+      --shadow: 0 30px 90px rgba(0,0,0,.42);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 73% 9%, rgba(102, 65, 173, .19), transparent 27%),
+        radial-gradient(circle at 15% 25%, rgba(34, 97, 168, .20), transparent 29%),
+        radial-gradient(circle at 50% 82%, rgba(208, 145, 55, .08), transparent 32%),
+        linear-gradient(160deg, #02040d 0%, #070b1c 48%, #03050f 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, select, input, textarea { font: inherit; }
+    button, select { -webkit-tap-highlight-color: transparent; }
+    button { color: inherit; }
+    ::selection { background: rgba(226,193,123,.3); color: white; }
+    :focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+
+    #skyCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      opacity: .78;
+      pointer-events: none;
+    }
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .aurora::before,
+    .aurora::after {
+      content: "";
+      position: absolute;
+      width: 55vw;
+      height: 55vw;
+      border: 1px solid rgba(229,197,124,.10);
+      border-radius: 50%;
+      filter: blur(.1px);
+    }
+    .aurora::before { right: -24vw; top: 7vh; box-shadow: 0 0 120px rgba(107,76,180,.12), inset 0 0 100px rgba(67,110,202,.08); }
+    .aurora::after { left: -33vw; top: 52vh; box-shadow: 0 0 120px rgba(58,118,199,.10), inset 0 0 100px rgba(226,193,123,.05); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(1440px, 100%);
+      margin: 0 auto;
+      padding: 15px clamp(18px, 4vw, 58px);
+      background: linear-gradient(180deg, rgba(3,6,18,.88), rgba(3,6,18,.56));
+      border-bottom: 1px solid rgba(231,201,132,.13);
+      backdrop-filter: blur(22px);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-mark {
+      position: relative;
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border: 1px solid rgba(243,216,156,.44);
+      border-radius: 50%;
+      color: var(--gold-pale);
+      box-shadow: inset 0 0 18px rgba(129,91,211,.18), 0 0 28px rgba(226,193,123,.08);
+    }
+    .brand-mark::before { content: ""; width: 24px; height: 10px; border: 1px solid rgba(124,168,255,.6); border-radius: 50%; transform: rotate(-18deg); position: absolute; }
+    .brand-mark span { position: relative; font-size: 16px; text-shadow: 0 0 10px var(--gold); }
+    .brand-copy { min-width: 0; }
+    .brand-copy strong { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 14px; letter-spacing: .11em; text-transform: uppercase; white-space: nowrap; }
+    .brand-copy small { display: block; color: var(--muted-2); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; margin-top: 2px; }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
+
+    .ghost-btn, .icon-btn, .mini-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      cursor: pointer;
+      transition: .22s ease;
+    }
+    .ghost-btn:hover, .icon-btn:hover, .mini-btn:hover { border-color: var(--line-bright); color: var(--gold-pale); background: rgba(226,193,123,.08); transform: translateY(-1px); }
+    .ghost-btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 9px 13px; font-size: 12px; }
+    .ghost-btn .count { display: grid; place-items: center; min-width: 19px; height: 19px; border-radius: 99px; background: rgba(124,168,255,.12); color: #cbd9ff; font-size: 10px; }
+    .icon-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
+
+    .page-shell { width: min(1320px, calc(100% - 32px)); margin: 0 auto; padding: 64px 0 48px; }
+    .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr); gap: clamp(28px, 6vw, 82px); align-items: center; min-height: 420px; padding: 36px 0 72px; }
+    .eyebrow { display: flex; align-items: center; gap: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: .2em; font-size: 10px; font-weight: 700; }
+    .eyebrow::before { content: ""; width: 34px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+    .hero h1 { margin: 19px 0 17px; max-width: 850px; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: clamp(46px, 7.1vw, 96px); line-height: .92; letter-spacing: -.045em; }
+    .hero h1 em { display: block; font-style: normal; color: transparent; background: linear-gradient(100deg, #fff5dc, #d7b86f 46%, #a6bfff); -webkit-background-clip: text; background-clip: text; }
+    .hero-sub { max-width: 700px; margin: 0; color: var(--muted); font-size: clamp(15px, 1.45vw, 19px); line-height: 1.75; }
+    .hero-sub strong { color: #f4e8cb; font-weight: 550; }
+
+    .hero-orbit { position: relative; min-height: 350px; display: grid; place-items: center; }
+    .orbital { position: relative; width: min(330px, 76vw); aspect-ratio: 1; display: grid; place-items: center; }
+    .orbital::before, .orbital::after, .orbit-line { content: ""; position: absolute; inset: 8%; border: 1px solid rgba(232,202,133,.24); border-radius: 50%; }
+    .orbital::before { transform: rotateX(67deg) rotateZ(17deg); box-shadow: 0 0 40px rgba(226,193,123,.07); }
+    .orbital::after { inset: 19%; border-color: rgba(124,168,255,.23); transform: rotateY(64deg) rotateZ(-9deg); }
+    .orbit-line { inset: 2%; border-color: rgba(183,148,255,.15); transform: rotateX(76deg) rotateZ(79deg); }
+    .love-orb {
+      position: relative;
+      width: 146px;
+      height: 146px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, #fff8e6 0 2%, #e7b6bb 8%, #7554a7 35%, #172553 66%, #070b1f 100%);
+      border: 1px solid rgba(255,232,181,.67);
+      box-shadow: 0 0 34px rgba(244,185,164,.24), 0 0 92px rgba(95,76,191,.26), inset -20px -22px 44px rgba(0,0,0,.45);
+    }
+    .love-orb::before { content: "♡"; font-family: Georgia, serif; font-size: 49px; color: #fff1d1; text-shadow: 0 0 13px #f2b2b6, 0 0 34px rgba(255,217,150,.85); transform: translateY(-2px); }
+    .love-orb::after { content: "SEMPRE ATIVO"; position: absolute; bottom: -43px; color: var(--gold); font-size: 8px; font-weight: 750; letter-spacing: .28em; white-space: nowrap; }
+    .planet-dot { position: absolute; border-radius: 50%; box-shadow: 0 0 14px currentColor; }
+    .planet-dot.one { width: 9px; height: 9px; color: #e2c17b; background: currentColor; left: 9%; top: 31%; }
+    .planet-dot.two { width: 6px; height: 6px; color: #91b5ff; background: currentColor; right: 17%; top: 18%; }
+    .planet-dot.three { width: 5px; height: 5px; color: #c8a7ff; background: currentColor; right: 7%; bottom: 30%; }
+
+    .love-lock {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 17px;
+      margin-top: -5px;
+      padding: 16px 18px;
+      border: 1px solid rgba(235,197,140,.30);
+      border-radius: 18px;
+      background: linear-gradient(105deg, rgba(91,53,93,.22), rgba(15,29,67,.58) 48%, rgba(127,92,39,.11));
+      box-shadow: inset 0 1px rgba(255,255,255,.035);
+    }
+    .love-lock-icon { width: 43px; height: 43px; display: grid; place-items: center; border: 1px solid rgba(242,169,188,.35); border-radius: 50%; color: #ffd9d0; background: rgba(242,169,188,.08); font-size: 22px; }
+    .love-lock small { display: block; color: var(--gold); text-transform: uppercase; letter-spacing: .16em; font-size: 8px; font-weight: 800; }
+    .love-lock strong { display: block; margin: 4px 0 3px; font-family: Georgia, serif; font-size: 17px; font-weight: 400; color: #fff5e1; }
+    .love-lock p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .lock-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 11px; border: 1px solid rgba(167,231,204,.25); border-radius: 999px; color: var(--success); font-size: 10px; white-space: nowrap; background: rgba(61,142,118,.08); }
+    .lock-pill input { accent-color: #d6bb79; pointer-events: none; }
+
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 19px; }
+    .section-head h2 { margin: 0; font-family: Georgia, serif; font-size: clamp(25px, 3.3vw, 39px); font-weight: 400; }
+    .section-head p { margin: 6px 0 0; max-width: 650px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .bank-badge { flex: 0 0 auto; padding: 8px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: rgba(255,255,255,.025); font-size: 10px; letter-spacing: .05em; }
+    .bank-badge strong { color: var(--gold-soft); }
+
+    .glass-card { border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(145deg, rgba(16,26,60,.70), rgba(6,11,29,.79)); box-shadow: var(--shadow), inset 0 1px rgba(255,255,255,.04); backdrop-filter: blur(20px); }
+    .composer { position: relative; padding: clamp(19px, 3vw, 33px); overflow: hidden; }
+    .composer::before { content: ""; position: absolute; width: 340px; height: 340px; top: -230px; right: -130px; border-radius: 50%; border: 1px solid rgba(226,193,123,.12); box-shadow: 0 0 100px rgba(107,76,189,.13); pointer-events: none; }
+
+    .formula { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(231,201,132,.12); }
+    .formula-chip { padding: 6px 9px; border-radius: 999px; background: rgba(124,168,255,.07); border: 1px solid rgba(124,168,255,.13); color: #c7d5f8; font-size: 10px; }
+    .formula-chip.love { background: rgba(242,169,188,.08); border-color: rgba(242,169,188,.19); color: #ffd8df; }
+    .formula-arrow { color: rgba(226,193,123,.52); font-size: 10px; }
+
+    .select-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .field { position: relative; }
+    .field.span-2 { grid-column: span 2; }
+    .field.span-4 { grid-column: 1 / -1; }
+    .field.is-hidden { display: none; }
+    .field label { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 8px 2px; color: #c8d1ea; font-size: 9px; font-weight: 760; letter-spacing: .13em; text-transform: uppercase; }
+    .field label span { color: var(--gold); font-size: 8px; }
+    .field select, .field input, .field textarea {
+      width: 100%;
+      min-height: 51px;
+      border: 1px solid rgba(180,194,232,.17);
+      border-radius: 13px;
+      background-color: rgba(4,9,25,.67);
+      color: var(--text);
+      padding: 0 43px 0 14px;
+      outline: none;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .field select { appearance: none; cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, #d8bf83 50%), linear-gradient(135deg, #d8bf83 50%, transparent 50%); background-position: calc(100% - 18px) 22px, calc(100% - 13px) 22px; background-size: 5px 5px; background-repeat: no-repeat; }
+    .field input { padding-right: 14px; }
+    .field textarea { min-height: 96px; resize: vertical; padding: 13px 14px; line-height: 1.55; }
+    .field select:hover, .field input:hover, .field textarea:hover { border-color: rgba(226,193,123,.34); }
+    .field select:focus, .field input:focus, .field textarea:focus { border-color: rgba(226,193,123,.64); box-shadow: 0 0 0 3px rgba(226,193,123,.07); background-color: rgba(7,13,33,.9); }
+    .field-note { margin: 7px 2px 0; min-height: 31px; color: var(--muted-2); font-size: 10px; line-height: 1.45; }
+    .inline-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .advanced-divider { grid-column: 1 / -1; height: 1px; margin: 7px 0 3px; background: linear-gradient(90deg, transparent, rgba(226,193,123,.18), transparent); }
+
+    .seed-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; grid-column: 1 / -1; padding-top: 4px; }
+    .seed-actions { display: flex; gap: 8px; padding-bottom: 31px; }
+    .mini-btn { min-height: 51px; padding: 0 15px; border-radius: 13px; font-size: 11px; white-space: nowrap; }
+    .generate-wrap { grid-column: 1 / -1; margin-top: 8px; }
+    .generate-btn {
+      position: relative;
+      width: 100%;
+      min-height: 64px;
+      overflow: hidden;
+      border: 1px solid rgba(255,237,191,.66);
+      border-radius: 16px;
+      background: linear-gradient(115deg, #8e6d30 0%, #e2c17b 27%, #f1dca8 50%, #ba9450 74%, #765626 100%);
+      color: #11101a;
+      cursor: pointer;
+      box-shadow: 0 14px 35px rgba(183,137,55,.18), inset 0 1px rgba(255,255,255,.5);
+      font-weight: 830;
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      transition: transform .2s, filter .2s, box-shadow .2s;
+    }
+    .generate-btn::before { content: ""; position: absolute; inset: 0; transform: translateX(-120%) skewX(-22deg); width: 34%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); transition: transform .7s ease; }
+    .generate-btn:hover { transform: translateY(-2px); filter: saturate(1.08) brightness(1.04); box-shadow: 0 18px 48px rgba(183,137,55,.25), inset 0 1px rgba(255,255,255,.5); }
+    .generate-btn:hover::before { transform: translateX(340%) skewX(-22deg); }
+    .generate-btn:active { transform: translateY(0); }
+    .generate-btn[disabled] { opacity: .65; cursor: wait; }
+
+    .integrity-note { display: grid; grid-template-columns: auto 1fr; gap: 12px; margin-top: 15px; padding: 13px 15px; border-radius: 14px; background: rgba(124,168,255,.045); border: 1px solid rgba(124,168,255,.11); }
+    .integrity-note b { color: #bfd0ff; font-size: 17px; }
+    .integrity-note p { margin: 0; color: var(--muted-2); font-size: 10px; line-height: 1.55; }
+    .integrity-note strong { color: #cbd7f3; font-weight: 650; }
+
+    .result-section { margin-top: 29px; scroll-margin-top: 90px; }
+    .result-card { position: relative; overflow: hidden; }
+    .result-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 85% 7%, rgba(183,148,255,.11), transparent 28%); }
+    .result-top { position: relative; display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; padding: 24px clamp(18px, 3vw, 31px); border-bottom: 1px solid rgba(231,201,132,.12); }
+    .result-kicker { color: var(--gold); font-size: 9px; font-weight: 800; letter-spacing: .19em; text-transform: uppercase; }
+    .result-title { margin: 7px 0 7px; font-family: Georgia, serif; font-weight: 400; font-size: clamp(22px, 3vw, 33px); }
+    .result-sub { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .result-seal { flex: 0 0 auto; width: 70px; height: 70px; display: grid; place-items: center; border: 1px solid rgba(226,193,123,.34); border-radius: 50%; color: var(--gold-pale); font-family: Georgia, serif; font-size: 24px; box-shadow: inset 0 0 26px rgba(124,168,255,.10); }
+    .result-meta { position: relative; display: flex; flex-wrap: wrap; gap: 7px; padding: 15px clamp(18px, 3vw, 31px); background: rgba(3,7,19,.28); border-bottom: 1px solid rgba(231,201,132,.09); }
+    .meta-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 9px; border-radius: 999px; border: 1px solid rgba(170,190,232,.13); color: #b9c5e4; background: rgba(124,168,255,.045); font-size: 9px; }
+    .meta-chip.love { color: #ffd8df; border-color: rgba(242,169,188,.18); background: rgba(242,169,188,.06); }
+    .prompt-wrap { position: relative; padding: clamp(18px, 3vw, 31px); }
+    .prompt-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 11px; }
+    .prompt-label span { color: var(--muted-2); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+    .prompt-label output { color: var(--muted-2); font-size: 9px; }
+    #promptOutput {
+      width: 100%;
+      min-height: 510px;
+      max-height: 72vh;
+      resize: vertical;
+      border: 1px solid rgba(180,194,232,.14);
+      border-radius: 16px;
+      background: rgba(2,5,16,.72);
+      color: #e9e8ec;
+      padding: 21px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.78;
+      outline: none;
+      scrollbar-color: rgba(226,193,123,.35) transparent;
+    }
+    #promptOutput:focus { border-color: rgba(226,193,123,.4); }
+    .result-actions { display: grid; grid-template-columns: 1.35fr 1fr 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .action-btn { min-height: 50px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.035); color: #d5dceb; cursor: pointer; font-size: 10px; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; transition: .2s; }
+    .action-btn:hover { border-color: var(--line-bright); background: rgba(226,193,123,.08); color: var(--gold-pale); transform: translateY(-1px); }
+    .action-btn.primary { background: linear-gradient(110deg, rgba(151,111,44,.64), rgba(226,193,123,.84)); color: #14101a; border-color: rgba(255,234,183,.47); }
+    .action-btn.primary:hover { background: linear-gradient(110deg, rgba(173,132,57,.77), rgba(240,215,156,.92)); color: #0b0b11; }
+
+    .empty-result { display: grid; place-items: center; min-height: 280px; padding: 40px; text-align: center; }
+    .empty-symbol { width: 64px; height: 64px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--gold); font-family: Georgia, serif; font-size: 25px; box-shadow: inset 0 0 24px rgba(124,168,255,.08); }
+    .empty-result h3 { margin: 17px 0 8px; font-family: Georgia, serif; font-weight: 400; font-size: 25px; }
+    .empty-result p { max-width: 480px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
+
+    .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+    .principle { padding: 20px; border: 1px solid rgba(231,201,132,.13); border-radius: 18px; background: rgba(7,12,30,.49); }
+    .principle span { color: var(--gold); font-family: Georgia, serif; font-size: 22px; }
+    .principle h3 { margin: 10px 0 6px; font-family: Georgia, serif; font-size: 16px; font-weight: 400; }
+    .principle p { margin: 0; color: var(--muted-2); font-size: 10px; line-height: 1.55; }
+
+    footer { padding: 42px 0 20px; text-align: center; color: var(--muted-2); font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
+    footer span { color: var(--gold); }
+
+    .drawer-backdrop { position: fixed; inset: 0; z-index: 50; visibility: hidden; opacity: 0; background: rgba(0,2,10,.65); backdrop-filter: blur(8px); transition: .25s; }
+    .drawer-backdrop.open { visibility: visible; opacity: 1; }
+    .drawer { position: absolute; top: 0; right: 0; width: min(520px, 100%); height: 100%; display: flex; flex-direction: column; transform: translateX(100%); background: linear-gradient(150deg, #0b1127, #040713); border-left: 1px solid var(--line); box-shadow: -30px 0 100px rgba(0,0,0,.45); transition: transform .3s cubic-bezier(.2,.75,.2,1); }
+    .drawer-backdrop.open .drawer { transform: translateX(0); }
+    .drawer-head { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 22px; border-bottom: 1px solid rgba(231,201,132,.14); }
+    .drawer-head small { color: var(--gold); font-size: 8px; letter-spacing: .16em; text-transform: uppercase; }
+    .drawer-head h2 { margin: 4px 0 0; font-family: Georgia, serif; font-size: 25px; font-weight: 400; }
+    .drawer-content { flex: 1; overflow-y: auto; padding: 15px; scrollbar-color: rgba(226,193,123,.35) transparent; }
+    .saved-item { padding: 16px; margin-bottom: 10px; border: 1px solid rgba(180,194,232,.13); border-radius: 15px; background: rgba(255,255,255,.025); }
+    .saved-item:hover { border-color: rgba(226,193,123,.24); }
+    .saved-item-top { display: flex; justify-content: space-between; gap: 12px; }
+    .saved-item h3 { margin: 0 0 6px; font-family: Georgia, serif; font-size: 16px; font-weight: 400; color: #f3ebda; }
+    .saved-item p { margin: 0; color: var(--muted-2); font-size: 9px; line-height: 1.5; }
+    .saved-item .seed { margin-top: 9px; color: var(--gold); font-family: ui-monospace, monospace; font-size: 9px; word-break: break-all; }
+    .saved-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+    .saved-actions button { min-height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.03); color: var(--muted); cursor: pointer; font-size: 9px; }
+    .saved-actions button:hover { color: var(--gold-pale); border-color: var(--line-bright); }
+    .saved-actions button.danger:hover { color: var(--danger); border-color: rgba(255,155,155,.35); }
+    .drawer-empty { display: grid; min-height: 260px; place-items: center; text-align: center; color: var(--muted-2); font-size: 11px; line-height: 1.6; }
+
+    .toast { position: fixed; left: 50%; bottom: 24px; z-index: 80; transform: translate(-50%, 22px); visibility: hidden; opacity: 0; padding: 11px 16px; border: 1px solid rgba(226,193,123,.34); border-radius: 999px; background: rgba(9,14,34,.96); color: #f7edda; box-shadow: 0 20px 60px rgba(0,0,0,.45); font-size: 11px; transition: .25s; }
+    .toast.show { transform: translate(-50%, 0); visibility: visible; opacity: 1; }
+
+    @media (max-width: 1030px) {
+      .select-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .field.span-4 { grid-column: 1 / -1; }
+      .result-actions { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 790px) {
+      .topbar { padding-inline: 16px; }
+      .top-actions .ghost-btn span.label { display: none; }
+      .page-shell { width: min(100% - 22px, 1320px); padding-top: 25px; }
+      .hero { grid-template-columns: 1fr; gap: 5px; padding: 25px 5px 42px; }
+      .hero-orbit { min-height: 270px; order: -1; }
+      .orbital { width: 250px; }
+      .love-orb { width: 112px; height: 112px; }
+      .love-orb::before { font-size: 39px; }
+      .love-lock { grid-template-columns: auto 1fr; }
+      .lock-pill { grid-column: 1 / -1; justify-content: center; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .bank-badge { align-self: flex-start; }
+      .principles { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 590px) {
+      .brand-copy small { display: none; }
+      .brand-copy strong { font-size: 11px; }
+      .ghost-btn { padding: 9px 10px; }
+      .select-grid { grid-template-columns: 1fr; }
+      .field.span-2, .field.span-4 { grid-column: auto; }
+      .advanced-divider { grid-column: auto; }
+      .seed-bar { grid-template-columns: 1fr; grid-column: auto; }
+      .seed-actions { padding-bottom: 0; }
+      .seed-actions .mini-btn { flex: 1; }
+      .generate-wrap { grid-column: auto; }
+      .result-top { align-items: center; }
+      .result-seal { width: 56px; height: 56px; }
+      .result-actions { grid-template-columns: 1fr; }
+      #promptOutput { min-height: 440px; padding: 15px; font-size: 11px; }
+      .formula { gap: 5px; }
+      .formula-chip { font-size: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="skyCanvas" aria-hidden="true"></canvas>
+  <div class="aurora" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Ir ao início" style="color:inherit;text-decoration:none">
+      <div class="brand-mark"><span>✦</span></div>
+      <div class="brand-copy">
+        <strong>Gerador do Firmamento</strong>
+        <small>Motor simbólico e visual</small>
+      </div>
+    </a>
+    <nav class="top-actions" aria-label="Coleções locais">
+      <button class="ghost-btn" id="historyButton" type="button"><span>◷</span><span class="label">Histórico</span><span class="count" id="historyCount">0</span></button>
+      <button class="ghost-btn" id="favoritesButton" type="button"><span>♡</span><span class="label">Favoritos</span><span class="count" id="favoritesCount">0</span></button>
+    </nav>
+  </header>
+
+  <main class="page-shell" id="inicio">
+    <section class="hero" aria-labelledby="mainTitle">
+      <div>
+        <div class="eyebrow">Atlas de contemplação visual</div>
+        <h1 id="mainTitle">Gerador do <em>Firmamento</em></h1>
+        <p class="hero-sub">Transforme <strong>conhecimento, símbolo e intenção</strong> em uma composição visual extraordinária — culturalmente cuidadosa, semanticamente coerente e envolvida pelo Amor.</p>
+      </div>
+      <div class="hero-orbit" aria-hidden="true">
+        <div class="orbital">
+          <div class="orbit-line"></div>
+          <i class="planet-dot one"></i><i class="planet-dot two"></i><i class="planet-dot three"></i>
+          <div class="love-orb"></div>
+        </div>
+      </div>
+      <div class="love-lock" role="status" aria-label="Amor universal sempre ativo">
+        <div class="love-lock-icon">♡</div>
+        <div>
+          <small>Elemento universal · obrigatório</small>
+          <strong>Amor envolve todo o firmamento</strong>
+          <p>Presença permanente na luz, na integração, na dignidade e na relação entre todos os planos — sem transformar a obra em uma colagem de corações.</p>
+        </div>
+        <label class="lock-pill"><input type="checkbox" checked disabled aria-label="Amor ativado permanentemente"> Amor ativo · bloqueado</label>
+      </div>
+    </section>
+
+    <section aria-labelledby="composeTitle">
+      <div class="section-head">
+        <div>
+          <h2 id="composeTitle">Componha seu universo</h2>
+          <p>Escolha as forças principais. O motor relaciona história, matéria, atmosfera, profundidade e luz antes de escrever o prompt.</p>
+        </div>
+        <div class="bank-badge"><strong id="bankCount">—</strong> unidades simbólicas modulares</div>
+      </div>
+
+      <div class="glass-card composer">
+        <div class="formula" id="liveFormula" aria-label="Fórmula atual da composição"></div>
+        <form class="select-grid" id="composerForm">
+          <div class="field">
+            <label for="themeSelect">01 · Tema <span>Núcleo</span></label>
+            <select id="themeSelect" required></select>
+            <p class="field-note" id="themeNote"></p>
+          </div>
+          <div class="field">
+            <label for="elementSelect">02 · Elemento <span>Matéria</span></label>
+            <select id="elementSelect" required></select>
+            <p class="field-note" id="elementNote"></p>
+          </div>
+          <div class="field">
+            <label for="intentionSelect">03 · Intenção <span>Sentido</span></label>
+            <select id="intentionSelect" required></select>
+            <p class="field-note" id="intentionNote"></p>
+          </div>
+          <div class="field">
+            <label for="styleSelect">04 · Estilo <span>Direção</span></label>
+            <select id="styleSelect" required></select>
+            <p class="field-note" id="styleNote"></p>
+          </div>
+          <div class="field">
+            <label for="intensitySelect">05 · Intensidade <span>Impacto</span></label>
+            <select id="intensitySelect" required></select>
+            <p class="field-note" id="intensityNote"></p>
+          </div>
+          <div class="field">
+            <label for="formatSelect">06 · Formato <span>Quadro</span></label>
+            <select id="formatSelect" required></select>
+            <p class="field-note" id="formatNote"></p>
+          </div>
+          <div class="field">
+            <label for="randomnessSelect">07 · Aleatoriedade <span>Lógica</span></label>
+            <select id="randomnessSelect" required></select>
+            <p class="field-note" id="randomnessNote"></p>
+          </div>
+          <div class="field">
+            <label for="phraseSourceSelect">08 · Frase <span>Padrão: sem frase</span></label>
+            <select id="phraseSourceSelect" required></select>
+            <p class="field-note" id="phraseSourceNote"></p>
+          </div>
+          <div class="field">
+            <label for="textModeSelect">09 · Tratamento do texto <span>Padrão: nenhum</span></label>
+            <select id="textModeSelect" required></select>
+            <p class="field-note" id="textModeNote"></p>
+          </div>
+
+          <div class="field span-2 is-hidden" id="secondaryThemeField">
+            <label for="secondaryThemeSelect">Núcleo complementar <span>Sincretismo explícito</span></label>
+            <select id="secondaryThemeSelect"></select>
+            <p class="field-note">A combinação será declarada como interpretação artística contemporânea, nunca como tradição histórica antiga.</p>
+          </div>
+          <div class="field span-2 is-hidden" id="customFormatField">
+            <label>Dimensões personalizadas <span>256–8192 px</span></label>
+            <div class="inline-fields">
+              <input id="customWidth" type="number" min="256" max="8192" step="1" value="1080" aria-label="Largura em pixels">
+              <input id="customHeight" type="number" min="256" max="8192" step="1" value="1350" aria-label="Altura em pixels">
+            </div>
+            <p class="field-note">Largura × altura em pixels.</p>
+          </div>
+          <div class="field span-4 is-hidden" id="customTextField">
+            <label for="customText">Texto exato a inserir <span>Sem traduções inventadas</span></label>
+            <textarea id="customText" maxlength="180" placeholder="Digite apenas o texto exato que deseja ver na imagem."></textarea>
+            <p class="field-note">O gerador pedirá reprodução literal. Para melhor legibilidade, mantenha a mensagem curta.</p>
+          </div>
+          <div class="field span-4 is-hidden" id="phraseChoiceField">
+            <label for="phraseChoiceSelect">Frase da coleção <span>Original ou acervo próprio</span></label>
+            <select id="phraseChoiceSelect"></select>
+            <p class="field-note" id="phraseChoiceNote">As frases originais são criadas pelo motor a partir das escolhas e não são citações do livro. Frases importadas são reproduzidas exatamente.</p>
+            <button class="mini-btn" id="managePhrasesButton" type="button" style="margin-top:8px;min-height:40px">Gerenciar meu acervo de frases</button>
+          </div>
+          <div class="field span-2 is-hidden" id="clanField">
+            <label for="clanSelect">Clã / tribo em contemplação <span>Neutro por padrão</span></label>
+            <select id="clanSelect"></select>
+            <p class="field-note" id="clanNote">A escolha destaca uma presença por luz e posição, sem criar brasões, gemas, territórios ou genealogias.</p>
+          </div>
+
+          <div class="advanced-divider"></div>
+
+          <div class="seed-bar">
+            <div class="field">
+              <label for="seedInput">Seed da composição <span>Reproduzível</span></label>
+              <input id="seedInput" type="text" maxlength="80" autocomplete="off" spellcheck="false" placeholder="Deixe vazio para criar uma nova seed">
+              <p class="field-note">A mesma seed + as mesmas escolhas reproduzem exatamente a mesma composição conceitual.</p>
+            </div>
+            <div class="seed-actions">
+              <button class="mini-btn" id="newSeedButton" type="button">Nova seed</button>
+              <button class="mini-btn" id="clearSeedButton" type="button">Limpar</button>
+            </div>
+          </div>
+
+          <div class="generate-wrap">
+            <button class="generate-btn" id="generateButton" type="submit">✦ &nbsp; Gerar composição &nbsp; ✦</button>
+          </div>
+        </form>
+
+        <div class="integrity-note">
+          <b>⌁</b>
+          <p><strong>Fidelidade ativa:</strong> o motor evita pseudo-hebraico, cuneiforme inventado, passagens inexistentes, genealogias falsas e alegações científicas sobre crenças espirituais. Interpretações modernas e sincréticas são nomeadas como tais.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="result-section" id="resultSection" aria-labelledby="resultHeading">
+      <div class="glass-card result-card" id="resultCard">
+        <div class="empty-result" id="emptyResult">
+          <div>
+            <div class="empty-symbol">✦</div>
+            <h3>O firmamento aguarda sua intenção</h3>
+            <p>Faça suas escolhas e gere um prompt completo, com múltiplos planos, iluminação conectiva, simbolismo coerente e o Amor como elemento permanente.</p>
+          </div>
+        </div>
+        <div id="filledResult" hidden>
+          <div class="result-top">
+            <div>
+              <div class="result-kicker">Prompt gerado · composição reproduzível</div>
+              <h2 class="result-title" id="resultHeading">—</h2>
+              <p class="result-sub" id="resultSummary">—</p>
+            </div>
+            <div class="result-seal" aria-hidden="true">✦</div>
+          </div>
+          <div class="result-meta" id="resultMeta"></div>
+          <div class="prompt-wrap">
+            <div class="prompt-label"><span>Prompt final completo</span><output id="promptStats">0 caracteres</output></div>
+            <textarea id="promptOutput" readonly aria-label="Prompt final gerado"></textarea>
+            <div class="result-actions">
+              <button class="action-btn primary" id="copyButton" type="button">Copiar prompt</button>
+              <button class="action-btn" id="anotherButton" type="button">Gerar outra</button>
+              <button class="action-btn" id="saveButton" type="button">Salvar favorito</button>
+              <button class="action-btn" id="downloadButton" type="button">Baixar .txt</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="principles" aria-label="Princípios do motor">
+      <article class="principle"><span>Ⅰ</span><h3>Coerência antes do acaso</h3><p>O símbolo central nasce do tema; o elemento transforma a matéria; a intenção conduz luz, movimento e emoção.</p></article>
+      <article class="principle"><span>Ⅱ</span><h3>Amor como realidade comum</h3><p>Uma força visual obrigatória conecta os planos com dignidade, cuidado e unidade — não como adereço romântico automático.</p></article>
+      <article class="principle"><span>Ⅲ</span><h3>Beleza com honestidade</h3><p>O motor distingue referência histórica, crença tradicional e criação contemporânea para não apresentar invenções como fatos.</p></article>
+    </section>
+
+    <footer>Conhecimento transforma-se em significado <span>✦</span> significado transforma-se em contemplação</footer>
+  </main>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" aria-hidden="true">
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <div class="drawer-head">
+        <div><small id="drawerKicker">Coleção local</small><h2 id="drawerTitle">Histórico</h2></div>
+        <button class="icon-btn" id="closeDrawerButton" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="drawer-content" id="drawerContent"></div>
+    </aside>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  "use strict";
+  // O código é organizado em cinco camadas dentro deste único arquivo:
+  // 1) banco simbólico; 2) aleatoriedade determinística; 3) motor de composição;
+  // 4) motor de prompts; 5) interface e persistência. A integração futura com API
+  // fica isolada em ImageApiAdapter, sem alterar o motor conceitual.
+
+  const LOVE_LAYER = Object.freeze({
+    id: "amor-universal",
+    label: "Amor universal",
+    meaning: "força de cuidado, dignidade, vínculo, benevolência e unidade que envolve toda a realidade visual sem apagar as particularidades",
+    visual: [
+      "um fluxo luminoso dourado-rosado que percorre discretamente todos os planos",
+      "uma rede de reflexos quentes conectando matéria, símbolo central e firmamento",
+      "uma luz acolhedora que aproxima os elementos sem os fundir",
+      "um ritmo de curvas suaves que conduz o olhar da terra ao céu",
+      "um halo vivo de calor sereno envolvendo o centro simbólico",
+      "pequenos pontos de luz relacionados como uma constelação de cuidado",
+      "uma corrente luminosa contínua que transforma separação em relação",
+      "um campo de claridade compassiva irradiando do centro para as margens"
+    ],
+    atmosphere: [
+      "acolhimento profundo sem sentimentalismo excessivo",
+      "ternura monumental e silenciosa",
+      "presença protetora, generosa e contemplativa",
+      "unidade viva que preserva a individualidade de cada símbolo",
+      "calor espiritual equilibrado por vastidão cósmica",
+      "esperança íntima dentro de uma escala celestial"
+    ],
+    integration: "O Amor deve estar visivelmente presente como princípio de relação, luz e dignidade em todo o firmamento. Ele nunca pode ser removido, desativado ou tratado como mero adereço romântico. Evitar a repetição automática de corações; quando um coração aparecer, deve ser raro, elegante e organicamente justificado pela composição.",
+    palette: ["ouro suave", "branco quente", "rosa mineral muito discreto", "violeta crepuscular", "azul celeste"]
+  });
+
+  const THEMES = {
+    cabala: {
+      id: "cabala", label: "Cabala", short: "Cabala",
+      note: "Árvore da Vida, Sefirot, caminhos e contemplação cabalística com rigor visual.",
+      meaning: "contemplação das emanações, relações e caminhos da Árvore da Vida dentro da tradição cabalística judaica",
+      subject: "um atlas contemplativo da Árvore da Vida tratado como estrutura relacional luminosa, não como decoração esotérica aleatória",
+      central: [
+        "a Árvore da Vida em sua disposição tradicional de dez Sefirot conectadas por caminhos, sem inscrições inventadas",
+        "Tiferet como esfera solar central dentro de uma Árvore da Vida completa e proporcional",
+        "Keter como coroa de luz no ápice de uma estrutura cabalística rigorosamente organizada",
+        "Malkhut como portal terrestre na base de uma Árvore da Vida ascendente",
+        "as dez Sefirot como esferas minerais distintas ligadas por uma arquitetura de luz",
+        "três pilares luminosos sustentando a disposição tradicional da Árvore da Vida",
+        "um diagrama cabalístico sem texto, construído por círculos, relações e caminhos reconhecíveis",
+        "uma Árvore da Vida integrada à paisagem, como eixo entre matéria e firmamento"
+      ],
+      secondary: [
+        "dez esferas de luz em hierarquia equilibrada", "vinte e dois caminhos sugeridos por filamentos discretos", "três pilares verticais em equilíbrio", "uma coroa luminosa superior", "um reino mineral na base", "véus de luz entre os níveis", "romãs e oliveiras como referências bíblicas discretas", "estrelas organizadas em correspondência visual, sem alegações históricas", "portais concêntricos de contemplação", "pequenos pontos de luz marcando relações entre as esferas"
+      ],
+      scenes: [
+        "um santuário cósmico aberto sobre montanhas noturnas", "um jardim mineral sob um céu azul-violeta", "um vale silencioso atravessado por um eixo luminoso", "uma biblioteca astronômica sem inscrições legíveis", "uma plataforma de pedra diante de um horizonte estelar", "uma caverna cristalina que se abre para o firmamento", "um terraço antigo entre nuvens celestes", "um deserto azul ao amanhecer com estrelas ainda visíveis"
+      ],
+      architecture: ["arcos de pedra inspirados na arquitetura levantina, sem falsa reconstrução", "colunas discretas formando três eixos", "um portal circular com filigrana geométrica", "degraus ascendentes integrados à montanha", "um pavilhão contemplativo sem iconografia inventada", "molduras de atlas antigo com ornamentação vegetal"],
+      geometries: ["dez círculos ligados em diagrama vertical", "três eixos equilibrados", "relações triangulares entre esferas", "círculos concêntricos ao redor da Árvore da Vida", "uma mandorla sutil envolvendo a estrutura", "linhas de força proporcionais e claramente legíveis"],
+      materials: ["ouro envelhecido", "lápis-lazúli", "pedra calcária", "vidro azul profundo", "pergaminho marfim", "madeira escura", "bronze patinado", "quartzo translúcido"],
+      palette: ["azul-noturno", "azul safira", "violeta profundo", "branco quente", "ouro envelhecido", "tons minerais terrosos"],
+      celestial: ["uma Via Láctea alinhada ao eixo vertical", "dez estrelas principais em correspondência puramente visual", "Lua e Sol em equilíbrio lateral", "nebulosas formando véus entre os mundos", "um zênite de luz branca acima da coroa"],
+      rule: "Tratar a Cabala como tradição histórica e religiosa complexa. Não inventar palavras hebraicas, nomes de Sefirot, caminhos, traduções ou correspondências. Se houver letras, usar somente formas verificáveis e solicitar legibilidade exata; preferir uma composição sem texto.",
+      avoid: ["pseudo-hebraico", "Sefirot em número ou posição incorretos", "mistura silenciosa com chakras", "pentagramas aleatórios", "alegações de autenticidade para correspondências modernas"]
+    },
+    evangelhos: {
+      id: "evangelhos", label: "Evangelhos e simbolismo cristão", short: "Evangelhos",
+      note: "Luz, criação, parábolas, água, pão, videira, montanhas e esperança cristã.",
+      meaning: "contemplação de imagens presentes nos Evangelhos e na tradição simbólica cristã, com centralidade na luz, no serviço e na esperança",
+      subject: "uma paisagem evangélica simbólica na qual a criação comunica graça, caminho, cuidado e renovação",
+      central: ["uma lâmpada acesa sobre pedra, irradiando luz mansa", "uma videira viva envolvendo um arco de luz", "um caminho estreito conduzindo a uma montanha iluminada", "pão partido e um cálice simples em composição reverente", "uma fonte de água viva no centro de um jardim", "uma porta aberta para um horizonte luminoso", "uma pequena semente transformando-se em árvore monumental", "uma barca serena atravessando águas sob estrelas"],
+      secondary: ["espigas de trigo", "ramos de oliveira", "peixes discretos sob água cristalina", "uma pomba branca distante", "lírios do campo", "redes de pesca recolhidas", "pedras formando um caminho", "uma figueira sob luz matinal", "sete lâmpadas pequenas sem inscrições", "vinhas e cachos de uva integrados à paisagem"],
+      scenes: ["margens de um lago ao amanhecer", "colinas da Galileia tratadas poeticamente, sem alegar reconstrução exata", "um deserto dourado sob céu estrelado", "um jardim silencioso depois da chuva", "um monte envolvido por nuvens claras", "uma aldeia antiga vista à distância", "um campo de trigo sob luz celeste", "uma praia rochosa com redes e barca"],
+      architecture: ["arcos simples de pedra", "uma casa levantina de linhas sóbrias", "degraus escavados na rocha", "um pátio com fonte central", "um portal sem inscrições", "colunas discretas cobertas por videira"],
+      geometries: ["mandorla luminosa", "círculos concêntricos de luz", "eixo vertical entre terra e céu", "triângulos sutis sugerindo unidade", "ritmo radial semelhante a uma rosácea sem texto", "proporções serenas organizando caminho e horizonte"],
+      materials: ["pedra calcária", "linho cru", "madeira de oliveira", "cerâmica simples", "vidro translúcido", "bronze envelhecido", "água cristalina", "folhas verdes iluminadas"],
+      palette: ["azul celestial", "azul-marinho", "branco quente", "verde oliveira", "ocre claro", "ouro como luz"],
+      celestial: ["uma estrela matinal sobre o horizonte", "constelações delicadas acima do caminho", "Lua crescente refletida na água", "Sol nascente atravessando nuvens", "um firmamento profundo que gradualmente se abre em luz"],
+      rule: "Não inventar passagens bíblicas, citações, números de versículos ou inscrições. Toda frase bíblica solicitada deve ser fornecida pelo usuário ou identificada com exatidão. Manter tom reverente, não kitsch e não triunfalista.",
+      avoid: ["versículos inventados", "texto pseudo-bíblico", "iconografia religiosa usada como adereço aleatório", "caricaturas devocionais", "excesso de símbolos desconectados"]
+    },
+    mesopotamia: {
+      id: "mesopotamia", label: "Mesopotâmia / tradições sumérias", short: "Mesopotâmia",
+      note: "Cosmologia, cuneiforme não legível, zigurates, relevos, céu e estrelas.",
+      meaning: "evocação historicamente cuidadosa das culturas mesopotâmicas e de sua atenção ao céu, à cidade, ao templo e ao registro em argila",
+      subject: "um atlas celeste inspirado na Mesopotâmia antiga, distinguindo evocação artística de reconstrução arqueológica",
+      central: ["um zigurate monumental sob um céu densamente estrelado", "um disco celeste de bronze inspirado em instrumentos antigos, sem inscrições falsas", "uma tábua de argila intacta tratada como objeto material, sem texto legível inventado", "um portal de tijolos vitrificados abrindo-se para o firmamento", "uma roseta estelar mesopotâmica em relevo central", "um selo cilíndrico ampliado como friso visual sem tradução alegada", "uma cidade-templo vista entre rios e estrelas", "uma escadaria ritual conduzindo do vale fluvial ao céu"],
+      secondary: ["juncos de margem fluvial", "tijolos de barro queimado", "rosetas de oito pontas historicamente inspiradas", "selos cilíndricos", "relevos de leões tratados com sobriedade", "vasos de alabastro", "lamparinas de óleo", "linhas de água dos grandes rios", "contas de lápis-lazúli", "fragmentos de argila sem escrita legível"],
+      scenes: ["planície aluvial ao crepúsculo", "cidade de tijolos junto a canais", "terraço elevado sob tempestade distante", "mar de juncos refletindo constelações", "pátio de templo iluminado por lamparinas", "deserto de argila sob Lua ampla", "ruínas arqueológicas tratadas poeticamente", "observatório imaginado como cena artística, sem alegação histórica"],
+      architecture: ["zigurate em terraços", "portais de tijolo vitrificado", "muros de adobe monumentais", "escadarias processionais", "pátios retangulares", "frisos de relevo inspirados em peças museológicas sem copiá-las"],
+      geometries: ["roseta de oito pontas", "faixas concêntricas de estrelas", "grade de tijolos ritmada", "círculos celestes gravados no bronze", "eixos alinhados ao horizonte", "padrões de selo cilíndrico não textuais"],
+      materials: ["argila", "adobe", "betume escuro", "bronze", "alabastro", "lápis-lazúli", "tijolo azul vitrificado", "ouro aplicado em pequenos detalhes"],
+      palette: ["azul-lápis", "ocre de argila", "marrom profundo", "bronze", "preto betume", "ouro antigo", "violeta noturno"],
+      celestial: ["faixas densas de estrelas sobre o zigurate", "Lua ampla acima dos canais", "planetas como pontos distintos sem nomeação astrológica", "nuvens de tempestade iluminadas no horizonte", "um céu azul-lápis atravessado por poeira estelar"],
+      rule: "Não inventar traduções, frases ou sinais cuneiformes legíveis. Não fundir povos e períodos distintos como se fossem uma cultura única. Assumir a cena como evocação artística informada, não reconstrução arqueológica exata.",
+      avoid: ["cuneiforme falso legível", "traduções inventadas", "pirâmides egípcias", "estética greco-romana dominante", "afirmações arqueológicas não verificadas"]
+    },
+    numerologia: {
+      id: "numerologia", label: "Numerologia", short: "Numerologia",
+      note: "Padrões, ciclos e proporções como interpretação simbólica — não ciência matemática.",
+      meaning: "interpretação simbólica moderna de números, ciclos e repetição, claramente diferenciada de prova ou propriedade matemática científica",
+      subject: "um campo visual de números, intervalos e ciclos tratados como linguagem contemplativa e artística",
+      central: ["uma espiral de pontos numerados do um ao nove", "um círculo de doze divisões regulares sem alegação divinatória específica", "uma sequência de sete portais luminosos", "uma matriz de nove luzes organizadas em equilíbrio", "um número central escolhido apenas como forma gráfica, sem profecia", "três círculos interligados formando um ritmo de unidade", "vinte e dois pontos formando uma arquitetura abstrata", "um relógio celeste sem ponteiros, organizado por ciclos"],
+      secondary: ["repetições de três, seis e nove como recurso compositivo", "grupos de sete estrelas", "doze marcas radiais", "linhas de contagem discretas", "sequências espirais", "padrões alternados de luz e sombra", "proporções geométricas", "intervalos simétricos", "números arábicos legíveis e mínimos", "pequenos círculos marcando ciclos"],
+      scenes: ["uma câmara abstrata de proporções luminosas", "um atlas cósmico construído por ciclos", "uma escadaria com intervalos regulares", "um lago circular refletindo padrões", "uma paisagem de monólitos numerados com sobriedade", "um céu organizado por anéis", "um jardim geométrico", "uma biblioteca de formas sem textos extensos"],
+      architecture: ["arcos repetidos em progressão", "degraus proporcionais", "cúpula dividida radialmente", "pavilhão circular", "colunata ritmada", "plataforma composta por módulos"],
+      geometries: ["espiral logarítmica como forma visual, sem misticismo científico", "grade de nove módulos", "doze setores radiais", "triângulos em progressão", "círculos concêntricos", "proporção áurea apresentada apenas como recurso compositivo"],
+      materials: ["latão escovado", "vidro fumê", "mármore azul", "papel de algodão", "tinta dourada", "quartzo claro", "madeira escura", "prata envelhecida"],
+      palette: ["azul-marinho", "branco marfim", "violeta", "latão dourado", "cinza mineral", "acentos turquesa"],
+      celestial: ["órbitas divididas em setores regulares", "grupos contáveis de estrelas", "Lua em fases sucessivas", "uma espiral galáctica ecoando ciclos", "corpos celestes distribuídos em ritmo matemático"],
+      rule: "Apresentar toda leitura numerológica como tradição, crença ou interpretação artística. Não atribuir eficácia científica, diagnóstica ou preditiva. Manter números exatos e legíveis quando usados.",
+      avoid: ["alegações científicas", "previsões garantidas", "equações falsas", "números ilegíveis", "mistura entre numerologia e demonstração matemática"]
+    },
+    cristais: {
+      id: "cristais", label: "Cristais e minerais", short: "Cristais",
+      note: "Mineralogia visual rica; associações espirituais tratadas como crenças e tradições.",
+      meaning: "contemplação da estrutura, cor, transparência e antiguidade geológica dos minerais, com associações espirituais identificadas como crenças",
+      subject: "uma catedral mineral onde cristais reais são representados com textura convincente e beleza contemplativa",
+      central: ["uma geoda de ametista monumental aberta como santuário", "um cristal de quartzo transparente refratando o firmamento", "um coração mineral abstrato formado naturalmente por quartzo rosa", "uma torre de lápis-lazúli com veios dourados naturais", "uma obsidiana polida refletindo estrelas", "um conjunto de citrinos irradiando luz solar", "uma formação de selenita semelhante a uma arquitetura de luz", "uma drusa multicolorida tratada com precisão mineral"],
+      secondary: ["pequenas drusas", "fragmentos de quartzo leitoso", "cabochões de lápis-lazúli", "obsidiana negra", "citrino translúcido", "quartzo rosa", "ágata bandada", "pirita cúbica", "fluorita violeta e verde", "cristais de rocha com inclusões naturais"],
+      scenes: ["caverna mineral aberta para o cosmos", "planície vulcânica sob estrelas", "jardim de cristais junto a um lago", "montanha geológica cortada em seção luminosa", "gruta de gelo mineral", "praia de pedras polidas", "vale rochoso com névoa", "mesa de estudo mineral em atlas celestial"],
+      architecture: ["arcos cristalinos naturais", "pedestais de pedra bruta", "câmara geodésica", "terraços minerais", "colunas de basalto", "moldura de gabinete científico antigo"],
+      geometries: ["simetria cristalina", "redes hexagonais", "facetas prismáticas", "células geométricas abstratas", "círculos de minerais", "estrutura radial de uma geoda"],
+      materials: ["ametista", "quartzo hialino", "quartzo rosa", "citrino", "obsidiana", "lápis-lazúli", "selenita", "pirita", "fluorita", "ágata"],
+      palette: ["violeta ametista", "azul-lápis", "rosa mineral", "branco cristalino", "preto obsidiana", "ouro pirita", "verde fluorita"],
+      celestial: ["nebulosas refletidas nas facetas", "Lua filtrada por quartzo", "estrelas refratadas em espectros delicados", "planeta azul sobre a entrada da caverna", "Via Láctea acompanhando os veios minerais"],
+      rule: "Representar propriedades físicas observáveis com realismo. Qualquer associação a cura, energia ou espiritualidade deve ser formulada como crença, tradição ou metáfora, nunca como propriedade científica comprovada.",
+      avoid: ["promessas de cura", "alegações médicas", "cristais flutuando sem lógica no modo coerente", "cores plásticas", "mineralogia impossível apresentada como real"]
+    },
+    astrologia: {
+      id: "astrologia", label: "Astrologia", short: "Astrologia",
+      note: "Zodíaco, casas, aspectos e instrumentos celestes sem fabricar mapas pessoais.",
+      meaning: "contemplação da tradição astrológica como sistema simbólico histórico, sem gerar dados natais ou previsões específicas",
+      subject: "um grande mapa celeste simbólico com zodíaco, casas e aspectos organizados como atlas antigo",
+      central: ["uma esfera armilar monumental", "uma roda zodiacal de doze setores sem signos inventados", "um astrolábio de latão diante do cosmos", "um mapa de doze casas tratado como diagrama não pessoal", "Sol e Lua em equilíbrio dentro de círculos celestes", "um observatório renascentista com globo astral", "um disco celeste girando sobre uma mesa de atlas", "um círculo de constelações estilizadas sem alegar precisão cartográfica"],
+      secondary: ["doze divisões radiais", "linhas de aspecto em cores discretas", "pequenos glifos planetários historicamente reconhecíveis", "instrumentos de observação antigos", "compassos de latão", "efemérides sem dados legíveis", "fases da Lua", "marcas do horizonte", "constelações desenhadas por pontos", "anéis orbitais"],
+      scenes: ["terraço de observatório sob noite límpida", "biblioteca renascentista aberta para o céu", "deserto de altitude", "cúpula celeste sobre oceano escuro", "jardim astronômico", "torre de pedra entre nuvens", "mesa de cartógrafo iluminada por Lua", "paisagem montanhosa sob eclíptica luminosa"],
+      architecture: ["observatório de cúpula aberta", "arcada renascentista", "terraço circular", "torre astronômica", "gabinete de madeira e latão", "pavilhão orientado ao horizonte"],
+      geometries: ["roda de doze setores", "círculo do horizonte", "eclíptica inclinada", "linhas de aspecto", "anéis planetários", "grade celeste esférica"],
+      materials: ["latão", "cobre patinado", "pergaminho", "tinta azul", "madeira de nogueira", "vidro óptico", "mármore escuro", "ouro em filigrana"],
+      palette: ["azul meia-noite", "violeta", "latão dourado", "cobre", "branco estelar", "vermelho profundo em mínimos acentos"],
+      celestial: ["eclíptica luminosa atravessando o céu", "planetas distribuídos sem posições datadas", "Lua com fases delicadas", "constelações como desenhos pontilhados", "Sol distante irradiando ouro"],
+      rule: "Não inventar posições planetárias, mapas natais, efemérides, datas ou aspectos específicos. Assumir o diagrama como simbólico e não pessoal, a menos que dados verificados sejam fornecidos.",
+      avoid: ["mapa natal falso", "datas inventadas", "glifos incorretos", "previsões deterministas", "confusão entre astrologia e astronomia científica"]
+    },
+    hermetismo: {
+      id: "hermetismo", label: "Hermetismo e alquimia", short: "Hermetismo",
+      note: "Transformação, metais, elementos, vasos e manuscritos historicamente informados.",
+      meaning: "contemplação da transformação alquímica e das correspondências herméticas como tradições históricas e linguagens simbólicas",
+      subject: "um laboratório-almanaque de transformação no qual matéria, céu e consciência dialogam por imagens alquímicas reconhecíveis",
+      central: ["um vaso alquímico de vidro contendo uma aurora luminosa", "Sol e Lua unidos acima de um athanor", "um ouroboros circular em relevo, tratado com sobriedade", "uma rosa alquímica emergindo de metais transformados", "um retorto de vidro no centro de um laboratório celeste", "quatro elementos organizados ao redor de uma quinta luz", "um manuscrito aberto com diagramas não textuais", "um forno alquímico como coração luminoso da composição"],
+      secondary: ["retortas de vidro", "cadinho de metal", "enxofre amarelo como matéria visual", "sal cristalino", "mercúrio apenas como símbolo histórico, sem manuseio realista", "discos de cobre e ferro", "Sol e Lua", "serpente circular", "rosas e lírios", "pequenos símbolos elementares verificáveis"],
+      scenes: ["laboratório renascentista aberto para o firmamento", "câmara de pedra iluminada por forno", "biblioteca de manuscritos e instrumentos", "jardim hermético ao crepúsculo", "oficina de metalurgia simbólica", "torre de observação", "caverna com nascente mineral", "pátio circular entre Sol e Lua"],
+      architecture: ["laboratório abobadado", "athanor de tijolos", "arcada renascentista", "gabinetes de madeira", "mesa circular de pedra", "portal ornamentado por metais"],
+      geometries: ["quadratura do círculo como referência visual histórica", "círculos dentro de quadrados", "triângulo dos elementos", "ouroboros circular", "Sol e Lua em oposição equilibrada", "estrela geométrica sem atribuição falsa"],
+      materials: ["cobre", "ferro", "chumbo", "estanho", "prata", "ouro", "vidro soprado", "pergaminho", "pedra escurecida por calor"],
+      palette: ["azul profundo", "vermelho alquímico", "branco lunar", "ouro solar", "cobre", "preto mineral", "verde patinado"],
+      celestial: ["Sol e Lua em equilíbrio", "sete corpos celestes como alusão histórica sem tabela de correspondências", "firmamento observado por uma janela circular", "nebulosa semelhante a vapor dentro do vaso", "estrelas refletidas nos metais"],
+      rule: "Usar símbolos alquímicos históricos apenas quando reconhecíveis; não inventar tratados, traduções, fórmulas ou atribuições a Hermes Trismegisto. Apresentar a cena como arte simbólica, não instrução química.",
+      avoid: ["fórmulas químicas falsas", "textos herméticos inventados", "instruções perigosas", "símbolos aleatórios", "afirmações de tradição antiga para criações modernas"]
+    },
+    israel: {
+      id: "israel", label: "Tribos de Israel e simbolismo bíblico", short: "Tribos de Israel",
+      note: "Doze tribos, pedras, tendas, caminhos e símbolos bíblicos com respeito histórico.",
+      meaning: "contemplação respeitosa da unidade e diversidade das doze tribos de Israel dentro do imaginário bíblico",
+      subject: "uma composição de doze partes reunidas em torno de um centro de aliança, sem genealogias ou emblemas inventados",
+      central: ["doze pedras luminosas organizadas em quatro fileiras, sem atribuir gemas específicas às tribos", "doze tendas formando um círculo ao redor de uma luz central", "uma oliveira antiga com doze ramos principais", "doze portais de pedra voltados para um mesmo horizonte", "um peitoral cerimonial estilizado com doze pedras, sem inscrições", "um caminho de doze marcos atravessando o deserto", "uma fonte central cercada por doze pilares", "um firmamento com doze grupos de estrelas em unidade visual"],
+      secondary: ["ramos de oliveira", "romãs", "espigas de trigo", "tendas de tecido", "pedras memoriais", "lamparinas de óleo", "caminhos no deserto", "doze pontos de luz", "tecidos azul e púrpura", "um rio cruzando a paisagem"],
+      scenes: ["acampamento no deserto sob estrelas", "vale de oliveiras", "montanha ao amanhecer", "margem de rio com doze marcos", "pátio de pedra com fonte", "planície vista de um alto", "jardim bíblico estilizado", "horizonte de tendas e nuvens luminosas"],
+      architecture: ["tendas inspiradas em materiais antigos", "pilares de pedra sem inscrições", "portal levantino", "pátio retangular", "degraus de rocha", "moldura inspirada em tecidos cerimoniais"],
+      geometries: ["círculo de doze partes", "quatro fileiras de três", "doze raios convergentes", "eixo de unidade central", "padrão radial de tendas", "constelação de doze grupos"],
+      materials: ["pedra calcária", "tecido azul", "púrpura discreta", "linho", "bronze", "madeira de acácia como referência bíblica sem alegar reconstrução", "óleo luminoso", "gemas não identificadas"],
+      palette: ["azul bíblico", "púrpura", "areia", "verde oliveira", "bronze", "branco quente", "ouro como luz"],
+      celestial: ["doze grupos de estrelas sem nomes", "Lua sobre o acampamento", "coluna de nuvem iluminada poeticamente", "aurora dourada além do deserto", "Via Láctea unindo o horizonte"],
+      rule: "Não inventar genealogias, inscrições hebraicas, bandeiras ou correspondências de gemas e tribos. Quando uma associação histórica for discutida, reconhecer variantes e incertezas. Manter respeito religioso e cultural.",
+      avoid: ["pseudo-hebraico", "genealogias falsas", "mapas territoriais inventados", "emblemas tribais não verificados", "apropriação caricatural"]
+    },
+    geometria: {
+      id: "geometria", label: "Geometria sagrada", short: "Geometria Sagrada",
+      note: "Círculos, triângulos, hexágonos, proporções e estruturas radiais sofisticadas.",
+      meaning: "uso contemplativo de formas, simetrias e proporções que tradições e movimentos modernos associam ao sagrado",
+      subject: "uma arquitetura de relações geométricas na qual cada forma participa de um sistema espacial coerente",
+      central: ["uma roseta radial construída por círculos entrelaçados", "um sólido platônico transparente suspenso sobre um espelho d'água", "uma vesica piscis luminosa em escala monumental", "uma mandala geométrica sem iconografia religiosa específica", "uma estrutura hexagonal cristalina aberta para o céu", "círculos concêntricos atravessados por um eixo de luz", "um poliedro dourado envolvendo uma esfera celeste", "uma flor geométrica contemporânea declarada como interpretação artística"],
+      secondary: ["círculos tangentes", "triângulos equiláteros", "hexágonos", "linhas radiais", "espirais", "poliedros translúcidos", "grades proporcionais", "arcos concêntricos", "pontos de interseção luminosos", "simetrias quebradas de modo controlado"],
+      scenes: ["templo abstrato de luz", "jardim geométrico", "planície espelhada", "câmara sem paredes sob o cosmos", "desfiladeiro organizado por formas", "oceano noturno com estruturas suspensas", "atlas de formas sobre pergaminho", "paisagem mineral modular"],
+      architecture: ["cúpula geodésica artística", "pavilhão circular", "arcos proporcionais", "plataforma hexagonal", "colunata radial", "moldura de compassos e linhas"],
+      geometries: ["vesica piscis", "círculos concêntricos", "triângulos equiláteros", "rede hexagonal", "espiral logarítmica", "sólidos platônicos", "simetria radial", "proporções áureas apenas como técnica compositiva"],
+      materials: ["latão fino", "vidro óptico", "mármore azul", "quartzo", "papel marfim", "prata", "água refletiva", "pedra polida"],
+      palette: ["azul cósmico", "branco quente", "violeta", "ouro delicado", "prata", "turquesa mineral"],
+      celestial: ["órbitas em harmonia com a grade", "constelações nos pontos de interseção", "planeta central enquadrado por polígonos", "nebulosa radial", "Lua refletida dentro de círculos"],
+      rule: "Não apresentar padrões modernos como tradições antigas comprovadas. Distinguir beleza matemática observável de interpretações espirituais. Manter linhas precisas e relações espaciais legíveis.",
+      avoid: ["atribuições históricas falsas", "geometria deformada sem intenção", "equações inventadas", "excesso de glifos", "sobreposição que destrói a legibilidade"]
+    },
+    firmamento: {
+      id: "firmamento", label: "Firmamento", short: "Firmamento",
+      note: "Cosmos, estrelas, Sol, Lua, planetas, nebulosas, nuvens e profundidade espacial.",
+      meaning: "contemplação da vastidão celeste como camada universal de profundidade, mistério, tempo e pertencimento",
+      subject: "um atlas celestial monumental onde cosmos, nuvens, luz e paisagem formam uma única realidade contemplativa",
+      central: ["uma esfera celeste antiga envolvendo uma galáxia", "um portal circular aberto para uma nebulosa", "Sol e Lua em diálogo sobre um horizonte planetário", "uma árvore cósmica cujos ramos se tornam constelações", "um planeta azul cercado por anéis de atlas", "uma espiral galáctica vista como catedral de luz", "um globo astronômico de vidro contendo estrelas", "uma abertura nas nuvens revelando profundidade cósmica infinita"],
+      secondary: ["estrelas de diferentes magnitudes", "planetas distantes", "Lua crescente", "Sol radiante", "cometas discretos", "nuvens luminosas", "poeira cósmica", "anéis celestes", "constelações pontilhadas", "reflexos planetários"],
+      scenes: ["oceano cósmico", "montanhas sob Via Láctea", "terraço acima das nuvens", "deserto noturno", "arquipélago sob duas luzes celestes", "vale violeta", "observatório sem paredes", "planície de sal refletindo o céu"],
+      architecture: ["arcos de atlas celestial", "observatório circular", "ponte entre penhascos", "plataforma de pedra", "cúpula aberta", "moldura renascentista ornamentada"],
+      geometries: ["anéis orbitais", "grade celeste", "círculos concêntricos", "espiral galáctica", "eixos de horizonte e zênite", "mandala de constelações"],
+      materials: ["vidro azul", "ouro envelhecido", "pedra estelar imaginária declarada como fantasia", "prata", "quartzo", "mármore noturno", "névoa luminosa", "água espelhada"],
+      palette: ["azul cósmico", "azul celestial", "violeta", "branco estelar", "ouro suave", "rosa de nebulosa", "preto apenas como profundidade"],
+      celestial: ["Via Láctea monumental", "nebulosa azul-violeta", "Lua e Sol em escalas equilibradas", "planetas com atmosferas sutis", "campo estelar profundo com paralaxe visual"],
+      rule: "Distinguir fantasia cósmica de astronomia documental. Não nomear constelações, posições ou eventos astronômicos específicos sem dados verificados. Priorizar profundidade e coerência luminosa.",
+      avoid: ["planetas duplicados sem propósito", "cosmos chapado", "colagem espacial", "eventos astronômicos falsamente datados", "preto e dourado uniforme"]
+    }
+  };
+
+  const ELEMENTS = {
+    terra: {
+      id: "terra", label: "Terra", note: "Estabilidade, matéria, raízes, ancestralidade, construção e manifestação.",
+      meaning: "estabilidade, matéria, raízes, ancestralidade, construção, permanência e manifestação",
+      foreground: ["rochas estratificadas com musgos", "cristais parcialmente enraizados no solo", "raízes antigas atravessando pedras", "um caminho de lajes minerais", "vegetação baixa entre fragmentos de quartzo", "solo úmido com detalhes microscópicos", "pedras memoriais sem inscrições", "uma plataforma de pedra esculpida pelo tempo"],
+      landscape: ["montanhas profundas", "caverna mineral", "floresta ancestral", "desfiladeiro de ocre e azul", "planalto sob o céu", "jardim de rochas", "vale de oliveiras", "ruínas integradas à natureza"],
+      secondary: ["raízes", "sementes", "anéis de crescimento", "estratos geológicos", "pedras polidas", "folhas verde-escuras", "colunas de basalto", "cristais brutos"],
+      materials: ["pedra calcária", "granito", "basalto", "madeira antiga", "argila", "bronze patinado", "cristal bruto", "ouro envelhecido"],
+      minerals: ["quartzo fumê", "turmalina negra", "jaspe", "malaquita", "ágata", "pirita", "quartzo transparente", "lápis-lazúli"],
+      palette: ["verde profundo", "ocre", "marrom mineral", "azul noturno", "cinza rocha", "ouro envelhecido"],
+      lighting: ["luz baixa atravessando fendas na rocha", "claridade dourada rente ao solo", "reflexos minerais discretos", "raios firmes recortando a paisagem", "brilho subterrâneo emergindo das raízes"],
+      movement: ["crescimento lento de raízes e luz", "poeira mineral suspensa", "folhas movidas por vento leve", "energia ascendente do solo", "névoa baixa acompanhando o relevo"],
+      atmosphere: ["solidez contemplativa", "antiguidade e permanência", "silêncio mineral", "segurança enraizada", "presença tátil e ancestral"],
+      firmament: ["estrelas vistas entre picos", "Via Láctea acompanhando uma cadeia montanhosa", "Lua refletida em minerais", "constelações alinhadas às raízes visuais"]
+    },
+    agua: {
+      id: "agua", label: "Água", note: "Fluxo, emoção, intuição, profundidade, contemplação e renovação.",
+      meaning: "fluxo, emoção, intuição, profundidade, contemplação e renovação",
+      foreground: ["espelho d'água com ondulações concêntricas", "cristais translúcidos parcialmente submersos", "pedras molhadas refletindo estrelas", "lótus sem atribuição cultural específica", "gotas suspensas como pequenas lentes", "uma nascente cristalina", "conchas discretas e minerais azuis", "corrente rasa atravessando o primeiro plano"],
+      landscape: ["oceano noturno", "rio entre montanhas", "lago de altitude", "caverna inundada", "cascata de névoa", "estuário sob Lua", "jardim depois da chuva", "planície alagada refletindo o cosmos"],
+      secondary: ["ondas", "gotas", "névoa", "reflexos lunares", "círculos na água", "juncos", "conchas", "peixes vistos apenas como silhuetas naturais"],
+      materials: ["água cristalina", "vidro soprado", "madrepérola", "prata", "pedra molhada", "quartzo translúcido", "tecido fluido", "cerâmica azul"],
+      minerals: ["água-marinha", "pedra da Lua", "quartzo claro", "opala", "larimar", "ametista pálida", "fluorita azul", "calcedônia"],
+      palette: ["azul profundo", "turquesa", "prata", "violeta", "branco lunar", "azul-petróleo"],
+      lighting: ["luz lunar refratada pela água", "reflexos móveis conectando os planos", "caústicas luminosas sobre pedra", "claridade azul emergindo das profundezas", "brilho prateado atravessando a névoa"],
+      movement: ["fluxo contínuo em curvas", "ondulações lentas", "névoa que respira", "chuva fina diagonal", "correntes luminosas sob a superfície"],
+      atmosphere: ["profundidade emocional serena", "mistério fluido", "renovação silenciosa", "intuição e escuta", "calma de maré noturna"],
+      firmament: ["Lua ampla refletida na água", "estrelas duplicadas no espelho d'água", "nebulosa semelhante a corrente celeste", "planeta azul no horizonte úmido"]
+    },
+    fogo: {
+      id: "fogo", label: "Fogo", note: "Transformação, força, coragem, expansão, iluminação e renascimento.",
+      meaning: "transformação, força, coragem, expansão, iluminação e renascimento",
+      foreground: ["brasas minerais em sulcos de pedra", "cristais com reflexos incandescentes", "uma chama ritual contida em recipiente seguro", "pétalas iluminadas por calor", "cinzas formando padrões suaves", "metal aquecido em brilho controlado", "pequenas luzes como sementes de fogo", "pedras vulcânicas com veios luminosos"],
+      landscape: ["caldeira vulcânica distante", "deserto ao nascer do Sol", "forja simbólica", "vale de rocha escura", "templo iluminado por chamas contidas", "montanha sob aurora vermelha", "campo de brasas estelares", "caverna aberta para um Sol nascente"],
+      secondary: ["brasas", "faíscas", "raios solares", "fênix apenas como metáfora artística quando coerente", "metais aquecidos", "cinzas", "girassóis", "estrelas rubras"],
+      materials: ["bronze aquecido", "cobre", "obsidiana", "pedra vulcânica", "vidro âmbar", "ouro", "ferro escuro", "cerâmica refratária"],
+      minerals: ["cornalina", "citrino", "granada", "olho-de-tigre", "obsidiana", "pirita", "quartzo rutilado", "jaspe vermelho"],
+      palette: ["vermelho profundo", "âmbar", "laranja queimado", "ouro", "azul cósmico de contraste", "preto mineral localizado"],
+      lighting: ["contraluz solar intensa", "brilho âmbar vindo do centro", "raios volumétricos atravessando fumaça leve", "luz de brasas refletida nos metais", "coroa radiante com bordas azul-cósmicas"],
+      movement: ["faíscas ascendentes", "chamas em movimento espiral", "ondas de calor delicadas", "energia expansiva radial", "cinzas transformando-se em pontos de luz"],
+      atmosphere: ["coragem luminosa", "transformação irreversível", "energia vital controlada", "renascimento solene", "intensidade sem violência"],
+      firmament: ["Sol radiante em contraste com céu azul", "estrelas parecendo brasas distantes", "nebulosa vermelho-âmbar", "cometa discreto como gesto de transformação"]
+    },
+    ar: {
+      id: "ar", label: "Ar", note: "Mente, conhecimento, comunicação, movimento, liberdade e percepção.",
+      meaning: "mente, conhecimento, comunicação, movimento, liberdade e percepção",
+      foreground: ["pergaminhos sem texto movidos pelo vento", "penas naturais pousadas em pedra", "gramíneas inclinadas", "pequenos sinos sem conotação ritual específica", "folhas suspensas em fluxo", "fitas de luz transparente", "cristais leves sobre pedestal", "nuvens baixas atravessando degraus"],
+      landscape: ["terraço acima das nuvens", "pico de montanha", "céu aberto sobre planície", "pontes suspensas", "observatório aéreo", "ilhas rochosas entre nuvens", "deserto varrido pelo vento", "falésias diante do horizonte"],
+      secondary: ["nuvens", "penas", "folhas", "pássaros distantes em formação natural", "pergaminhos sem escrita", "fitas", "constelações", "sinos de vento"],
+      materials: ["linho leve", "papel de algodão", "prata", "vidro claro", "madeira pálida", "latão delicado", "quartzo transparente", "névoa"],
+      minerals: ["quartzo claro", "celestita", "selenita", "água-marinha", "fluorita", "opala branca", "calcita óptica", "pedra da Lua"],
+      palette: ["azul celestial", "branco", "prata", "dourado delicado", "azul noturno", "lilás atmosférico"],
+      lighting: ["luz difusa atravessando nuvens", "raios celestes abertos", "bordas prateadas nas formas", "claridade alta e leve", "lampejos dourados conduzidos pelo vento"],
+      movement: ["correntes espirais de ar", "nuvens em camadas", "tecidos e folhas flutuando com lógica física", "estrelas cadentes discretas", "movimento diagonal que amplia a liberdade"],
+      atmosphere: ["clareza mental", "liberdade serena", "percepção ampliada", "leveza inteligente", "silêncio de grande altitude"],
+      firmament: ["constelações muito nítidas", "nuvens revelando planetas", "céu em gradiente do azul celeste ao noturno", "anéis de luz semelhantes a correntes atmosféricas"]
+    },
+    espirito: {
+      id: "espirito", label: "Espírito", note: "Unidade, transcendência, consciência, mistério, contemplação e integração.",
+      meaning: "unidade, transcendência, consciência, mistério, contemplação e integração",
+      foreground: ["um círculo de pequenas luzes sobre superfície escura", "cristais brancos irradiando delicadamente", "névoa luminosa tocando o chão", "um espelho circular refletindo o zênite", "pedras claras em configuração radial", "água imóvel como limiar", "um degrau de mármore voltado para a luz", "flores brancas discretas"],
+      landscape: ["firmamento profundo sem horizonte rígido", "santuário de luz entre nuvens", "planície cósmica", "câmara circular aberta ao infinito", "montanha envolta em halos", "oceano de estrelas", "jardim celeste", "portal entre paisagem e nebulosa"],
+      secondary: ["halos", "círculos cósmicos", "véus luminosos", "estrelas", "esferas transparentes", "pontos de união", "nuvens radiantes", "linhas de luz ascendente"],
+      materials: ["vidro luminoso", "mármore branco", "ouro suave", "prata", "quartzo claro", "tecido translúcido", "água pura", "luz volumétrica"],
+      minerals: ["selenita", "quartzo claro", "ametista", "pedra da Lua", "opala", "celestita", "diamante representado com sobriedade", "labradorita"],
+      palette: ["azul cósmico", "violeta", "branco luminoso", "ouro suave", "azul celestial", "prata"],
+      lighting: ["luz celestial sem fonte única aparente", "halo volumétrico ao redor do centro", "branco quente emergindo do azul", "raios verticais muito suaves", "luminosidade que conecta matéria e espaço"],
+      movement: ["expansão lenta de círculos de luz", "névoa ascendente", "órbitas serenas", "pulsação luminosa quase imóvel", "convergência de pequenas estrelas no centro"],
+      atmosphere: ["transcendência silenciosa", "mistério acolhedor", "consciência ampla", "unidade sem apagamento", "presença contemplativa"],
+      firmament: ["nebulosa violeta e branca", "círculo celeste no zênite", "camadas profundas de estrelas", "Sol e Lua reduzidos a presenças equilibradas"]
+    }
+  };
+
+  const INTENTIONS = {
+    amor: { id:"amor", label:"Amor", note:"Vínculo, cuidado, presença e comunhão.", meaning:"cultivar vínculo, cuidado, presença generosa e comunhão", focus:["duas formas luminosas em relação", "um centro que acolhe sem aprisionar", "caminhos convergindo suavemente", "luz compartilhada entre diferentes matérias", "gestos de proximidade sugeridos pela paisagem"], symbols:["arcos que se aproximam", "círculos interligados", "ramos entrelaçados", "reflexos que se encontram", "constelações em pares"], light:["luz quente compartilhada", "brilho rosado mineral muito sutil", "dois focos que formam uma só claridade", "halo acolhedor"], motion:["convergência suave", "movimento circular de encontro", "fluxos que se aproximam sem colisão"], emotion:"ternura profunda, reciprocidade e pertencimento", avoid:"corações repetidos, romantização excessiva ou posse" },
+    sabedoria: { id:"sabedoria", label:"Sabedoria", note:"Discernimento, maturidade, memória e clareza.", meaning:"buscar discernimento, maturidade, memória e clareza interior", focus:["uma luz central revelando camadas", "um caminho entre sombra e claridade", "um livro fechado sem texto tratado como memória", "uma árvore antiga", "um instrumento de observação cuidadosamente orientado"], symbols:["lâmpada", "olho abstrato formado por paisagem, não anatômico", "círculos de leitura", "chave discreta", "estrela guia"], light:["luz dourada precisa", "claridade lateral revelando textura", "foco sereno sobre o centro", "azul profundo equilibrado por branco quente"], motion:["abertura gradual", "ascensão em degraus", "rotação lenta de anéis"], emotion:"lucidez humilde e serenidade madura", avoid:"superioridade, excesso de livros ou aparência acadêmica fria" },
+    protecao: { id:"protecao", label:"Proteção", note:"Abrigo, limite, cuidado e segurança sem agressividade.", meaning:"manifestar abrigo, limite saudável, cuidado vigilante e segurança", focus:["um círculo protetor permeável à luz", "um arco robusto envolvendo o centro", "montanhas formando abrigo natural", "uma cúpula transparente", "raízes sustentando uma estrutura"], symbols:["círculo envolvente", "muralha baixa integrada à paisagem", "asas apenas como forma luminosa abstrata", "escudo sem heráldica", "portal guardado por luz"], light:["contraluz protetora", "halo firme nas bordas", "luz interior mais quente que o exterior", "faixa luminosa definindo limite"], motion:["energia centrípeta", "luz circulando o centro", "nuvens desviadas suavemente"], emotion:"segurança, amparo e confiança", avoid:"armas, ameaça, medo, militarização ou clausura" },
+    autoconhecimento: { id:"autoconhecimento", label:"Autoconhecimento", note:"Interioridade, espelho, verdade pessoal e integração.", meaning:"aprofundar interioridade, verdade pessoal, reconhecimento e integração", focus:["um espelho d'água revelando céu interior", "um portal voltado para dentro", "duas metades complementares", "um caminho em espiral", "uma figura humana pequena apenas como escala contemplativa"], symbols:["espelho", "labirinto aberto", "casulo de luz", "círculo incompleto", "reflexo transformado"], light:["luz interior emergente", "reflexo que ilumina o observador", "sombra detalhada e não ameaçadora", "claridade gradual"], motion:["espiral para o centro", "respiração luminosa", "reflexo que se expande"], emotion:"honestidade íntima, curiosidade e aceitação", avoid:"narcisismo, rosto hipercentral, diagnóstico psicológico ou dualismo simplista" },
+    proposito: { id:"proposito", label:"Propósito", note:"Direção, vocação, contribuição e caminho.", meaning:"encontrar direção, vocação, contribuição e sentido de caminho", focus:["uma estrada luminosa até o horizonte", "uma estrela orientadora", "um eixo claro entre base e zênite", "uma ponte em construção completa", "um portal alinhado ao nascer do Sol"], symbols:["bússola sem letras", "seta formada pela paisagem", "farol distante", "semente em crescimento", "marcos de caminho"], light:["feixe direcional", "aurora no horizonte", "luz que destaca o próximo passo", "contraste claro entre caminho e entorno"], motion:["avanço diagonal", "ascensão contínua", "corrente de luz em direção ao horizonte"], emotion:"direção serena e disposição para servir", avoid:"destino rígido, promessa de sucesso ou simbologia corporativa" },
+    esperanca: { id:"esperanca", label:"Esperança", note:"Possibilidade, aurora, confiança e futuro aberto.", meaning:"sustentar possibilidade, confiança e abertura ao futuro mesmo diante da noite", focus:["primeira luz depois de longa noite", "broto verde entre pedras", "horizonte se abrindo", "estrela visível entre nuvens", "ponte luminosa sobre águas escuras"], symbols:["aurora", "broto", "janela aberta", "ave distante", "pequena chama protegida"], light:["claridade crescente no horizonte", "luz azul transformando-se em ouro", "um ponto luminoso resistente", "raios atravessando nuvens"], motion:["abertura ascendente", "nuvens se afastando", "crescimento delicado"], emotion:"confiança realista, consolo e renovação", avoid:"euforia artificial, negação da dor ou promessa garantida" },
+    transformacao: { id:"transformacao", label:"Transformação", note:"Mudança, alquimia, passagem e renascimento.", meaning:"atravessar mudança, passagem, transmutação e renascimento", focus:["uma matéria mudando de estado", "um portal entre duas atmosferas", "casulo abrindo em luz", "metal escuro tornando-se dourado gradualmente", "paisagem passando da noite à aurora"], symbols:["espiral de passagem", "ponte", "fênix abstrata quando culturalmente neutra", "folha em mudança", "círculo rompido e recomposto"], light:["gradiente de sombra para brilho", "fogo controlado", "luz atravessando matéria", "duas temperaturas de cor em transição"], motion:["expansão", "metamorfose em camadas", "fluxo atravessando o centro"], emotion:"coragem diante da mudança e vitalidade renovada", avoid:"destruição gratuita, explosões, caos ou promessa de cura" },
+    harmonia: { id:"harmonia", label:"Harmonia", note:"Equilíbrio vivo, proporção, escuta e consonância.", meaning:"cultivar equilíbrio vivo, proporção, escuta e consonância entre diferenças", focus:["formas distintas em equilíbrio assimétrico", "Sol e Lua em diálogo", "cinco elementos organizados ao redor de um centro", "paisagem refletida com pequenas variações", "arcos que sustentam um mesmo espaço"], symbols:["balança abstrata sem pratos", "círculos tangentes", "acordes de cor", "ondas concêntricas", "pares complementares"], light:["iluminação equilibrada", "temperaturas quentes e frias em consonância", "reflexos correspondentes", "luz uniforme com centro suave"], motion:["órbitas estáveis", "ondas regulares", "movimento alternado e sincronizado"], emotion:"equilíbrio respirável e beleza relacional", avoid:"simetria rígida, uniformidade ou apagamento das diferenças" },
+    coragem: { id:"coragem", label:"Coragem", note:"Presença, decisão, firmeza e ação lúcida.", meaning:"fortalecer presença, decisão, firmeza e ação lúcida diante do desconhecido", focus:["uma passagem iluminada através da montanha", "figura pequena diante de vastidão, sem heroísmo bélico", "chama firme sob vento", "ponte atravessando um abismo", "árvore resistente em alto penhasco"], symbols:["leão apenas como presença natural e respeitosa", "tocha segura", "rocha vertical", "Sol nascente", "passo marcado no caminho"], light:["contraluz firme", "laranja e ouro contra azul profundo", "feixe atravessando tempestade", "bordas luminosas fortes"], motion:["avanço contra o vento", "ascensão", "expansão do peito sugerida pela paisagem"], emotion:"bravura serena e responsabilidade", avoid:"violência, armas, dominação, culto ao herói ou imprudência" },
+    gratidao: { id:"gratidao", label:"Gratidão", note:"Reconhecimento, abundância simples e reverência.", meaning:"reconhecer dádivas, relações, aprendizados e abundância simples", focus:["mãos apenas sugeridas oferecendo luz, sem anatomia central", "mesa simples com frutos e água", "paisagem banhada por fim de tarde", "círculo de pequenas dádivas naturais", "fonte devolvendo água ao rio"], symbols:["cesta de frutos", "ramos curvados", "taça simples", "pétalas", "luzes como oferendas não rituais"], light:["luz dourada de fim de tarde", "brilho quente sobre objetos simples", "reflexos suaves", "halo de contentamento"], motion:["fluxo de dar e receber", "queda lenta de pétalas", "círculo de retorno"], emotion:"contentamento, reverência e generosidade", avoid:"luxo ostentatório, acumulação ou culpa" },
+    contemplacao: { id:"contemplacao", label:"Contemplação", note:"Silêncio, presença, vastidão e atenção.", meaning:"entrar em silêncio, presença, vastidão e atenção não utilitária", focus:["um único símbolo diante de grande espaço", "horizonte amplo e quase imóvel", "lua sobre água silenciosa", "portal vazio", "pequena luz em arquitetura monumental"], symbols:["banco de pedra vazio", "círculo simples", "espelho imóvel", "estrela isolada", "janela alta"], light:["iluminação baixa e delicada", "luz lunar", "um feixe silencioso", "gradações longas de azul"], motion:["quase imobilidade", "névoa muito lenta", "ondulação mínima"], emotion:"silêncio fértil, espanto e presença", avoid:"densidade excessiva, narrativa literal ou estímulo visual agressivo" },
+    renovacao: { id:"renovacao", label:"Renovação", note:"Recomeço, frescor, limpeza e vida restaurada.", meaning:"abrir espaço para recomeço, frescor, limpeza e vida restaurada", focus:["chuva clareando uma paisagem", "folhas novas sobre ramo antigo", "fonte renascendo entre pedras", "aurora depois da tempestade", "ciclo lunar iniciando"], symbols:["broto", "gota", "casca aberta", "janela lavada pela chuva", "pássaros retornando"], light:["luz fresca depois da chuva", "verde e azul iluminados", "branco limpo no horizonte", "reflexos aquáticos novos"], motion:["água corrente", "folhas se abrindo", "nuvens se renovando"], emotion:"leveza, frescor e possibilidade", avoid:"apagamento do passado, pureza moralista ou promessa médica" },
+    compaixao: { id:"compaixao", label:"Compaixão", note:"Escuta, cuidado com a dor e solidariedade.", meaning:"cultivar escuta, cuidado com a dor, solidariedade e presença não julgadora", focus:["uma luz envolvendo uma forma ferida sem ocultá-la", "duas margens unidas por ponte", "água chegando à terra seca", "manto abstrato de luz", "círculo aberto acolhendo formas diversas"], symbols:["ponte", "tigela com água", "tecido envolvente", "mãos abstratas formadas por luz", "flor nascendo em fissura"], light:["luz muito suave nas áreas de sombra", "calor concentrado sem espetáculo", "halo protetor aberto", "reflexo compartilhado"], motion:["aproximação lenta", "fluxo em direção ao que está isolado", "expansão acolhedora"], emotion:"empatia, respeito e cuidado corajoso", avoid:"piedade superior, exploração da dor ou sentimentalismo" },
+    verdade: { id:"verdade", label:"Verdade", note:"Clareza, autenticidade, revelação e integridade.", meaning:"buscar clareza, autenticidade, revelação e integridade sem rigidez", focus:["um véu translúcido revelando a estrutura real", "cristal claro no centro", "espelho sem distorção", "luz atravessando uma abertura estreita", "camadas geológicas expostas"], symbols:["prisma", "janela", "fio de prumo", "água transparente", "círculo sem ornamento"], light:["luz branca precisa", "contraste limpo", "refração controlada", "raio revelador lateral"], motion:["dissipação de névoa", "alinhamento gradual", "abertura de camadas"], emotion:"honestidade, sobriedade e liberdade", avoid:"moralismo, julgamento, luz cegante ou afirmações absolutas" },
+    unidade: { id:"unidade", label:"Unidade", note:"Integração, pertencimento e diversidade relacionada.", meaning:"perceber integração, pertencimento e diversidade relacionada em um todo vivo", focus:["múltiplos caminhos chegando a uma praça aberta", "esferas diferentes orbitando um centro comum", "rios formando um oceano", "mosaico mineral contínuo", "constelações unidas por uma única luz"], symbols:["círculo de círculos", "rede", "tecido entrelaçado", "ponte radial", "árvore de muitos ramos"], light:["luz distribuída por toda a composição", "centro que não domina", "reflexos conectivos", "gradiente contínuo entre cores"], motion:["convergência sem fusão", "órbitas relacionadas", "fluxos em rede"], emotion:"pertencimento, inclusão e totalidade viva", avoid:"homogeneidade, centralização autoritária ou apagamento cultural" },
+    paz: { id:"paz", label:"Paz", note:"Quietude, reconciliação, descanso e ordem viva.", meaning:"favorecer quietude, reconciliação, descanso e ordem viva", focus:["água perfeitamente calma", "horizonte azul depois da chuva", "jardim protegido", "círculo aberto sob Lua", "pombas distantes apenas quando coerentes com o tema"], symbols:["ramo de oliveira", "pedras equilibradas naturalmente", "casa iluminada ao longe", "Lua refletida", "dois caminhos unidos"], light:["luz difusa e estável", "azul suave com ouro mínimo", "branco lunar", "amanhecer sem contraste agressivo"], motion:["respiração lenta", "ondas quase imóveis", "nuvens horizontais"], emotion:"descanso, reconciliação e segurança", avoid:"esterilidade, ausência de vida, fuga do conflito ou clichê excessivo" }
+  };
+
+  const VISUAL_STYLES = {
+    contemplativo: { id:"contemplativo", label:"Contemplativo", note:"Poucos elementos, enorme beleza e silêncio visual.", density:"densidade baixa e seletiva; cada elemento precisa ter espaço para respirar", composition:["composição assimétrica com grande área de silêncio", "um único eixo visual e horizonte amplo", "centro deslocado segundo a regra dos terços", "composição vertical simples e meditativa"], camera:["plano amplo com distância contemplativa", "enquadramento frontal estável", "ângulo ligeiramente baixo e sereno", "vista elevada muito suave"], texture:"textura refinada, detalhes concentrados no centro e transições longas", atmosphere:"silêncio visual, lentidão e presença" },
+    celestial: { id:"celestial", label:"Celestial", note:"Firmamento dominante, estrelas, planetas e iluminação cósmica.", density:"densidade média com ênfase na profundidade do céu", composition:["firmamento ocupando dois terços da imagem", "arcos orbitais conduzindo ao centro", "horizonte baixo e cosmos monumental", "composição radial celeste equilibrada"], camera:["grande angular voltada ao zênite", "vista panorâmica de horizonte baixo", "perspectiva entre nuvens", "enquadramento orbital cinematográfico"], texture:"estrelas de magnitudes variadas, nebulosas em camadas e atmosfera volumétrica", atmosphere:"vastidão, espanto e luminosidade cósmica" },
+    monumental: { id:"monumental", label:"Monumental", note:"Escala grandiosa e extremo detalhamento arquitetônico.", density:"densidade alta, organizada por hierarquia e sem ruído", composition:["simetria axial monumental", "perspectiva central com estrutura colossal", "composição vertical ascendente", "grande arco enquadrando múltiplos planos"], camera:["ângulo baixo cinematográfico", "grande angular arquitetônica", "vista frontal de escala épica", "perspectiva atmosférica profunda"], texture:"microdetalhes em pedra, metal, nuvens e filigrana; escala humana mínima", atmosphere:"grandeza solene, reverência e impacto" },
+    manuscrito: { id:"manuscrito", label:"Manuscrito", note:"Atlas antigo, pergaminho, diagramas e astronomia histórica.", density:"densidade editorial média-alta com zonas legíveis", composition:["página de atlas antigo fundida a uma paisagem real", "moldura renascentista ao redor de um diagrama central", "mesa de cartógrafo abrindo-se para o cosmos", "diagrama circular com vinhetas materiais"], camera:["vista ortográfica de atlas", "plano superior sobre manuscrito", "frontalidade de gravura antiga", "perspectiva híbrida entre página e mundo"], texture:"pergaminho, tinta, ouro envelhecido, gravura fina e matéria realista", atmosphere:"erudição antiga, descoberta e mistério histórico" },
+    visionario: { id:"visionario", label:"Visionário", note:"Surrealismo espiritual elegante com lógica visual interna.", density:"densidade média-alta com surrealismo controlado", composition:["paisagem impossível obedecendo a uma única física poética", "portal transformando arquitetura em cosmos", "escala recursiva entre mineral e galáxia", "estrutura central flutuante sustentada por luz e perspectiva"], camera:["perspectiva onírica coerente", "grande angular surreal", "enquadramento imersivo", "vista profunda através de portais"], texture:"realismo fantástico, transições orgânicas e materiais convincentes", atmosphere:"mistério, revelação e assombro elegante" },
+    maxima: { id:"maxima", label:"Máxima beleza", note:"Composição, luz, profundidade, harmonia e impacto levados ao ápice.", density:"riqueza alta porém rigorosamente editada; nenhum objeto existe apenas para preencher espaço", composition:["hierarquia triangular envolvida por órbitas e profundidade atmosférica", "simetria quase perfeita quebrada por movimento orgânico", "eixo monumental com primeiro plano tátil e céu expansivo", "composição radial sofisticada com centro luminoso e margens respirando"], camera:["grande angular cinematográfica de alta elegância", "ângulo levemente baixo com profundidade em camadas", "vista imersiva equilibrando intimidade e escala", "perspectiva central com paralaxe pronunciada"], texture:"acabamento premium: microtexturas, filigrana histórica, materiais táteis, névoa volumétrica e detalhes seletivos de altíssima precisão", atmosphere:"beleza extraordinária, harmonia emocional, mistério luminoso e presença contemplativa" }
+  };
+
+  const INTENSITIES = {
+    serena: { id:"serena", label:"Serena", note:"Baixo contraste e delicadeza meditativa.", detail:"detalhamento fino porém contido, com amplas áreas de descanso", contrast:"contraste baixo a médio", energy:"energia silenciosa", count:2 },
+    equilibrada: { id:"equilibrada", label:"Equilibrada", note:"Riqueza visual com clareza e respiro.", detail:"alto detalhamento equilibrado por hierarquia visual clara", contrast:"contraste médio cinematográfico", energy:"energia estável", count:3 },
+    radiante: { id:"radiante", label:"Radiante", note:"Luz intensa, cor rica e forte presença.", detail:"detalhamento muito alto em todos os planos, sem ruído", contrast:"contraste luminoso alto, preservando meios-tons", energy:"energia expansiva", count:4 },
+    sublime: { id:"sublime", label:"Sublime", note:"Impacto máximo, monumental e refinado.", detail:"detalhamento extraordinário, microtexturas premium e acabamento de obra-prima", contrast:"contraste dramático cuidadosamente controlado", energy:"energia transcendente sem agressividade", count:5 }
+  };
+
+  const FORMATS = {
+    vertical: { id:"vertical", label:"9:16 · contemplação / Reels / Stories", note:"Vertical imersivo; conduz o olhar da matéria ao zênite.", ratio:"9:16", pixels:"1080 × 1920", direction:"composição vertical ascendente" },
+    square: { id:"square", label:"1:1 · quadrado", note:"Equilíbrio central e leitura compacta.", ratio:"1:1", pixels:"1080 × 1080", direction:"composição quadrada equilibrada" },
+    portrait: { id:"portrait", label:"4:5 · publicação", note:"Retrato editorial com boa área contemplativa.", ratio:"4:5", pixels:"1080 × 1350", direction:"composição vertical editorial" },
+    landscape: { id:"landscape", label:"16:9 · paisagem / monitor", note:"Horizonte amplo e narrativa espacial.", ratio:"16:9", pixels:"1920 × 1080", direction:"composição panorâmica horizontal" },
+    custom: { id:"custom", label:"Personalizado", note:"Defina largura e altura em pixels.", ratio:"personalizado", pixels:"personalizado", direction:"composição adaptada às dimensões fornecidas" }
+  };
+
+  const RANDOMNESS = {
+    coerente: { id:"coerente", label:"Coerente", note:"Somente correspondências fortemente relacionadas.", freedom:"fidelidade temática máxima; escolher somente relações diretas e historicamente cuidadosas" },
+    criativo: { id:"criativo", label:"Criativo", note:"Liberdade artística dentro do mesmo universo.", freedom:"liberdade poética moderada dentro do núcleo escolhido, sem perder coerência ou rigor cultural" },
+    sincretico: { id:"sincretico", label:"Sincrético", note:"Combina dois núcleos e declara a fusão como moderna.", freedom:"diálogo explícito entre dois núcleos, apresentado como interpretação artística contemporânea e nunca como tradição antiga comprovada" }
+  };
+
+  const TEXT_MODES = {
+    none: { id:"none", label:"Sem texto", note:"Opção recomendada para contemplação e melhor fidelidade visual.", instruction:"Não inserir letras, números, legendas, assinaturas, marcas d'água ou qualquer texto na imagem." },
+    title: { id:"title", label:"Título curto", note:"Uma linha breve, com tipografia integrada.", instruction:"Inserir somente o título fornecido, em uma única linha curta, com ortografia exata e tipografia integrada à composição." },
+    word: { id:"word", label:"Palavra central", note:"Uma palavra como foco contemplativo.", instruction:"Inserir somente a palavra fornecida, central e perfeitamente legível, sem acrescentar nenhuma outra palavra." },
+    message: { id:"message", label:"Pequena mensagem", note:"Até duas linhas curtas; sem parágrafos.", instruction:"Inserir somente a pequena mensagem fornecida, em no máximo duas linhas, com reprodução literal e alto contraste local." },
+    explanatory: { id:"explanatory", label:"Composição explicativa", note:"Rótulos mínimos e apenas conteúdo verificado.", instruction:"Usar poucos rótulos curtos e verificáveis fornecidos pelo usuário; não inventar traduções, inscrições, nomes ou explicações." }
+  };
+
+  const PHRASE_SOURCES = {
+    none: { id:"none", label:"Sem frase · padrão", note:"Nenhuma frase será criada ou inserida.", lens:"silêncio contemplativo", publicSafe:true },
+    original: { id:"original", label:"Frase original do motor", note:"Criada pelas escolhas; não é citação de livro.", lens:"sabedoria contemplativa universal", publicSafe:true },
+    minutos: { id:"minutos", label:"Minutos de Sabedoria · referência temática", note:"Textos do livro não são copiados; use frase original ou seu acervo autorizado.", lens:"sabedoria cotidiana, gentileza, disciplina interior e serenidade", motifs:["o pequeno gesto cotidiano", "a serenidade que amadurece", "a bondade praticada agora", "o passo simples e constante", "a luz cultivada no íntimo"] },
+    pao: { id:"pao", label:"Pão Nosso · referência temática", note:"Textos do livro não são copiados; use frase original ou seu acervo autorizado.", lens:"reflexão cristã diária, serviço, alimento espiritual e responsabilidade", motifs:["o pão repartido", "o serviço silencioso", "a fé que se torna gesto", "a palavra vivida", "a mesa que acolhe"] },
+    agenda: { id:"agenda", label:"Agenda Cristã · referência temática", note:"Textos do livro não são copiados; use frase original ou seu acervo autorizado.", lens:"conduta cristã, caridade, paciência, trabalho interior e convivência", motifs:["a caridade em ação", "a paciência que constrói", "o dever feito com amor", "a convivência que educa", "o bem possível de hoje"] },
+    agora: { id:"agora", label:"O Poder do Agora · referência temática", note:"Textos do livro não são copiados; use frase original ou seu acervo autorizado.", lens:"presença, atenção ao instante e libertação da distração mental", motifs:["este instante respirado", "a presença sem pressa", "o espaço entre os pensamentos", "a vida que acontece agora", "a atenção inteira"] },
+    gotas: { id:"gotas", label:"Gotas de Esperança · referência temática", note:"Textos do livro não são copiados; use frase original ou seu acervo autorizado.", lens:"esperança diária, consolo, perseverança e recomeço", motifs:["a gota que anuncia a fonte", "a manhã depois da noite", "a coragem que volta devagar", "a semente persistente", "a luz que não desistiu"] },
+    portas: { id:"portas", label:"Abrindo Portas Interiores · referência temática", note:"Textos do livro não são copiados; use frase original ou seu acervo autorizado.", lens:"silêncio interior, abertura espiritual, escuta e transformação íntima", motifs:["a porta que se abre por dentro", "o silêncio que revela", "a morada interior", "a escuta profunda", "o limiar da consciência"] },
+    grandes: { id:"grandes", label:"Grandes Frases · coleção pessoal", note:"Use frases originais ou importe sua própria seleção autorizada.", lens:"aforismos universais sobre vida, coragem, amor e sabedoria", motifs:["uma verdade breve", "o essencial em poucas palavras", "a ideia que ilumina o caminho", "a frase que permanece", "o pensamento transformado em gesto"] }
+  };
+
+  // Convenção visual solicitada: doze porções com Efraim e Manassés, enquanto
+  // Levi é apresentado como presença sacerdotal partilhada. Listas bíblicas das
+  // tribos variam conforme o contexto; o gerador explicita esta convenção e não
+  // inventa heráldica para preencher lacunas históricas.
+  const CLANS = {
+    neutral: { id:"neutral", label:"Neutro · todas as tribos em equilíbrio", note:"Nenhuma tribo recebe precedência visual; as doze presenças têm igual dignidade.", visual:"manter doze estações de igual peso ao redor de um centro comum; nenhuma deve dominar", position:"distribuição circular equilibrada" },
+    ruben: { id:"ruben", label:"Rúben", note:"Ênfase nominal e contemplativa, sem emblema inventado.", visual:"destacar discretamente a estação de Rúben por um feixe de luz e maior nitidez, preservando as outras onze", position:"primeira estação do percurso visual, sem afirmar hierarquia espiritual" },
+    simeao: { id:"simeao", label:"Simeão", note:"Ênfase nominal e contemplativa, sem emblema inventado.", visual:"destacar discretamente a estação de Simeão por um arco de luz e maior nitidez, preservando as outras onze", position:"uma estação lateral integrada ao círculo" },
+    juda: { id:"juda", label:"Judá", note:"Ênfase nominal e contemplativa, sem heráldica moderna.", visual:"destacar discretamente a estação de Judá por luz quente e enquadramento, sem criar brasão ou bandeira", position:"uma estação de forte presença, equilibrada pelas demais" },
+    zebulom: { id:"zebulom", label:"Zebulom", note:"Ênfase nominal e contemplativa, sem correspondência inventada.", visual:"destacar discretamente a estação de Zebulom por reflexo azul-dourado e maior nitidez, preservando as outras onze", position:"uma estação próxima ao horizonte visual" },
+    issacar: { id:"issacar", label:"Issacar", note:"Ênfase nominal e contemplativa, sem correspondência inventada.", visual:"destacar discretamente a estação de Issacar por luz estável e textura mineral, preservando as outras onze", position:"uma estação assentada na base da composição" },
+    da: { id:"da", label:"Dã", note:"Ênfase nominal e contemplativa, sem emblema inventado.", visual:"destacar discretamente a estação de Dã por contraste controlado e um círculo luminoso, preservando as outras onze", position:"uma estação na transição entre sombra e luz" },
+    gade: { id:"gade", label:"Gade", note:"Ênfase nominal e contemplativa, sem emblema inventado.", visual:"destacar discretamente a estação de Gade por luz firme e desenho de caminho, preservando as outras onze", position:"uma estação junto a um percurso de pedra" },
+    aser: { id:"aser", label:"Aser", note:"Ênfase nominal e contemplativa, sem correspondência inventada.", visual:"destacar discretamente a estação de Aser por luminosidade suave e riqueza natural sóbria, preservando as outras onze", position:"uma estação envolvida por vegetação discreta" },
+    naftali: { id:"naftali", label:"Naftali", note:"Ênfase nominal e contemplativa, sem emblema inventado.", visual:"destacar discretamente a estação de Naftali por sensação de abertura e luz celeste, preservando as outras onze", position:"uma estação voltada para o espaço aberto" },
+    benjamim: { id:"benjamim", label:"Benjamim", note:"Ênfase nominal e contemplativa, sem heráldica inventada.", visual:"destacar discretamente a estação de Benjamim por luz concentrada e proteção arquitetônica, preservando as outras onze", position:"uma estação próxima ao centro, sem supremacia" },
+    efraim: { id:"efraim", label:"Efraim", note:"Ênfase nominal e contemplativa; José é representado aqui por Efraim e Manassés.", visual:"destacar discretamente a estação de Efraim por luz de crescimento e profundidade, preservando as outras onze", position:"uma de duas estações relacionadas visualmente, sem fundi-la a Manassés" },
+    manasses: { id:"manasses", label:"Manassés", note:"Ênfase nominal e contemplativa; José é representado aqui por Efraim e Manassés.", visual:"destacar discretamente a estação de Manassés por luz de memória e continuidade, preservando as outras onze", position:"uma de duas estações relacionadas visualmente, sem fundi-la a Efraim" },
+    levi: { id:"levi", label:"Levi · presença sacerdotal distribuída", note:"Levi não vira um 13º território; sua presença conecta todas as estações.", visual:"representar Levi como uma rede sacerdotal de luz compartilhada que atravessa e serve todas as doze estações, sem criar um décimo terceiro setor territorial", position:"presença distribuída, não uma estação territorial isolada" }
+  };
+
+  const ORIGINAL_PHRASE_BANK = {
+    openings: ["Que", "Quando", "Onde", "Hoje,", "No silêncio,", "A cada passo,", "Dentro de nós,", "Sob o mesmo céu,", "Mesmo na noite,", "Com presença,"],
+    verbs: ["a luz encontra", "o amor sustenta", "a coragem abre", "a sabedoria revela", "a esperança renova", "a paz reúne", "a verdade ilumina", "a gratidão transforma", "a compaixão aproxima", "a presença desperta"],
+    objects: ["um caminho possível", "o essencial", "aquilo que parecia distante", "a força do recomeço", "a beleza de permanecer", "o próximo gesto", "uma fonte interior", "a unidade entre céu e terra", "o sentido escondido no simples", "a claridade que já existia"],
+    endings: ["e o coração aprende a respirar.", "sem pressa e sem medo.", "até que o caminho se torne luz.", "como quem reconhece o próprio lar.", "e cada instante volta a ter sentido.", "porque nenhum gesto de cuidado é pequeno.", "onde a vida pede presença.", "e o horizonte se abre por dentro.", "com firmeza, ternura e verdade.", "sob a companhia silenciosa do firmamento."],
+    bridges: ["há espaço para", "começa", "torna-se visível", "cresce", "permanece", "volta a nascer", "encontra forma", "se faz caminho", "aprende a florescer", "recorda sua origem"]
+  };
+
+  const UNIVERSAL_BANKS = {
+    framings: ["enquadramento central cerimonial", "enquadramento assimétrico com horizonte amplo", "vista através de um arco em primeiro plano", "perspectiva baixa voltada ao zênite", "vista elevada sobre uma paisagem em camadas", "composição imersiva a partir do nível do solo", "enquadramento circular de atlas celeste", "perspectiva diagonal conduzida por um rio de luz", "visão frontal monumental", "enquadramento íntimo expandindo-se para o cosmos"],
+    placements: ["símbolo central no terço superior", "símbolo central ligeiramente abaixo do centro", "símbolo principal alinhado ao eixo vertical", "centro simbólico deslocado para a esquerda e equilibrado por um planeta", "centro deslocado para a direita e contrabalançado por arquitetura", "símbolo suspenso sobre o horizonte", "estrutura principal emergindo do primeiro plano", "símbolo enquadrado por um portal", "centro dentro de círculos concêntricos", "foco central refletido na água"],
+    firmaments: ["céu azul-marinho com profundidade estelar realista", "nebulosas azul-violeta em camadas translúcidas", "Via Láctea atravessando a composição em arco", "campo estelar de magnitudes variadas", "nuvens luminosas abrindo uma janela cósmica", "Sol e Lua em equilíbrio de escala", "planetas distantes com luz atmosférica sutil", "poeira cósmica como véu de profundidade", "constelações sugeridas por pontos discretos", "zênite branco-dourado dissolvendo-se em azul profundo", "aurora celeste azul e violeta", "horizonte planetário sob estrelas"],
+    geometries: ["círculos concêntricos finos", "triângulos proporcionais quase invisíveis", "grade celeste esférica", "arcos orbitais", "mandorla luminosa", "hexágonos minerais discretos", "espiral ampla conduzindo o olhar", "estrutura radial de doze divisões", "linhas de perspectiva integradas à geometria", "proporção áurea usada apenas como organização", "eixos vertical e horizontal equilibrados", "poliedros transparentes em segundo plano"],
+    minerals: ["ametista", "quartzo hialino", "quartzo rosa", "citrino", "obsidiana", "lápis-lazúli", "selenita", "pirita", "ágata", "fluorita", "malaquita", "água-marinha", "jaspe", "labradorita", "pedra da Lua", "cornalina"],
+    materials: ["ouro envelhecido aplicado em filigrana", "bronze patinado", "prata oxidada", "pergaminho marfim", "vidro soprado", "pedra calcária", "mármore azul", "madeira escura", "linho", "argila", "água refletiva", "névoa volumétrica", "cristal translúcido", "tinta mineral"],
+    lighting: ["iluminação cinematográfica volumétrica", "raios crepusculares atravessando nuvens", "contraluz dourada com sombras azuis", "luz lunar prateada e reflexos quentes", "brilho interno dos materiais translúcidos", "luz lateral revelando microtexturas", "halo central com queda gradual", "aurora suave conectando céu e paisagem", "reflexos cruzados entre minerais e estrelas", "atmosfera luminosa em múltiplas distâncias"],
+    atmospheres: ["mistério contemplativo", "reverência serena", "silêncio monumental", "esperança luminosa", "antiguidade viva", "elegância espiritual", "profundidade emocional", "espanto cósmico", "harmonia entre matéria e infinito", "presença acolhedora"],
+    foregrounds: ["pequenos minerais em foco nítido", "pedras texturizadas e vegetação discreta", "superfície de água refletindo o centro", "fragmentos de atlas e instrumentos sem texto", "raízes e folhas tocadas por luz", "degraus de pedra conduzindo ao símbolo", "brumas baixas entre cristais", "moldura natural de rochas laterais"],
+    middleGrounds: ["arquitetura parcialmente envolta em nuvens", "anéis geométricos atravessando a paisagem", "pilares que estabelecem escala", "um portal intermediário", "terraços sucessivos", "véus de névoa separando distâncias", "círculos celestes entre matéria e céu", "um rio de luz conduzindo ao fundo"],
+    backgrounds: ["firmamento profundo além do horizonte", "montanhas dissolvendo-se em atmosfera", "oceano escuro encontrando o cosmos", "nebulosa monumental atrás da arquitetura", "nuvens abertas para estrelas", "paisagem distante iluminada por aurora", "planeta enorme e sutil no horizonte", "Via Láctea formando um arco de fundo"],
+    avoid: ["aparência de colagem", "objetos místicos desconectados", "composição genérica de banco de imagens", "excesso de preto e dourado", "dourado cobrindo superfícies inteiras", "texto ilegível", "pseudoescritas", "logos", "marcas d'água", "assinaturas", "molduras cortadas sem intenção", "anatomia defeituosa", "mãos deformadas", "perspectiva incoerente", "planetas repetidos", "cristais plásticos", "saturação agressiva", "ruído visual", "simetria sem vida", "ícones flutuando sem interação", "fantasia kitsch", "estereótipos culturais"]
+  };
+
+  const PHRASE_CLAUSES = {
+    amor: ["o cuidado transforma distância em encontro", "amar também é dar espaço para que o outro floresça", "a presença partilhada se torna morada", "a ternura encontra força sem perder delicadeza"],
+    sabedoria: ["a clareza nasce quando escutamos antes de responder", "o essencial se revela a quem aprende a olhar com calma", "discernir é iluminar o próximo passo, não dominar todo o caminho", "a maturidade une memória, humildade e ação"],
+    protecao: ["o verdadeiro abrigo fortalece sem aprisionar", "cuidar é criar limites onde a vida possa respirar", "a segurança cresce quando a luz alcança também as bordas", "a firmeza pode ser uma forma de ternura"],
+    autoconhecimento: ["olhar para dentro abre janelas para o mundo", "a verdade interior não exige máscara nem pressa", "reconhecer-se é integrar luz, sombra e caminho", "quem se escuta com honestidade aprende a caminhar inteiro"],
+    proposito: ["o sentido se torna visível no próximo gesto consciente", "cada passo fiel aproxima caminho e vocação", "a direção amadurece quando o dom encontra serviço", "propósito é transformar presença em contribuição"],
+    esperanca: ["a primeira luz já contém a promessa de um novo horizonte", "mesmo pequena, a claridade sabe atravessar a noite", "recomeçar é permitir que o futuro volte a respirar", "a esperança não nega a noite; aprende a acender caminhos dentro dela"],
+    transformacao: ["toda passagem pede coragem para deixar uma forma e acolher outra", "o que muda por dentro redesenha o horizonte", "renascer é conservar a essência e libertar novas possibilidades", "a matéria tocada pela consciência encontra outra maneira de brilhar"],
+    harmonia: ["diferenças em relação podem formar uma beleza maior", "equilíbrio não é imobilidade, mas escuta entre movimentos", "cada voz encontra lugar quando o conjunto aprende a respirar", "a consonância nasce quando nenhuma parte precisa desaparecer"],
+    coragem: ["a luz do próximo passo é suficiente para começar", "coragem é permanecer presente diante do que ainda não tem nome", "a firmeza cresce quando o medo deixa de caminhar sozinho", "avançar com cuidado também é bravura"],
+    gratidao: ["reconhecer o que sustenta a vida transforma o olhar", "o simples se torna abundante quando é recebido com presença", "agradecer devolve brilho ao que a pressa tornou invisível", "cada dádiva reconhecida se transforma em cuidado compartilhado"],
+    contemplacao: ["o silêncio revela relações que o ruído escondia", "a vastidão começa no instante em que paramos para perceber", "contemplar é permitir que a beleza exista sem ser apressada", "quando o olhar descansa, o mundo volta a ter profundidade"],
+    renovacao: ["a vida encontra passagem até nas menores fissuras", "cada manhã oferece matéria nova ao coração atento", "o que foi lavado pela chuva aprende outra vez a refletir o céu", "recomeçar não apaga a história; devolve movimento a ela"],
+    compaixao: ["aproximar-se da dor com respeito já é uma forma de luz", "a escuta acolhe o que nenhuma resposta consegue resolver", "cuidar é permanecer sem transformar a ferida em espetáculo", "a compaixão constrói pontes onde o julgamento ergueu muros"],
+    verdade: ["a clareza não precisa ferir para ser inteira", "quando o véu se abre, cada coisa recupera sua forma", "ser verdadeiro é alinhar presença, palavra e gesto", "a luz mais honesta revela sem humilhar"],
+    unidade: ["pertencer ao todo não exige deixar de ser único", "muitos caminhos podem compartilhar o mesmo horizonte", "a diversidade se torna força quando aprende a viver em relação", "a unidade conecta diferenças sem apagar seus nomes"],
+    paz: ["a quietude devolve ordem ao que a pressa fragmentou", "a paz começa quando o interior deixa de lutar contra a própria presença", "descansar também é confiar que a vida continua seu trabalho", "a reconciliação abre espaço para um novo modo de caminhar"]
+  };
+
+  const ELEMENT_METAPHORS = {
+    terra: ["raízes profundas", "a paciência da pedra", "solo fértil", "montanhas antigas", "matéria que sustenta"],
+    agua: ["água em movimento", "um rio interior", "a memória das marés", "chuva renovadora", "reflexos profundos"],
+    fogo: ["uma chama consciente", "o calor da transformação", "brasas que permanecem", "a aurora solar", "luz que renasce"],
+    ar: ["o sopro que abre espaço", "nuvens em passagem", "um céu sem fronteiras", "o vento da percepção", "a leveza do pensamento"],
+    espirito: ["o silêncio do infinito", "uma luz sem fronteiras", "o centro que integra", "a vastidão interior", "o mistério que une"]
+  };
+
+  function hashSeed(value) {
+    var h = 1779033703 ^ String(value).length;
+    for (var i = 0; i < String(value).length; i++) {
+      h = Math.imul(h ^ String(value).charCodeAt(i), 3432918353);
+      h = h << 13 | h >>> 19;
+    }
+    return function() {
+      h = Math.imul(h ^ h >>> 16, 2246822507);
+      h = Math.imul(h ^ h >>> 13, 3266489909);
+      return (h ^= h >>> 16) >>> 0;
+    };
+  }
+
+  function mulberry32(seed) {
+    return function() {
+      var t = seed += 0x6D2B79F5;
+      t = Math.imul(t ^ t >>> 15, t | 1);
+      t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function createRng(seed, config) {
+    var normalized = JSON.stringify({
+      seed: String(seed),
+      theme: config.theme,
+      secondaryTheme: config.secondaryTheme,
+      element: config.element,
+      intention: config.intention,
+      style: config.style,
+      intensity: config.intensity,
+      format: config.format,
+      customWidth: config.customWidth,
+      customHeight: config.customHeight,
+      randomness: config.randomness,
+      phraseSource: config.phraseSource,
+      phraseChoice: config.phraseChoice,
+      clan: config.clan,
+      textMode: config.textMode,
+      customText: config.customText
+    });
+    return mulberry32(hashSeed(normalized)());
+  }
+
+  function pick(list, rng) {
+    if (!list || !list.length) return "";
+    return list[Math.floor(rng() * list.length)];
+  }
+
+  function sampleUnique(list, count, rng) {
+    var copy = Array.from(new Set((list || []).filter(Boolean)));
+    var selected = [];
+    while (copy.length && selected.length < count) {
+      selected.push(copy.splice(Math.floor(rng() * copy.length), 1)[0]);
+    }
+    return selected;
+  }
+
+  function sentenceCase(value) {
+    value = String(value || "").trim();
+    return value ? value.charAt(0).toUpperCase() + value.slice(1) : "";
+  }
+
+  function lowerFirst(value) {
+    value = String(value || "").trim();
+    return value ? value.charAt(0).toLowerCase() + value.slice(1) : "";
+  }
+
+  function stripFinalPunctuation(value) {
+    return String(value || "").trim().replace(/[.!?;:,]+$/, "");
+  }
+
+  function listText(items) {
+    var clean = Array.from(new Set((items || []).filter(Boolean)));
+    if (!clean.length) return "";
+    if (clean.length === 1) return clean[0];
+    if (clean.length === 2) return clean[0] + " e " + clean[1];
+    return clean.slice(0, -1).join(", ") + " e " + clean[clean.length - 1];
+  }
+
+  function createSeed() {
+    var time = Date.now().toString(36).toUpperCase();
+    var random = Math.floor(Math.random() * 0xFFFFFF).toString(36).toUpperCase().padStart(5, "0");
+    return "FIRM-" + time + "-" + random;
+  }
+
+  function getImportedPhrase(sourceId, phraseChoice, phraseLibrary) {
+    if (!phraseChoice || phraseChoice.indexOf("custom:") !== 0) return null;
+    var id = phraseChoice.slice(7);
+    var collection = phraseLibrary[sourceId] || [];
+    return collection.find(function(item) { return item.id === id; }) || null;
+  }
+
+  function createOriginalPhrase(config, rng, phraseLibrary) {
+    var source = PHRASE_SOURCES[config.phraseSource] || PHRASE_SOURCES.original;
+    var imported = getImportedPhrase(config.phraseSource, config.phraseChoice, phraseLibrary || {});
+    if (imported) {
+      return { text: imported.text, kind: "imported", sourceLabel: source.label, attribution: "frase do acervo pessoal importado pelo usuário" };
+    }
+    if (config.phraseSource === "none") return { text: "", kind: "none", sourceLabel: "Sem frase", attribution: "" };
+
+    var motifs = source.motifs || [
+      "o gesto presente", "a luz no caminho", "o silêncio atento", "a vida compartilhada", "a beleza do essencial"
+    ];
+    var clause = pick(PHRASE_CLAUSES[config.intention] || PHRASE_CLAUSES.contemplacao, rng);
+    var motif = pick(motifs, rng);
+    var elementMetaphor = pick(ELEMENT_METAPHORS[config.element], rng);
+    var patterns = [
+      sentenceCase(motif) + " nos recorda que " + clause + ".",
+      "Quando " + lowerFirst(motif) + " encontra " + elementMetaphor + ", " + clause + ".",
+      "Sob o mesmo firmamento, " + clause + "; " + lowerFirst(pick(ORIGINAL_PHRASE_BANK.endings, rng)),
+      sentenceCase(elementMetaphor) + " ensina: " + clause + ".",
+      "No coração deste instante, " + clause + "."
+    ];
+    var phrase = pick(patterns, rng).replace(/\.\./g, ".").replace(/; ([a-záàâãéêíóôõúç]+)\.$/i, "; $1.");
+    return {
+      text: phrase,
+      kind: "original",
+      sourceLabel: source.label,
+      attribution: config.phraseSource === "original"
+        ? "frase original criada pelo motor; não é citação"
+        : "frase original guiada apenas pelos temas amplos da referência selecionada; não é citação, paráfrase identificável nem imitação do autor"
+    };
+  }
+
+  function getFormatDescription(config) {
+    var format = FORMATS[config.format] || FORMATS.vertical;
+    if (format.id !== "custom") return {
+      label: format.label,
+      ratio: format.ratio,
+      pixels: format.pixels,
+      direction: format.direction
+    };
+    var width = Math.max(256, Math.min(8192, Number(config.customWidth) || 1080));
+    var height = Math.max(256, Math.min(8192, Number(config.customHeight) || 1350));
+    var orientation = width === height ? "quadrada" : width > height ? "horizontal" : "vertical";
+    return {
+      label: "Personalizado · " + width + " × " + height,
+      ratio: width + ":" + height,
+      pixels: width + " × " + height,
+      direction: "composição " + orientation + " adaptada exatamente às dimensões"
+    };
+  }
+
+  function buildComposition(config, seed, phraseLibrary) {
+    var rng = createRng(seed, config);
+    var theme = THEMES[config.theme] || THEMES.firmamento;
+    var element = ELEMENTS[config.element] || ELEMENTS.espirito;
+    var intention = INTENTIONS[config.intention] || INTENTIONS.contemplacao;
+    var style = VISUAL_STYLES[config.style] || VISUAL_STYLES.maxima;
+    var intensity = INTENSITIES[config.intensity] || INTENSITIES.sublime;
+    var randomness = RANDOMNESS[config.randomness] || RANDOMNESS.coerente;
+    var format = getFormatDescription(config);
+    var secondary = null;
+    if (randomness.id === "sincretico") {
+      secondary = THEMES[config.secondaryTheme] && config.secondaryTheme !== theme.id
+        ? THEMES[config.secondaryTheme]
+        : THEMES.geometria;
+    }
+
+    var richness = intensity.count;
+    var central = pick(theme.central, rng);
+    var themeSecondaries = sampleUnique(theme.secondary, Math.min(richness, 4), rng);
+    var intentionFocus = pick(intention.focus, rng);
+    var intentionSymbols = sampleUnique(intention.symbols, Math.min(3, richness), rng);
+    var elementSymbols = sampleUnique(element.secondary, Math.min(3, richness), rng);
+    var secondaryContribution = secondary ? [
+      pick(secondary.secondary, rng),
+      pick(secondary.geometries, rng),
+      pick(secondary.materials, rng)
+    ] : [];
+    var symbols = sampleUnique(themeSecondaries.concat(intentionSymbols, elementSymbols, secondaryContribution), Math.min(7, richness + 2), rng);
+
+    var firstPlane = sampleUnique(
+      element.foreground.concat(UNIVERSAL_BANKS.foregrounds),
+      randomness.id === "coerente" ? 3 : 4,
+      rng
+    );
+    var middlePlane = sampleUnique(
+      theme.architecture.concat(UNIVERSAL_BANKS.middleGrounds, secondary ? secondary.architecture : []),
+      Math.min(4, richness),
+      rng
+    );
+    var background = sampleUnique(
+      theme.scenes.concat(element.landscape, UNIVERSAL_BANKS.backgrounds),
+      Math.min(3, Math.max(2, richness - 1)),
+      rng
+    );
+    var firmament = sampleUnique(
+      theme.celestial.concat(element.firmament, UNIVERSAL_BANKS.firmaments, secondary ? secondary.celestial : []),
+      Math.min(5, richness + 1),
+      rng
+    );
+    var geometries = sampleUnique(
+      theme.geometries.concat(UNIVERSAL_BANKS.geometries, secondary ? secondary.geometries : []),
+      Math.min(5, richness),
+      rng
+    );
+    var minerals = sampleUnique(element.minerals.concat(UNIVERSAL_BANKS.minerals), Math.min(5, richness), rng);
+    var materials = sampleUnique(
+      theme.materials.concat(element.materials, UNIVERSAL_BANKS.materials, secondary ? secondary.materials : []),
+      Math.min(6, richness + 1),
+      rng
+    );
+    var palette = sampleUnique(theme.palette.concat(element.palette, LOVE_LAYER.palette), Math.min(8, richness + 3), rng);
+    var lighting = sampleUnique(
+      element.lighting.concat(intention.light, UNIVERSAL_BANKS.lighting),
+      Math.min(5, richness + 1),
+      rng
+    );
+    var movements = sampleUnique(element.movement.concat(intention.motion), Math.min(3, richness), rng);
+    var atmospheres = sampleUnique(
+      element.atmosphere.concat([intention.emotion, style.atmosphere], LOVE_LAYER.atmosphere, UNIVERSAL_BANKS.atmospheres),
+      Math.min(5, richness + 1),
+      rng
+    );
+    var framing = pick(UNIVERSAL_BANKS.framings, rng);
+    var placement = pick(UNIVERSAL_BANKS.placements, rng);
+    var compositionMethod = pick(style.composition, rng);
+    var camera = pick(style.camera, rng);
+    var loveVisual = pick(LOVE_LAYER.visual, rng);
+    var phrase = createOriginalPhrase(config, rng, phraseLibrary || {});
+
+    var includesIsrael = theme.id === "israel" || (secondary && secondary.id === "israel");
+    var clan = includesIsrael ? (CLANS[config.clan] || CLANS.neutral) : CLANS.neutral;
+    var clanContinuity = includesIsrael
+      ? clan.visual + "; " + clan.position + ". Em todos os casos, manter visíveis doze estações em continuidade e representar Levi como presença sacerdotal compartilhada, não como décimo terceiro território"
+      : "";
+
+    var traditions = secondary ? [theme.label, secondary.label] : [theme.label];
+    var culturalRules = [theme.rule];
+    var culturalAvoid = theme.avoid.slice();
+    if (secondary) {
+      culturalRules.push(secondary.rule);
+      culturalAvoid = culturalAvoid.concat(secondary.avoid);
+    }
+    if (includesIsrael) {
+      culturalRules.push("A lista visual adota a convenção de doze porções com Efraim e Manassés, enquanto Levi é uma presença sacerdotal distribuída. Outras listas bíblicas variam conforme o contexto; não apresentar esta convenção como a única possível.");
+      culturalAvoid.push("transformar Levi em décimo terceiro território", "inventar brasões, bandeiras, gemas, cores ou genealogias para as tribos");
+    }
+
+    var conceptNames = [
+      intention.label + " sob o " + element.label,
+      theme.short + " · " + intention.label + " viva",
+      "Atlas de " + intention.label + " e " + element.label,
+      "O firmamento de " + intention.label,
+      "Entre " + element.label + " e estrelas"
+    ];
+
+    return {
+      seed: seed,
+      config: config,
+      title: pick(conceptNames, rng),
+      theme: theme,
+      secondary: secondary,
+      traditions: traditions,
+      element: element,
+      intention: intention,
+      style: style,
+      intensity: intensity,
+      randomness: randomness,
+      format: format,
+      central: central,
+      intentionFocus: intentionFocus,
+      symbols: symbols,
+      firstPlane: firstPlane,
+      middlePlane: middlePlane,
+      background: background,
+      firmament: firmament,
+      geometries: geometries,
+      minerals: minerals,
+      materials: materials,
+      palette: palette,
+      lighting: lighting,
+      movements: movements,
+      atmospheres: atmospheres,
+      framing: framing,
+      placement: placement,
+      compositionMethod: compositionMethod,
+      camera: camera,
+      loveVisual: loveVisual,
+      phrase: phrase,
+      clan: clan,
+      clanContinuity: clanContinuity,
+      includesIsrael: includesIsrael,
+      culturalRules: culturalRules,
+      avoid: Array.from(new Set(UNIVERSAL_BANKS.avoid.concat(culturalAvoid, [intention.avoid])))
+    };
+  }
+
+  function buildTextInstruction(composition) {
+    var config = composition.config;
+    var textMode = TEXT_MODES[config.textMode] || TEXT_MODES.none;
+    var phrase = composition.phrase;
+
+    if (config.phraseSource !== "none" && phrase.text) {
+      if (textMode.id === "none") {
+        return "A frase selecionada — “" + phrase.text + "” — funciona somente como intenção conceitual e NÃO deve aparecer escrita na imagem. " + phrase.attribution + ".";
+      }
+      return textMode.instruction + " Texto exato: “" + phrase.text + "” " + sentenceCase(phrase.attribution) + ". Não acrescentar nome de autor, título de livro, aspas decorativas ou outras palavras.";
+    }
+    if (textMode.id !== "none" && String(config.customText || "").trim()) {
+      return textMode.instruction + " Texto exato fornecido pelo usuário: “" + String(config.customText).trim() + "” — não traduzir, completar, corrigir criativamente ou acrescentar conteúdo.";
+    }
+    return TEXT_MODES.none.instruction + " Sem frase selecionada.";
+  }
+
+  function buildPrompt(composition) {
+    var c = composition;
+    var syncretic = c.secondary
+      ? " Esta obra combina explicitamente " + c.traditions.join(" + ") + " como diálogo artístico contemporâneo; não sugerir que essa fusão seja uma tradição histórica antiga."
+      : "";
+    var clanText = c.includesIsrael
+      ? " Convenção tribal: " + c.clan.label + ". " + sentenceCase(c.clanContinuity) + "."
+      : "";
+    var textInstruction = buildTextInstruction(c);
+    var avoid = sampleUnique(c.avoid, 22, createRng(c.seed + "-avoid", c.config));
+
+    var sections = [
+      "Gere uma imagem em " + c.format.direction + ", no formato " + c.format.ratio + ", visualmente extraordinária, monumental e contemplativa, intitulada conceitualmente “" + c.title + "”. Construa uma única realidade visual inspirada em atlas celestial antigo, manuscrito astronômico, arte renascentista, realismo fantástico, fantasia espiritual elegante, geometria refinada, ornamentação histórica e iluminação cinematográfica. O Amor é um elemento universal obrigatório e deve envolver todo o firmamento por meio da luz, da relação e da dignidade visual.",
+      "01 — ASSUNTO\n" + sentenceCase(c.theme.subject) + ". O foco visual será " + c.central + "." + syncretic + clanText,
+      "02 — SIGNIFICADO\nA obra deve comunicar " + c.theme.meaning + ", orientada por " + c.intention.meaning + ". O Amor permanece como fundamento: " + LOVE_LAYER.meaning + ". Não transformar crença, metáfora ou interpretação simbólica em afirmação científica ou histórica.",
+      "03 — ELEMENTO\nElemento selecionado: " + c.element.label + ". Ele não deve apenas alterar a cor: deve transformar a paisagem, os materiais, a física da cena, a atmosfera, o movimento e a profundidade. Expressar " + c.element.meaning + ", com " + listText(c.movements) + ".",
+      "04 — INTENÇÃO\nIntenção principal: " + c.intention.label + ". Dar destaque a " + c.intentionFocus + ", transmitindo " + c.intention.emotion + ". A intenção deve influenciar gesto, ritmo, distância entre as formas, direção da luz e percurso do olhar.",
+      "05 — SÍMBOLO CENTRAL\nRepresentar " + c.central + ". Posicioná-lo como " + c.placement + ". Ele deve ser reconhecível, materialmente convincente e integrado à paisagem; nunca um ícone plano colado sobre o cenário.",
+      "06 — SÍMBOLOS SECUNDÁRIOS\nIntegrar organicamente " + listText(c.symbols) + ". Cada símbolo secundário deve ter função compositiva clara: conduzir o olhar, estabelecer escala, aprofundar o significado ou relacionar planos. Não usar símbolos apenas porque parecem místicos.",
+      "07 — FIRMAMENTO\nCriar " + listText(c.firmament) + ". O céu deve possuir escala real, variação de foco, diferentes magnitudes estelares, atmosfera e sensação de distância. O firmamento envolve visualmente toda a cena e responde ao elemento " + c.element.label + ".",
+      "08 — PRIMEIRO PLANO\nEm foco tátil e detalhado, mostrar " + listText(c.firstPlane) + ". Usar sobreposição, escala e textura para estabelecer proximidade. Nada deve bloquear o símbolo central por acidente.",
+      "09 — PLANO INTERMEDIÁRIO\nConstruir " + listText(c.middlePlane) + ". Este plano liga matéria e cosmos, estabelece escala e conduz o olhar por curvas, degraus, luz, névoa ou geometria.",
+      "10 — FUNDO\nAo fundo, apresentar " + listText(c.background) + ". Aplicar perspectiva atmosférica, redução progressiva de contraste e gradação cromática, preservando profundidade mesmo nas áreas escuras.",
+      "11 — GEOMETRIA\nOrganizar a composição com " + listText(c.geometries) + ". As linhas geométricas devem estruturar a realidade visual, aparecer gravadas, luminosas, arquitetônicas ou sugeridas pela paisagem — jamais como adesivos sobrepostos. Não atribuir antiguidade comprovada a padrões modernos.",
+      "12 — MINERAIS\nUtilizar seletivamente " + listText(c.minerals) + ". Representar facetas, inclusões, transparência, peso, reflexão e irregularidades naturais com precisão. Associações espirituais são metáforas ou crenças tradicionais, não propriedades científicas ou terapêuticas.",
+      "13 — MATERIAIS\nCombinar " + listText(c.materials) + ". Diferenciar claramente pedra, metal, vidro, papel, água, tecido e luz por microtextura, reflexão, translucidez, desgaste e resposta luminosa.",
+      "14 — PALETA\nPaleta principal: " + listText(c.palette) + ". Priorizar azuis profundos, azuis celestes, violeta, branco quente e tons minerais. Usar o dourado principalmente em iluminação, reflexos, filigrana, molduras e detalhes; não transformar automaticamente tudo em preto e dourado.",
+      "15 — ILUMINAÇÃO\nAplicar " + listText(c.lighting) + ". A luz deve conectar todos os planos, refletir corretamente nos materiais e conduzir o olhar ao centro. Presença visual obrigatória do Amor: " + c.loveVisual + ".",
+      "16 — COMPOSIÇÃO\nUsar " + c.compositionMethod + ", " + c.framing + " e " + c.camera + ". Criar paralaxe entre primeiro plano, centro, plano intermediário e fundo. Manter hierarquia, equilíbrio de massas, ritmo, áreas de respiro e percurso visual contínuo.",
+      "17 — ATMOSFERA\nEvocar " + listText(c.atmospheres) + ". A emoção deve ser profunda, elegante e contemplativa, nunca melodramática. Movimento ambiental: " + listText(c.movements) + ".",
+      "18 — ESTILO ARTÍSTICO\nModo visual: " + c.style.label + ". " + c.style.density + ". " + c.style.texture + ". Fundir atlas celestial antigo, manuscrito astronômico, arte renascentista, cosmos, realismo fantástico e iluminação cinematográfica em acabamento premium, sem copiar uma obra específica.",
+      "19 — FORMATO\nFormato " + c.format.ratio + " (" + c.format.pixels + "). " + sentenceCase(c.format.direction) + ". Respeitar áreas seguras nas bordas; não cortar o símbolo central, círculos principais, molduras ou texto.",
+      "20 — NÍVEL DE DETALHE\nIntensidade: " + c.intensity.label + ". Solicitar " + c.intensity.detail + ", " + c.intensity.contrast + " e " + c.intensity.energy + ". Alta definição, profundidade tonal, bordas seletivas, microdetalhes materiais, névoa volumétrica refinada e acabamento editorial premium.",
+      "21 — REGRA DE INTEGRAÇÃO\nTodos os elementos devem parecer pertencentes à mesma realidade visual e simbólica. A composição jamais deve parecer uma colagem de objetos místicos independentes. Símbolos, arquitetura, minerais, firmamento, iluminação, paisagem e geometria devem interagir organicamente. " + LOVE_LAYER.integration,
+      "22 — EVITAR\nEvitar " + listText(avoid) + ". " + c.culturalRules.join(" ") + " Liberdade de composição: " + c.randomness.freedom + ".",
+      "TEXTO E FRASE\n" + textInstruction,
+      "VERIFICAÇÃO FINAL\nAntes de concluir, conferir: coerência histórica e cultural; continuidade entre todos os planos; presença permanente do Amor; profundidade espacial real; legibilidade do símbolo central; variedade material; iluminação unificadora; ausência de pseudoescritas e de símbolos aleatórios; beleza máxima obtida por seleção e harmonia, não por acúmulo."
+    ];
+    return sections.join("\n\n");
+  }
+
+  const SymbolicEngine = Object.freeze({
+    create: function(config, seed, phraseLibrary) {
+      var composition = buildComposition(config, seed, phraseLibrary);
+      return { composition: composition, prompt: buildPrompt(composition) };
+    }
+  });
+
+  const ImageApiAdapter = Object.freeze({
+    enabled: false,
+    generateImage: async function(prompt, options) {
+      void prompt;
+      void options;
+      throw new Error("Integração de imagem ainda não configurada. O motor de prompts está pronto para ser conectado a uma API.");
+    }
+  });
+
+  const STORAGE_KEYS = {
+    history: "firmamento.history.v1",
+    favorites: "firmamento.favorites.v1",
+    phrases: "firmamento.phrases.v1",
+    settings: "firmamento.settings.v1"
+  };
+
+  function readStorage(key, fallback) {
+    try {
+      var value = localStorage.getItem(key);
+      return value ? JSON.parse(value) : fallback;
+    } catch (error) {
+      return fallback;
+    }
+  }
+
+  function writeStorage(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  const appState = {
+    history: readStorage(STORAGE_KEYS.history, []),
+    favorites: readStorage(STORAGE_KEYS.favorites, []),
+    phraseLibrary: readStorage(STORAGE_KEYS.phrases, {}),
+    current: null,
+    drawerMode: null,
+    toastTimer: null
+  };
+
+  const ui = {
+    form: document.getElementById("composerForm"),
+    theme: document.getElementById("themeSelect"),
+    element: document.getElementById("elementSelect"),
+    intention: document.getElementById("intentionSelect"),
+    style: document.getElementById("styleSelect"),
+    intensity: document.getElementById("intensitySelect"),
+    format: document.getElementById("formatSelect"),
+    randomness: document.getElementById("randomnessSelect"),
+    phraseSource: document.getElementById("phraseSourceSelect"),
+    phraseChoice: document.getElementById("phraseChoiceSelect"),
+    textMode: document.getElementById("textModeSelect"),
+    secondaryTheme: document.getElementById("secondaryThemeSelect"),
+    clan: document.getElementById("clanSelect"),
+    customWidth: document.getElementById("customWidth"),
+    customHeight: document.getElementById("customHeight"),
+    customText: document.getElementById("customText"),
+    seed: document.getElementById("seedInput"),
+    secondaryThemeField: document.getElementById("secondaryThemeField"),
+    customFormatField: document.getElementById("customFormatField"),
+    customTextField: document.getElementById("customTextField"),
+    phraseChoiceField: document.getElementById("phraseChoiceField"),
+    clanField: document.getElementById("clanField"),
+    themeNote: document.getElementById("themeNote"),
+    elementNote: document.getElementById("elementNote"),
+    intentionNote: document.getElementById("intentionNote"),
+    styleNote: document.getElementById("styleNote"),
+    intensityNote: document.getElementById("intensityNote"),
+    formatNote: document.getElementById("formatNote"),
+    randomnessNote: document.getElementById("randomnessNote"),
+    phraseSourceNote: document.getElementById("phraseSourceNote"),
+    textModeNote: document.getElementById("textModeNote"),
+    clanNote: document.getElementById("clanNote"),
+    formula: document.getElementById("liveFormula"),
+    bankCount: document.getElementById("bankCount"),
+    emptyResult: document.getElementById("emptyResult"),
+    filledResult: document.getElementById("filledResult"),
+    resultSection: document.getElementById("resultSection"),
+    resultHeading: document.getElementById("resultHeading"),
+    resultSummary: document.getElementById("resultSummary"),
+    resultMeta: document.getElementById("resultMeta"),
+    promptOutput: document.getElementById("promptOutput"),
+    promptStats: document.getElementById("promptStats"),
+    historyCount: document.getElementById("historyCount"),
+    favoritesCount: document.getElementById("favoritesCount"),
+    drawerBackdrop: document.getElementById("drawerBackdrop"),
+    drawerTitle: document.getElementById("drawerTitle"),
+    drawerKicker: document.getElementById("drawerKicker"),
+    drawerContent: document.getElementById("drawerContent"),
+    toast: document.getElementById("toast"),
+    managePhrasesButton: document.getElementById("managePhrasesButton")
+  };
+
+  function populateSelect(select, object, selectedId) {
+    select.innerHTML = "";
+    Object.keys(object).forEach(function(key) {
+      var item = object[key];
+      var option = document.createElement("option");
+      option.value = item.id;
+      option.textContent = item.label;
+      option.selected = item.id === selectedId;
+      select.appendChild(option);
+    });
+  }
+
+  function populateSecondaryTheme() {
+    var current = ui.secondaryTheme.value;
+    ui.secondaryTheme.innerHTML = "";
+    Object.keys(THEMES).forEach(function(key) {
+      var theme = THEMES[key];
+      if (theme.id === ui.theme.value) return;
+      var option = document.createElement("option");
+      option.value = theme.id;
+      option.textContent = theme.label;
+      ui.secondaryTheme.appendChild(option);
+    });
+    if (current && current !== ui.theme.value && THEMES[current]) ui.secondaryTheme.value = current;
+    if (!ui.secondaryTheme.value) ui.secondaryTheme.value = ui.theme.value === "geometria" ? "firmamento" : "geometria";
+  }
+
+  function populatePhraseChoices(preferredValue) {
+    var sourceId = ui.phraseSource.value;
+    var previous = preferredValue || ui.phraseChoice.value;
+    ui.phraseChoice.innerHTML = "";
+    if (sourceId === "none") return;
+
+    var original = document.createElement("option");
+    original.value = "original";
+    original.textContent = "Gerar uma nova frase original a partir das escolhas";
+    ui.phraseChoice.appendChild(original);
+
+    var custom = appState.phraseLibrary[sourceId] || [];
+    if (custom.length) {
+      var group = document.createElement("optgroup");
+      group.label = "Meu acervo autorizado";
+      custom.forEach(function(item) {
+        var option = document.createElement("option");
+        option.value = "custom:" + item.id;
+        option.textContent = item.text.length > 90 ? item.text.slice(0, 87) + "…" : item.text;
+        group.appendChild(option);
+      });
+      ui.phraseChoice.appendChild(group);
+    }
+    if (previous && Array.from(ui.phraseChoice.options).some(function(option) { return option.value === previous; })) {
+      ui.phraseChoice.value = previous;
+    }
+  }
+
+  function hasIsraelTheme() {
+    return ui.theme.value === "israel" || (ui.randomness.value === "sincretico" && ui.secondaryTheme.value === "israel");
+  }
+
+  function setFieldVisibility(field, visible) {
+    field.classList.toggle("is-hidden", !visible);
+  }
+
+  function updateNotesAndVisibility(options) {
+    options = options || {};
+    populateSecondaryTheme();
+    var theme = THEMES[ui.theme.value] || THEMES.firmamento;
+    var element = ELEMENTS[ui.element.value] || ELEMENTS.espirito;
+    var intention = INTENTIONS[ui.intention.value] || INTENTIONS.contemplacao;
+    var style = VISUAL_STYLES[ui.style.value] || VISUAL_STYLES.maxima;
+    var intensity = INTENSITIES[ui.intensity.value] || INTENSITIES.sublime;
+    var format = FORMATS[ui.format.value] || FORMATS.vertical;
+    var randomness = RANDOMNESS[ui.randomness.value] || RANDOMNESS.coerente;
+    var source = PHRASE_SOURCES[ui.phraseSource.value] || PHRASE_SOURCES.none;
+    var textMode = TEXT_MODES[ui.textMode.value] || TEXT_MODES.none;
+
+    ui.themeNote.textContent = theme.note;
+    ui.elementNote.textContent = element.note;
+    ui.intentionNote.textContent = intention.note;
+    ui.styleNote.textContent = style.note;
+    ui.intensityNote.textContent = intensity.note;
+    ui.formatNote.textContent = format.note;
+    ui.randomnessNote.textContent = randomness.note;
+    ui.phraseSourceNote.textContent = source.note;
+    ui.textModeNote.textContent = textMode.note;
+
+    setFieldVisibility(ui.secondaryThemeField, randomness.id === "sincretico");
+    setFieldVisibility(ui.customFormatField, format.id === "custom");
+    setFieldVisibility(ui.phraseChoiceField, source.id !== "none");
+    setFieldVisibility(ui.customTextField, textMode.id !== "none" && source.id === "none");
+    setFieldVisibility(ui.clanField, hasIsraelTheme());
+    ui.managePhrasesButton.style.display = source.id !== "none" && source.id !== "original" ? "inline-flex" : "none";
+    if (hasIsraelTheme()) ui.clanNote.textContent = (CLANS[ui.clan.value] || CLANS.neutral).note;
+
+    if (!options.keepPhraseChoice) populatePhraseChoices();
+    updateFormula();
+    saveSettings();
+  }
+
+  function updateFormula() {
+    var values = [
+      THEMES[ui.theme.value] ? THEMES[ui.theme.value].short : "Tema",
+      ui.randomness.value === "sincretico" && THEMES[ui.secondaryTheme.value] ? THEMES[ui.secondaryTheme.value].short : null,
+      hasIsraelTheme() && ui.clan.value !== "neutral" ? (CLANS[ui.clan.value] || CLANS.neutral).label : null,
+      ELEMENTS[ui.element.value] ? ELEMENTS[ui.element.value].label : "Elemento",
+      INTENTIONS[ui.intention.value] ? INTENTIONS[ui.intention.value].label : "Intenção",
+      PHRASE_SOURCES[ui.phraseSource.value] ? PHRASE_SOURCES[ui.phraseSource.value].label.split(" · ")[0] : null,
+      "Amor universal",
+      "Firmamento",
+      VISUAL_STYLES[ui.style.value] ? VISUAL_STYLES[ui.style.value].label : "Estilo"
+    ].filter(Boolean);
+    ui.formula.innerHTML = "";
+    values.forEach(function(value, index) {
+      var chip = document.createElement("span");
+      chip.className = "formula-chip" + (value === "Amor universal" ? " love" : "");
+      chip.textContent = value;
+      ui.formula.appendChild(chip);
+      if (index < values.length - 1) {
+        var arrow = document.createElement("span");
+        arrow.className = "formula-arrow";
+        arrow.textContent = "→";
+        ui.formula.appendChild(arrow);
+      }
+    });
+  }
+
+  function getConfig() {
+    return {
+      theme: ui.theme.value,
+      secondaryTheme: ui.secondaryTheme.value,
+      element: ui.element.value,
+      intention: ui.intention.value,
+      style: ui.style.value,
+      intensity: ui.intensity.value,
+      format: ui.format.value,
+      customWidth: Number(ui.customWidth.value) || 1080,
+      customHeight: Number(ui.customHeight.value) || 1350,
+      randomness: ui.randomness.value,
+      phraseSource: ui.phraseSource.value,
+      phraseChoice: ui.phraseChoice.value || "original",
+      clan: hasIsraelTheme() ? ui.clan.value : "neutral",
+      textMode: ui.textMode.value,
+      customText: ui.customText.value.trim()
+    };
+  }
+
+  function saveSettings() {
+    if (!ui.theme.value) return;
+    var config = getConfig();
+    config.customText = "";
+    writeStorage(STORAGE_KEYS.settings, config);
+  }
+
+  function applyConfig(config) {
+    if (!config) return;
+    if (THEMES[config.theme]) ui.theme.value = config.theme;
+    populateSecondaryTheme();
+    if (THEMES[config.secondaryTheme] && config.secondaryTheme !== ui.theme.value) ui.secondaryTheme.value = config.secondaryTheme;
+    if (ELEMENTS[config.element]) ui.element.value = config.element;
+    if (INTENTIONS[config.intention]) ui.intention.value = config.intention;
+    if (VISUAL_STYLES[config.style]) ui.style.value = config.style;
+    if (INTENSITIES[config.intensity]) ui.intensity.value = config.intensity;
+    if (FORMATS[config.format]) ui.format.value = config.format;
+    if (RANDOMNESS[config.randomness]) ui.randomness.value = config.randomness;
+    if (PHRASE_SOURCES[config.phraseSource]) ui.phraseSource.value = config.phraseSource;
+    if (TEXT_MODES[config.textMode]) ui.textMode.value = config.textMode;
+    if (CLANS[config.clan]) ui.clan.value = config.clan;
+    ui.customWidth.value = config.customWidth || 1080;
+    ui.customHeight.value = config.customHeight || 1350;
+    ui.customText.value = config.customText || "";
+    populatePhraseChoices(config.phraseChoice);
+    updateNotesAndVisibility({ keepPhraseChoice: true });
+  }
+
+  function validateBeforeGenerate(config) {
+    if (config.format === "custom") {
+      if (config.customWidth < 256 || config.customWidth > 8192 || config.customHeight < 256 || config.customHeight > 8192) {
+        showToast("Use dimensões entre 256 e 8192 pixels.");
+        ui.customWidth.focus();
+        return false;
+      }
+    }
+    if (config.textMode !== "none" && config.phraseSource === "none" && !config.customText) {
+      showToast("Digite o texto exato ou escolha “Sem texto”.");
+      ui.customText.focus();
+      return false;
+    }
+    return true;
+  }
+
+  function makeRecord(result) {
+    var now = new Date();
+    return {
+      id: result.composition.seed + "-" + now.getTime().toString(36),
+      seed: result.composition.seed,
+      title: result.composition.title,
+      summary: result.composition.traditions.join(" + ") + " · " + result.composition.element.label + " · " + result.composition.intention.label,
+      date: now.toISOString(),
+      config: result.composition.config,
+      prompt: result.prompt
+    };
+  }
+
+  function renderResult(result) {
+    var c = result.composition;
+    ui.emptyResult.hidden = true;
+    ui.filledResult.hidden = false;
+    ui.resultHeading.textContent = c.title;
+    var phraseSummary = c.phrase.text ? " · frase " + (c.phrase.kind === "imported" ? "do acervo" : "original") : " · sem frase";
+    ui.resultSummary.textContent = c.traditions.join(" + ") + " · " + c.element.label + " · " + c.intention.label + phraseSummary;
+    ui.promptOutput.value = result.prompt;
+    var wordCount = result.prompt.trim().split(/\s+/).length;
+    ui.promptStats.textContent = result.prompt.length.toLocaleString("pt-BR") + " caracteres · " + wordCount.toLocaleString("pt-BR") + " palavras";
+
+    var meta = [
+      "Seed: " + c.seed,
+      c.style.label,
+      c.intensity.label,
+      c.format.ratio,
+      c.randomness.label,
+      c.includesIsrael ? c.clan.label : null,
+      c.config.phraseSource !== "none" ? PHRASE_SOURCES[c.config.phraseSource].label.split(" · ")[0] : "Sem frase",
+      "♡ Amor sempre ativo"
+    ].filter(Boolean);
+    ui.resultMeta.innerHTML = "";
+    meta.forEach(function(value) {
+      var chip = document.createElement("span");
+      chip.className = "meta-chip" + (value.indexOf("Amor") >= 0 ? " love" : "");
+      chip.textContent = value;
+      ui.resultMeta.appendChild(chip);
+    });
+  }
+
+  function generateComposition(options) {
+    options = options || {};
+    var config = getConfig();
+    if (!validateBeforeGenerate(config)) return;
+    var seed = options.newSeed ? createSeed() : ui.seed.value.trim() || createSeed();
+    ui.seed.value = seed;
+    var result = SymbolicEngine.create(config, seed, appState.phraseLibrary);
+    appState.current = result;
+    renderResult(result);
+
+    var record = makeRecord(result);
+    appState.history = [record].concat(appState.history.filter(function(item) {
+      return !(item.seed === record.seed && JSON.stringify(item.config) === JSON.stringify(record.config));
+    })).slice(0, 30);
+    writeStorage(STORAGE_KEYS.history, appState.history);
+    updateCounts();
+    saveSettings();
+    if (!options.noScroll) {
+      window.setTimeout(function() {
+        ui.resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
+    }
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (error) {
+      var helper = document.createElement("textarea");
+      helper.value = text;
+      helper.style.position = "fixed";
+      helper.style.opacity = "0";
+      document.body.appendChild(helper);
+      helper.select();
+      var copied = document.execCommand("copy");
+      helper.remove();
+      return copied;
+    }
+  }
+
+  function saveCurrentFavorite() {
+    if (!appState.current) return;
+    var record = makeRecord(appState.current);
+    var exists = appState.favorites.some(function(item) {
+      return item.seed === record.seed && JSON.stringify(item.config) === JSON.stringify(record.config);
+    });
+    if (exists) {
+      showToast("Esta composição já está nos favoritos.");
+      return;
+    }
+    appState.favorites = [record].concat(appState.favorites).slice(0, 60);
+    writeStorage(STORAGE_KEYS.favorites, appState.favorites);
+    updateCounts();
+    showToast("Composição salva nos favoritos.");
+  }
+
+  function downloadCurrent() {
+    if (!appState.current) return;
+    var c = appState.current.composition;
+    var content = "GERADOR DO FIRMAMENTO\n" + c.title + "\nSeed: " + c.seed + "\n\n" + appState.current.prompt;
+    var blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = url;
+    link.download = "firmamento-" + c.seed.toLowerCase().replace(/[^a-z0-9-]/g, "-") + ".txt";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    showToast("Arquivo de prompt preparado.");
+  }
+
+  function updateCounts() {
+    ui.historyCount.textContent = appState.history.length;
+    ui.favoritesCount.textContent = appState.favorites.length;
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function formatDate(value) {
+    try {
+      return new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(new Date(value));
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function openDrawer(mode) {
+    appState.drawerMode = mode;
+    ui.drawerBackdrop.classList.add("open");
+    ui.drawerBackdrop.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    if (mode === "phrases") renderPhraseManager(ui.phraseSource.value);
+    else renderSavedCollection(mode);
+    document.getElementById("closeDrawerButton").focus();
+  }
+
+  function closeDrawer() {
+    ui.drawerBackdrop.classList.remove("open");
+    ui.drawerBackdrop.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  function renderSavedCollection(mode) {
+    var isFavorites = mode === "favorites";
+    var collection = isFavorites ? appState.favorites : appState.history;
+    ui.drawerKicker.textContent = isFavorites ? "Coleção local persistente" : "Últimas 30 gerações";
+    ui.drawerTitle.textContent = isFavorites ? "Favoritos" : "Histórico";
+    if (!collection.length) {
+      ui.drawerContent.innerHTML = '<div class="drawer-empty"><p>' + (isFavorites ? "Nenhum favorito salvo ainda.<br>Gere uma composição e use “Salvar favorito”." : "Seu histórico aparecerá aqui depois da primeira geração.") + "</p></div>";
+      return;
+    }
+    ui.drawerContent.innerHTML = collection.map(function(item) {
+      return '<article class="saved-item">' +
+        '<div class="saved-item-top"><div><h3>' + escapeHtml(item.title) + '</h3><p>' + escapeHtml(item.summary) + '<br>' + escapeHtml(formatDate(item.date)) + '</p></div></div>' +
+        '<div class="seed">' + escapeHtml(item.seed) + '</div>' +
+        '<div class="saved-actions">' +
+          '<button type="button" data-action="recreate" data-id="' + escapeHtml(item.id) + '">Reproduzir</button>' +
+          '<button type="button" data-action="copy" data-id="' + escapeHtml(item.id) + '">Copiar</button>' +
+          (!isFavorites ? '<button type="button" data-action="favorite" data-id="' + escapeHtml(item.id) + '">Favoritar</button>' : '') +
+          '<button class="danger" type="button" data-action="delete" data-id="' + escapeHtml(item.id) + '">Excluir</button>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+  }
+
+  function findRecord(mode, id) {
+    var collection = mode === "favorites" ? appState.favorites : appState.history;
+    return collection.find(function(item) { return item.id === id; });
+  }
+
+  function handleSavedAction(action, id) {
+    var mode = appState.drawerMode;
+    var item = findRecord(mode, id);
+    if (!item) return;
+    if (action === "copy") {
+      copyText(item.prompt).then(function() { showToast("Prompt copiado."); });
+      return;
+    }
+    if (action === "recreate") {
+      applyConfig(item.config);
+      ui.seed.value = item.seed;
+      closeDrawer();
+      generateComposition();
+      return;
+    }
+    if (action === "favorite") {
+      var exists = appState.favorites.some(function(favorite) {
+        return favorite.seed === item.seed && JSON.stringify(favorite.config) === JSON.stringify(item.config);
+      });
+      if (!exists) {
+        appState.favorites = [Object.assign({}, item, { id: item.id + "-fav" })].concat(appState.favorites).slice(0, 60);
+        writeStorage(STORAGE_KEYS.favorites, appState.favorites);
+        updateCounts();
+      }
+      showToast(exists ? "Já estava nos favoritos." : "Salvo nos favoritos.");
+      return;
+    }
+    if (action === "delete") {
+      if (mode === "favorites") {
+        appState.favorites = appState.favorites.filter(function(record) { return record.id !== id; });
+        writeStorage(STORAGE_KEYS.favorites, appState.favorites);
+      } else {
+        appState.history = appState.history.filter(function(record) { return record.id !== id; });
+        writeStorage(STORAGE_KEYS.history, appState.history);
+      }
+      updateCounts();
+      renderSavedCollection(mode);
+      showToast("Item excluído.");
+    }
+  }
+
+  function validPhraseSourceForLibrary(sourceId) {
+    return PHRASE_SOURCES[sourceId] && sourceId !== "none" && sourceId !== "original";
+  }
+
+  function renderPhraseManager(preferredSource) {
+    var sourceId = validPhraseSourceForLibrary(preferredSource) ? preferredSource : "minutos";
+    var collection = appState.phraseLibrary[sourceId] || [];
+    ui.drawerKicker.textContent = "Acervo pessoal · armazenamento neste dispositivo";
+    ui.drawerTitle.textContent = "Minhas frases";
+    var sourceOptions = Object.keys(PHRASE_SOURCES).filter(validPhraseSourceForLibrary).map(function(key) {
+      return '<option value="' + key + '"' + (key === sourceId ? " selected" : "") + ">" + escapeHtml(PHRASE_SOURCES[key].label.split(" · ")[0]) + "</option>";
+    }).join("");
+    var items = collection.length ? collection.slice(0, 200).map(function(item) {
+      return '<article class="saved-item"><p style="color:#d7deef;font-size:11px">' + escapeHtml(item.text) + '</p><div class="saved-actions"><button class="danger" type="button" data-phrase-delete="' + escapeHtml(item.id) + '" data-source="' + sourceId + '">Excluir</button></div></article>';
+    }).join("") : '<div class="drawer-empty" style="min-height:120px"><p>Nenhuma frase importada nesta coleção.</p></div>';
+    ui.drawerContent.innerHTML =
+      '<div class="saved-item" style="border-color:rgba(226,193,123,.26)">' +
+        '<p style="color:#d8c897;font-size:10px;line-height:1.6;margin-bottom:12px">Importe apenas frases que você tem autorização para usar. Cole uma frase por linha. O aplicativo não inclui textos integrais dos livros e não altera o conteúdo importado.</p>' +
+        '<div class="field"><label for="phraseManagerSource">Coleção</label><select id="phraseManagerSource">' + sourceOptions + '</select></div>' +
+        '<div class="field" style="margin-top:12px"><label for="phraseImportArea">Frases autorizadas · uma por linha</label><textarea id="phraseImportArea" maxlength="100000" placeholder="Cole aqui suas frases, uma em cada linha…"></textarea></div>' +
+        '<button class="mini-btn" id="importPhrasesButton" type="button" style="width:100%;margin-top:10px">Adicionar ao meu acervo</button>' +
+      '</div>' +
+      '<p style="color:#7f8bac;font-size:9px;margin:15px 4px">' + collection.length + " frase(s) nesta coleção · exibindo até 200</p>" +
+      items;
+
+    document.getElementById("phraseManagerSource").addEventListener("change", function(event) {
+      renderPhraseManager(event.target.value);
+    });
+    document.getElementById("importPhrasesButton").addEventListener("click", function() {
+      importPhrases(sourceId);
+    });
+  }
+
+  function importPhrases(sourceId) {
+    var area = document.getElementById("phraseImportArea");
+    var lines = area.value.split(/\r?\n/).map(function(line) { return line.trim(); }).filter(Boolean);
+    if (!lines.length) {
+      showToast("Cole ao menos uma frase.");
+      area.focus();
+      return;
+    }
+    var collection = appState.phraseLibrary[sourceId] || [];
+    var existing = new Set(collection.map(function(item) { return item.text.toLocaleLowerCase("pt-BR"); }));
+    var added = 0;
+    lines.forEach(function(line, index) {
+      var text = line.slice(0, 500);
+      var key = text.toLocaleLowerCase("pt-BR");
+      if (!existing.has(key) && collection.length < 5000) {
+        collection.push({
+          id: Date.now().toString(36) + "-" + index.toString(36) + "-" + Math.random().toString(36).slice(2, 7),
+          text: text
+        });
+        existing.add(key);
+        added++;
+      }
+    });
+    appState.phraseLibrary[sourceId] = collection;
+    writeStorage(STORAGE_KEYS.phrases, appState.phraseLibrary);
+    if (ui.phraseSource.value === sourceId) populatePhraseChoices();
+    renderPhraseManager(sourceId);
+    showToast(added + " frase(s) adicionada(s).");
+  }
+
+  function deletePhrase(sourceId, phraseId) {
+    var collection = appState.phraseLibrary[sourceId] || [];
+    appState.phraseLibrary[sourceId] = collection.filter(function(item) { return item.id !== phraseId; });
+    writeStorage(STORAGE_KEYS.phrases, appState.phraseLibrary);
+    if (ui.phraseSource.value === sourceId) populatePhraseChoices();
+    renderPhraseManager(sourceId);
+    showToast("Frase removida do acervo.");
+  }
+
+  function showToast(message) {
+    window.clearTimeout(appState.toastTimer);
+    ui.toast.textContent = message;
+    ui.toast.classList.add("show");
+    appState.toastTimer = window.setTimeout(function() {
+      ui.toast.classList.remove("show");
+    }, 2600);
+  }
+
+  function countBankUnits(value) {
+    if (Array.isArray(value)) return value.reduce(function(total, item) { return total + countBankUnits(item); }, 0);
+    if (value && typeof value === "object") return Object.keys(value).reduce(function(total, key) { return total + countBankUnits(value[key]); }, 0);
+    return typeof value === "string" && value.trim() ? 1 : 0;
+  }
+
+  function initializeCanvas() {
+    var canvas = document.getElementById("skyCanvas");
+    var context = canvas.getContext("2d");
+    var stars = [];
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var width = 0;
+    var height = 0;
+    var ratio = 1;
+
+    function resize() {
+      ratio = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * ratio);
+      canvas.height = Math.floor(height * ratio);
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+      var count = Math.min(270, Math.max(90, Math.floor(width * height / 6200)));
+      var rng = mulberry32(184729);
+      stars = Array.from({ length: count }, function(_, index) {
+        return {
+          x: rng() * width,
+          y: rng() * height,
+          size: rng() * 1.35 + (index % 41 === 0 ? 1.2 : .15),
+          alpha: rng() * .58 + .15,
+          speed: rng() * .0015 + .0003,
+          warm: rng() > .84
+        };
+      });
+      draw(0);
+    }
+
+    function draw(time) {
+      context.clearRect(0, 0, width, height);
+      stars.forEach(function(star, index) {
+        var twinkle = reduced ? 1 : .72 + Math.sin(time * star.speed + index) * .28;
+        context.beginPath();
+        context.fillStyle = star.warm
+          ? "rgba(242,210,147," + (star.alpha * twinkle) + ")"
+          : "rgba(190,211,255," + (star.alpha * twinkle) + ")";
+        context.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        context.fill();
+        if (star.size > 1.6) {
+          context.strokeStyle = "rgba(235,216,170," + (.11 * twinkle) + ")";
+          context.beginPath();
+          context.moveTo(star.x - 5, star.y);
+          context.lineTo(star.x + 5, star.y);
+          context.moveTo(star.x, star.y - 5);
+          context.lineTo(star.x, star.y + 5);
+          context.stroke();
+        }
+      });
+      if (!reduced) requestAnimationFrame(draw);
+    }
+    window.addEventListener("resize", resize, { passive: true });
+    resize();
+    if (!reduced) requestAnimationFrame(draw);
+  }
+
+  function initialize() {
+    populateSelect(ui.theme, THEMES, "firmamento");
+    populateSelect(ui.element, ELEMENTS, "espirito");
+    populateSelect(ui.intention, INTENTIONS, "contemplacao");
+    populateSelect(ui.style, VISUAL_STYLES, "maxima");
+    populateSelect(ui.intensity, INTENSITIES, "sublime");
+    populateSelect(ui.format, FORMATS, "vertical");
+    populateSelect(ui.randomness, RANDOMNESS, "coerente");
+    populateSelect(ui.phraseSource, PHRASE_SOURCES, "none");
+    populateSelect(ui.textMode, TEXT_MODES, "none");
+    populateSelect(ui.clan, CLANS, "neutral");
+    populateSecondaryTheme();
+    populatePhraseChoices();
+
+    var savedSettings = readStorage(STORAGE_KEYS.settings, null);
+    if (savedSettings) applyConfig(savedSettings);
+    else updateNotesAndVisibility();
+
+    var dataTotal = countBankUnits({
+      love: LOVE_LAYER,
+      themes: THEMES,
+      elements: ELEMENTS,
+      intentions: INTENTIONS,
+      styles: VISUAL_STYLES,
+      intensities: INTENSITIES,
+      formats: FORMATS,
+      randomness: RANDOMNESS,
+      phrases: PHRASE_SOURCES,
+      originalPhrases: ORIGINAL_PHRASE_BANK,
+      clans: CLANS,
+      universal: UNIVERSAL_BANKS
+    });
+    ui.bankCount.textContent = dataTotal.toLocaleString("pt-BR");
+    updateCounts();
+    initializeCanvas();
+  }
+
+  ui.form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    generateComposition();
+  });
+
+  [ui.theme, ui.element, ui.intention, ui.style, ui.intensity, ui.format, ui.randomness, ui.textMode, ui.secondaryTheme, ui.clan].forEach(function(control) {
+    control.addEventListener("change", function() {
+      updateNotesAndVisibility();
+    });
+  });
+
+  ui.phraseSource.addEventListener("change", function() {
+    if (ui.phraseSource.value !== "none" && ui.textMode.value === "none") ui.textMode.value = "message";
+    if (ui.phraseSource.value === "none" && ui.textMode.value === "message" && !ui.customText.value.trim()) ui.textMode.value = "none";
+    populatePhraseChoices();
+    updateNotesAndVisibility({ keepPhraseChoice: true });
+  });
+  ui.phraseChoice.addEventListener("change", saveSettings);
+  ui.customWidth.addEventListener("change", saveSettings);
+  ui.customHeight.addEventListener("change", saveSettings);
+  ui.customText.addEventListener("input", function() {
+    if (ui.customText.value.length === 180) showToast("Limite recomendado de 180 caracteres atingido.");
+  });
+
+  document.getElementById("newSeedButton").addEventListener("click", function() {
+    ui.seed.value = createSeed();
+    showToast("Nova seed preparada.");
+  });
+  document.getElementById("clearSeedButton").addEventListener("click", function() {
+    ui.seed.value = "";
+    showToast("Seed limpa; uma nova será criada ao gerar.");
+  });
+  document.getElementById("anotherButton").addEventListener("click", function() {
+    generateComposition({ newSeed: true });
+  });
+  document.getElementById("copyButton").addEventListener("click", function() {
+    if (!appState.current) return;
+    copyText(appState.current.prompt).then(function(success) {
+      showToast(success ? "Prompt copiado para a área de transferência." : "Não foi possível copiar automaticamente.");
+    });
+  });
+  document.getElementById("saveButton").addEventListener("click", saveCurrentFavorite);
+  document.getElementById("downloadButton").addEventListener("click", downloadCurrent);
+  document.getElementById("historyButton").addEventListener("click", function() { openDrawer("history"); });
+  document.getElementById("favoritesButton").addEventListener("click", function() { openDrawer("favorites"); });
+  ui.managePhrasesButton.addEventListener("click", function() { openDrawer("phrases"); });
+  document.getElementById("closeDrawerButton").addEventListener("click", closeDrawer);
+  ui.drawerBackdrop.addEventListener("click", function(event) {
+    if (event.target === ui.drawerBackdrop) closeDrawer();
+  });
+  ui.drawerContent.addEventListener("click", function(event) {
+    var savedButton = event.target.closest("[data-action]");
+    if (savedButton) handleSavedAction(savedButton.dataset.action, savedButton.dataset.id);
+    var deleteButton = event.target.closest("[data-phrase-delete]");
+    if (deleteButton) deletePhrase(deleteButton.dataset.source, deleteButton.dataset.phraseDelete);
+  });
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape" && ui.drawerBackdrop.classList.contains("open")) closeDrawer();
+    if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+      event.preventDefault();
+      generateComposition();
+    }
+  });
+
+  window.FirmamentEngine = Object.freeze({
+    version: "1.0.0",
+    createPrompt: function(config, seed) {
+      return SymbolicEngine.create(config, seed || createSeed(), appState.phraseLibrary);
+    },
+    database: Object.freeze({
+      themes: THEMES,
+      elements: ELEMENTS,
+      intentions: INTENTIONS,
+      clans: CLANS,
+      phraseSources: PHRASE_SOURCES
+    }),
+    apiAdapter: ImageApiAdapter
+  });
+
+  initialize();
+  </script>
+</body>
+</html>
