@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#071426" />
+  <title>Seu Mapa Astral — Gerador de Prompt</title>
+  <meta name="description" content="Preencha seus dados de nascimento e gere gratuitamente um prompt completo para criar seu mapa astral em qualquer chat de IA." />
+  <style>
+    :root{
+      --bg:#06111f;
+      --bg2:#0a1a30;
+      --card:rgba(10,25,45,.78);
+      --line:rgba(214,174,92,.34);
+      --gold:#d9b36c;
+      --gold2:#f4d99b;
+      --text:#f8f1e5;
+      --muted:#b9c2ce;
+      --blue:#79aee8;
+      --danger:#ff8a8a;
+      --shadow:0 20px 60px rgba(0,0,0,.36);
+      --radius:24px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(42,91,151,.24), transparent 38%),
+        radial-gradient(circle at 85% 18%, rgba(190,137,52,.13), transparent 28%),
+        linear-gradient(180deg,#030b15 0%, var(--bg) 42%, #040b13 100%);
+      min-height:100vh;
+    }
+    body:before{
+      content:"";
+      position:fixed; inset:0; pointer-events:none; opacity:.45;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.75) 0 1px, transparent 1.4px),
+        radial-gradient(circle, rgba(217,179,108,.7) 0 1px, transparent 1.3px);
+      background-size:71px 71px, 113px 113px;
+      background-position:11px 17px, 39px 61px;
+      mask-image:linear-gradient(to bottom,black,transparent 85%);
+    }
+    .wrap{width:min(1120px,92vw); margin:auto; position:relative}
+    header{padding:58px 0 26px; text-align:center}
+    .eyebrow{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 13px; border:1px solid var(--line);
+      border-radius:999px; color:var(--gold2); font-size:.82rem;
+      letter-spacing:.08em; text-transform:uppercase; background:rgba(4,12,23,.52)
+    }
+    h1{
+      font-family:Georgia,"Times New Roman",serif;
+      font-weight:500; margin:18px auto 12px; line-height:1.02;
+      font-size:clamp(2.3rem,6vw,5.6rem);
+      max-width:900px;
+      background:linear-gradient(180deg,#fff6dd 12%,#e1b96d 92%);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .lead{max-width:760px;margin:0 auto;color:var(--muted);font-size:clamp(1rem,2.2vw,1.18rem);line-height:1.7}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin-top:34px}
+    .card{
+      background:linear-gradient(180deg,rgba(13,31,55,.86),rgba(7,18,33,.86));
+      border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+    }
+    .form-card{padding:28px}
+    .side-card{padding:28px;position:relative;overflow:hidden}
+    .side-card:after{
+      content:"✦"; position:absolute; right:-18px; bottom:-70px;
+      font-size:250px; color:rgba(217,179,108,.05); transform:rotate(20deg)
+    }
+    .section-title{font-family:Georgia,serif;color:var(--gold2);font-size:1.42rem;margin:0 0 7px}
+    .section-sub{color:var(--muted);font-size:.94rem;line-height:1.55;margin:0 0 22px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{display:flex;flex-direction:column;gap:7px}
+    .field.full{grid-column:1/-1}
+    label{font-size:.88rem;color:#e7dfd2}
+    input,select{
+      width:100%; padding:14px 15px; border-radius:14px;
+      border:1px solid rgba(215,184,125,.25); color:var(--text);
+      background:rgba(2,10,18,.58); outline:none; font-size:1rem;
+      transition:.2s ease;
+    }
+    input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,179,108,.1)}
+    input[type=file]{padding:10px}
+    .hint{font-size:.76rem;color:#8fa0b3}
+    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    button{
+      border:0; cursor:pointer; border-radius:14px; padding:14px 18px;
+      font-weight:700; font-size:.96rem; transition:.18s ease
+    }
+    .primary{
+      color:#08111f;
+      background:linear-gradient(135deg,var(--gold2),var(--gold));
+      box-shadow:0 10px 24px rgba(217,179,108,.18)
+    }
+    .primary:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    .ghost{background:rgba(255,255,255,.04);color:var(--text);border:1px solid rgba(255,255,255,.1)}
+    .steps{display:grid;gap:14px;margin-top:20px}
+    .step{display:grid;grid-template-columns:42px 1fr;gap:13px;align-items:start;padding:13px;border:1px solid rgba(255,255,255,.07);border-radius:16px;background:rgba(255,255,255,.025)}
+    .num{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(217,179,108,.12);border:1px solid var(--line);color:var(--gold2);font-weight:800}
+    .step b{display:block;margin:2px 0 5px}.step p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.5}
+    .trust{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+    .chip{font-size:.78rem;padding:7px 10px;border:1px solid rgba(126,172,225,.2);border-radius:999px;color:#c8d8ea;background:rgba(78,130,184,.08)}
+    .result{margin:24px 0 60px;padding:28px;display:none}
+    .result.show{display:block}
+    textarea{
+      width:100%;min-height:430px;resize:vertical;background:#020a12;color:#eef3f8;
+      border:1px solid var(--line);border-radius:16px;padding:18px;line-height:1.5;font-size:.9rem;
+    }
+    .result-head{display:flex;align-items:end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+    .success{color:#bce6c5;font-size:.9rem}
+    footer{color:#7f8da0;text-align:center;padding:0 0 35px;font-size:.82rem}
+    .notice{margin-top:16px;padding:13px 14px;border-left:3px solid var(--gold);background:rgba(217,179,108,.06);color:#c8c1b6;border-radius:8px;font-size:.84rem;line-height:1.55}
+    @media (max-width:840px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
+      .field.full{grid-column:auto}
+      header{padding-top:36px}
+      .form-card,.side-card,.result{padding:20px}
+      h1{font-size:clamp(2.4rem,13vw,4rem)}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">✦ experiência gratuita de autoconhecimento</div>
+      <h1>Crie o prompt do seu Mapa Astral</h1>
+      <p class="lead">Preencha seus dados de nascimento e receba um prompt completo, pronto para copiar e colar em qualquer chat de IA compatível.</p>
+    </header>
+
+    <main class="hero-grid">
+      <section class="card form-card">
+        <h2 class="section-title">Seus dados de nascimento</h2>
+        <p class="section-sub">Quanto mais exatos os dados, melhor o chat poderá conferir cálculos, fuso, casas e demais informações do mapa.</p>
+
+        <form id="astroForm">
+          <div class="grid">
+            <div class="field">
+              <label for="name">Seu nome ou apelido</label>
+              <input id="name" placeholder="Ex.: Ana" autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="date">Data de nascimento *</label>
+              <input id="date" type="date" required />
+            </div>
+            <div class="field">
+              <label for="time">Horário de nascimento *</label>
+              <input id="time" type="time" required />
+              <span class="hint">Se for aproximado, marque abaixo.</span>
+            </div>
+            <div class="field">
+              <label for="precision">Precisão do horário</label>
+              <select id="precision">
+                <option value="exato">Exato</option>
+                <option value="aproximado">Aproximado</option>
+                <option value="não confirmado">Não confirmado</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="city">Cidade onde nasceu *</label>
+              <input id="city" placeholder="Ex.: Aracaju" required />
+            </div>
+            <div class="field">
+              <label for="region">Estado / Província / Região *</label>
+              <input id="region" placeholder="Ex.: Sergipe" required />
+            </div>
+            <div class="field full">
+              <label for="country">País *</label>
+              <input id="country" placeholder="Ex.: Brasil" required />
+            </div>
+            <div class="field full">
+              <label for="photo">Foto para personalização da arte (opcional)</label>
+              <input id="photo" type="file" accept="image/*" />
+              <span class="hint">A foto não é incorporada ao prompt; você deverá anexá-la no mesmo chat onde colar o prompt.</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" type="submit">✦ Gerar meu prompt</button>
+            <button class="ghost" type="reset">Limpar</button>
+          </div>
+
+          <div class="notice">
+            Astrologia será apresentada no prompt como tradição interpretativa e ferramenta simbólica de reflexão, sem linguagem fatalista e sem tratar previsões como fatos científicos.
+          </div>
+        </form>
+      </section>
+
+      <aside class="card side-card">
+        <h2 class="section-title">Como funciona</h2>
+        <p class="section-sub">Em poucos passos você transforma seus dados em uma instrução completa para análise + arte personalizada.</p>
+        <div class="steps">
+          <div class="step"><div class="num">1</div><div><b>Preencha seus dados</b><p>Data, horário, cidade, região e país de nascimento.</p></div></div>
+          <div class="step"><div class="num">2</div><div><b>Gere o prompt</b><p>O site monta automaticamente uma instrução completa e organizada.</p></div></div>
+          <div class="step"><div class="num">3</div><div><b>Copie o texto</b><p>Use o botão de copiar e leve o prompt para o chat de IA que você preferir.</p></div></div>
+          <div class="step"><div class="num">4</div><div><b>Anexe sua foto, se quiser</b><p>No chat escolhido, envie também sua foto antes de pedir a criação da arte.</p></div></div>
+        </div>
+        <div class="trust">
+          <span class="chip">Sem cadastro</span>
+          <span class="chip">Grátis</span>
+          <span class="chip">Pronto para copiar</span>
+          <span class="chip">Compatível com vários chats</span>
+        </div>
+      </aside>
+    </main>
+
+    <section class="card result" id="result">
+      <div class="result-head">
+        <div>
+          <h2 class="section-title">Seu prompt está pronto ✨</h2>
+          <div class="success" id="resultMsg">Copie o texto abaixo e cole no chat de IA escolhido.</div>
+        </div>
+        <button class="primary" id="copyBtn" type="button">Copiar prompt</button>
+      </div>
+      <textarea id="promptOutput" readonly></textarea>
+      <div class="notice">
+        <b>Dica para quem recebeu este link pelo Instagram:</b> se o link não abrir ao tocar, pressione e segure a mensagem, copie o endereço e cole na barra do seu navegador (Chrome, Safari ou outro). Depois, preencha o formulário, gere o prompt, copie e cole em um chat de IA. Se quiser aparecer na arte, anexe sua foto nesse mesmo chat antes da geração da imagem.
+      </div>
+    </section>
+
+    <footer>Feito para transformar seus dados em um prompt completo de Mapa Astral + arte personalizada.</footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('astroForm');
+    const result = document.getElementById('result');
+    const output = document.getElementById('promptOutput');
+    const copyBtn = document.getElementById('copyBtn');
+    const resultMsg = document.getElementById('resultMsg');
+
+    const fmtDate = (v) => {
+      if(!v) return '';
+      const [y,m,d] = v.split('-');
+      return `${d}/${m}/${y}`;
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const date = fmtDate(document.getElementById('date').value);
+      const time = document.getElementById('time').value;
+      const precision = document.getElementById('precision').value;
+      const city = document.getElementById('city').value.trim();
+      const region = document.getElementById('region').value.trim();
+      const country = document.getElementById('country').value.trim();
+      const photo = document.getElementById('photo').files.length > 0;
+
+      const prompt = `PROMPT — MAPA ASTRAL COMPLETO + ARTE PERSONALIZADA
+
+Quero que você crie para mim uma experiência completa de Mapa Astral, unindo análise astrológica detalhada, explicações fáceis de entender e uma arte personalizada de altíssima qualidade.
+
+Quero um resultado profundo, bonito e compreensível mesmo para alguém que não entende astrologia.
+
+1. MEUS DADOS
+
+Nome/apelido: ${name || '[não informado]'}
+Data de nascimento: ${date}
+Horário de nascimento: ${time} (${precision})
+Cidade onde nasci: ${city}
+Estado/Província/Região: ${region}
+País: ${country}
+Foto para personalização: ${photo ? 'SIM — anexarei uma foto neste chat para você usar como referência visual.' : 'NÃO — crie a arte sem retrato pessoal.'}
+
+2. PRIMEIRO: CONFIRA TUDO
+
+Antes de interpretar ou criar qualquer imagem, confira cuidadosamente meus dados.
+
+Considere corretamente:
+- data de nascimento;
+- horário local do nascimento;
+- localização geográfica;
+- fuso horário correspondente àquela data;
+- eventual horário de verão vigente na época;
+- coordenadas geográficas da cidade, quando necessárias.
+
+Não invente informações astrológicas.
+
+Se você não tiver recursos suficientes para calcular com segurança determinada posição, grau, casa, cúspide ou aspecto, informe claramente essa limitação.
+
+Se algum dado essencial estiver faltando ou estiver ambíguo, pergunte antes de prosseguir.
+
+Diferencie claramente:
+DADOS CALCULADOS — posições e informações obtidas a partir dos dados de nascimento.
+INTERPRETAÇÃO ASTROLÓGICA — significado simbólico atribuído a esses dados pela tradição astrológica.
+
+3. MEU MAPA ASTRAL
+
+Determine, quando for possível calcular com segurança:
+☀️ Sol
+🌙 Lua
+⬆️ Ascendente
+☿ Mercúrio
+♀ Vênus
+♂ Marte
+♃ Júpiter
+♄ Saturno
+♅ Urano
+♆ Netuno
+♇ Plutão
+🔝 Meio do Céu
+☊ Nodo Norte
+☋ Nodo Sul
+⚷ Quíron
+🌑 Lua Negra (ponto astrológico)
+
+Para cada elemento, informe:
+- signo;
+- grau;
+- casa astrológica;
+- significado dentro do conjunto do mapa.
+
+Depois apresente as 12 casas astrológicas, com cúspides e signos quando puderem ser determinados com segurança.
+
+4. ASPECTOS ASTROLÓGICOS
+
+Identifique os principais aspectos do mapa:
+- conjunções;
+- oposições;
+- trígonos;
+- quadraturas;
+- sextis.
+
+Explique os planetas ou pontos envolvidos e o significado tradicionalmente atribuído a cada combinação.
+
+Mostre também como diferentes aspectos podem reforçar, equilibrar ou entrar em tensão uns com os outros.
+
+5. INTERPRETE MINHA PERSONALIDADE
+
+Explique em linguagem simples e profunda:
+
+☀️ IDENTIDADE — SOL
+Essência, expressão individual, identidade e realização.
+
+🌙 EMOÇÕES — LUA
+Necessidades emocionais, segurança, sensibilidade, reações espontâneas e mundo interior.
+
+⬆️ COMO ME APRESENTO — ASCENDENTE
+Primeira impressão, comportamento exterior, postura diante da vida e início de experiências.
+
+🧠 MENTE E COMUNICAÇÃO — MERCÚRIO
+Raciocínio, comunicação, aprendizado, decisões e organização do pensamento.
+
+❤️ AMOR — VÊNUS
+Afetividade, atração, valores, carinho e necessidades nos relacionamentos.
+
+🔥 AÇÃO — MARTE
+Iniciativa, energia, desejo, coragem, competitividade e resposta a desafios.
+
+🌟 EXPANSÃO — JÚPITER
+Crescimento, oportunidades, confiança, aprendizado e visão de mundo.
+
+🪐 RESPONSABILIDADE — SATURNO
+Disciplina, limites, amadurecimento, responsabilidades e desafios de longo prazo.
+
+🌌 URANO, NETUNO E PLUTÃO
+Explique especialmente como interagem com meus planetas pessoais e pontos importantes.
+
+6. AS 12 CASAS
+
+Relacione cada casa às posições realmente encontradas no meu mapa:
+
+Casa 1: identidade e apresentação
+Casa 2: recursos e valores
+Casa 3: comunicação e aprendizado
+Casa 4: raízes, lar e família
+Casa 5: criatividade, prazer e expressão
+Casa 6: rotina, trabalho e hábitos
+Casa 7: relacionamentos e parcerias
+Casa 8: transformações e recursos compartilhados
+Casa 9: conhecimento, filosofia e expansão
+Casa 10: carreira, reputação e direção pública
+Casa 11: amizades, grupos e projetos
+Casa 12: interioridade, recolhimento e conteúdos inconscientes
+
+Não forneça apenas definições genéricas.
+
+7. RELACIONAMENTOS
+
+Considere especialmente Vênus, Marte, Lua, Casa 5, Casa 7 e aspectos relevantes.
+
+Explique:
+- como demonstro afeto;
+- o que procuro emocionalmente;
+- possíveis necessidades em relacionamentos;
+- padrões de atração;
+- pontos fortes;
+- possíveis conflitos;
+- formas de construir relações mais equilibradas.
+
+Não afirme que determinado relacionamento ou acontecimento amoroso necessariamente ocorrerá.
+
+8. CARREIRA, TALENTOS E VOCAÇÃO
+
+Analise Meio do Céu, Casas 2, 6 e 10, Sol, Mercúrio, Marte, Júpiter, Saturno e aspectos relevantes.
+
+Mostre possíveis:
+- talentos naturais;
+- ambientes profissionais compatíveis;
+- formas de trabalhar;
+- liderança;
+- criatividade;
+- comunicação;
+- organização;
+- desafios profissionais;
+- áreas favoráveis ao desenvolvimento.
+
+Não determine uma única profissão como destino.
+
+9. DESENVOLVIMENTO PESSOAL
+
+☊ Nodo Norte — crescimento e desenvolvimento.
+☋ Nodo Sul — padrões familiares e tendências naturais.
+⚷ Quíron — vulnerabilidade, aprendizado e amadurecimento.
+🌑 Lua Negra — autonomia, intensidade, desejos, limites e aspectos menos facilmente expressos.
+
+Apresente tudo como interpretação simbólica da astrologia, não como destino inevitável.
+
+10. MINHA SÍNTESE ASTROLÓGICA
+
+Crie:
+⭐ MINHAS PRINCIPAIS FORÇAS
+⚠️ MEUS PRINCIPAIS DESAFIOS
+☯️ MINHAS CONTRADIÇÕES
+💎 POTENCIAIS QUE POSSO DESENVOLVER
+🌌 MINHA ASSINATURA ASTROLÓGICA
+
+Conecte o mapa inteiro e finalize com uma síntese memorável.
+
+Não use linguagem fatalista.
+Não diga que algo obrigatoriamente acontecerá comigo.
+Apresente astrologia como tradição interpretativa e ferramenta simbólica de reflexão, não como ciência comprovada nem previsão inevitável do futuro.
+
+11. AGORA CRIE MINHA ARTE
+
+Somente depois de concluir e revisar os dados anteriores, crie uma ARTE VERTICAL 9:16 DO MEU MAPA ASTRAL.
+
+Quero uma imagem de nível excepcional, combinando:
+mapa astral profissional + infográfico premium + obra de arte cósmica personalizada.
+
+Estética:
+✨ celestial
+🌌 cósmica
+👑 luxuosa
+🔮 misteriosa
+⭐ sofisticada
+🎬 cinematográfica
+💫 extremamente detalhada
+🏛️ elegante e monumental
+
+Utilize:
+- espaço profundo;
+- estrelas;
+- nebulosas;
+- constelações;
+- símbolos zodiacais;
+- círculos celestiais;
+- detalhes dourados;
+- iluminação cósmica;
+- profundidade;
+- acabamento premium.
+
+12. MINHA FOTO NA ARTE
+
+${photo ? 'Eu anexarei uma foto neste chat. Use-a como referência visual, preserve minhas principais características e integre minha representação naturalmente ao universo do mapa.' : 'Não anexei foto. Crie uma composição sofisticada sem retrato pessoal, usando a roda zodiacal, elementos celestiais e os dados do mapa.'}
+
+13. INFORMAÇÕES VISUAIS
+
+A arte deverá apresentar elegantemente:
+
+MEU MAPA ASTRAL
+
+Data: ${date}
+Horário: ${time}
+Local: ${city}, ${region} — ${country}
+
+Em grande destaque:
+☀️ SOL: [resultado verificado]
+🌙 LUA: [resultado verificado]
+⬆️ ASCENDENTE: [resultado verificado]
+
+Inclua uma roda zodiacal detalhada representando signos, casas e posicionamentos calculados.
+
+Também organize:
+- planetas;
+- casas;
+- principais aspectos;
+- elementos predominantes;
+- modalidades predominantes;
+- principais forças;
+- principais desafios;
+- pequena síntese do mapa.
+
+14. NÃO SACRIFIQUE QUALIDADE POR QUANTIDADE
+
+Não use textos minúsculos apenas para fazer tudo caber em uma única imagem.
+
+Priorize:
+BELEZA + LEGIBILIDADE + PRECISÃO + ORGANIZAÇÃO.
+
+Se houver informação demais para uma única imagem 9:16, transforme o resultado em uma coleção coerente de artes 9:16:
+
+ARTE 1 — Meu Mapa Astral
+Visão geral + Sol + Lua + Ascendente + roda zodiacal.
+
+ARTE 2 — Minha Personalidade
+Planetas pessoais + interpretação.
+
+ARTE 3 — Amor e Relacionamentos
+Vênus + Marte + Lua + casas relacionadas.
+
+ARTE 4 — Carreira e Talentos
+Meio do Céu + casas profissionais + potenciais.
+
+ARTE 5 — Forças e Desafios
+Aspectos + síntese.
+
+ARTE 6 — Minha Assinatura Astrológica
+Grande conclusão visual personalizada.
+
+REGRA FINAL
+
+Antes de gerar qualquer arte, faça uma última revisão e verifique se:
+✓ meus dados pessoais estão corretos;
+✓ os resultados astrológicos correspondem aos dados calculados;
+✓ nenhum grau ou casa foi inventado;
+✓ não existem contradições entre análise e imagem;
+✓ os textos estão corretos;
+✓ a composição está legível;
+✓ a proporção é 9:16;
+✓ a imagem mantém qualidade visual premium.
+
+Se encontrar alguma inconsistência, corrija antes da geração.
+
+Comece agora pela conferência dos meus dados de nascimento.`;
+
+      output.value = prompt;
+      result.classList.add('show');
+      result.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(output.value);
+        copyBtn.textContent = '✓ Copiado';
+        resultMsg.textContent = 'Pronto! Agora cole em qualquer chat de IA compatível.';
+        setTimeout(()=> copyBtn.textContent='Copiar prompt', 2200);
+      }catch{
+        output.select();
+        document.execCommand('copy');
+        copyBtn.textContent = '✓ Copiado';
+        setTimeout(()=> copyBtn.textContent='Copiar prompt', 2200);
+      }
+    });
+  </script>
+</body>
+</html>
